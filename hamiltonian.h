@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 
-double Gethijab(int a, int b, double r, double* d, std::string typei, std::string typej);
+double Gethijab(int a, int b, double r, double* d,const std::string& typei,const std::string& typej);
 double S(double r);
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz
