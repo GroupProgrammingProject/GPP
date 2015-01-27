@@ -11,7 +11,7 @@ void Hamiltonian(int n, std::vector<string>* type, std::vector<double>* posx, st
   int i, j, a, b;                                       // i,j loop over atoms; a,b loop over orbitals
   double d[3], r;                                       // 3d array of atom pair's connecting vector (varys within ij loop)
   double rx, ry, rz, r, sr;
-  char typei, typej;
+  std::string typei, typej;
   std::vector<double> H_MD;                             // A matrix to be populated with interaction parameters for MD
   typedef Eigen::Matrix<std::complex<double>, Dynamic, Dynamic > Matrix;
   Matrix Hijab;
@@ -21,14 +21,14 @@ void Hamiltonian(int n, std::vector<string>* type, std::vector<double>* posx, st
       rx = posx[i]-posx[j];
       ry = posy[i]-posy[j];                             // Cartesian elements of vector r[i] - r[j]
       rz = posz[i]-posz[j];
-      d  = [rx,ry,rz];                                  // Vector r[i] - r[j]
+      d  = {rx,ry,rz};                                  // Vector r[i] - r[j]
       r  = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));      // Length |r[i] - r[j]|
       sr = S(r);                                        // Scaling parameter
       for (a=0:a<4;a++) {
 	for (b=0:b<4;b++) {
 	  hijab =  Gethijab(a,b,r,d,typei,typej);       // Hamiltonian elements of ij interaction
-	  H_MD[(4*i+a)*4*j+b] = hijab;                  // Vector of interactions to pass to MD
-	  H_MD[(4*j+a)*4*i+b] = hijab;                  // Vector of interactions to pass to MD
+	  H_MD.push_back((4*i+a)*4*j+b) = hijab;        // Vector of interactions to pass to MD
+	  H_MD.push_back((4*j+a)*4*i+b) = hijab;        // Vector of interactions to pass to MD
 	  Hijab(4*i+a,4*j+b)  = sr*hijab;               // Scale hijab and populate matrix Hijab
 	  Hijab(4*j+a,4*i+b)  = sr*hijab;               // Scale hijab and populate matrix Hijab
 	}                                               // End loop over b
