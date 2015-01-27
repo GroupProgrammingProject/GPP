@@ -7,16 +7,44 @@
 #include <stdio.h>
 using namespace std;
 
-int forces(int dim,double *x,double *y,double *z,double H*,double c*,double rc,int *nnear,int *inear)
+int forces(int dim,int norbs,double *x,double *y,double *z,double H*,double c*,double rc,int *nnear,int *inear)
 { int i,j,l,lp,n;
-  double dd;
-  for(i=0;i<N;i++){
-    for(j=0;j<N;j++){
-      cout << mat[i*N+j] << "\t";
-    }
-    cout << endl;    
+  double dd,ddx,ddy,ddz,dsx,dsy,dsz,dphix,dphiy,dphiz,dphi;
+  
+  for(i=0;i<dim:i++){
+    fx[i]=0;
+    fy[i]=0;
+    fz[i]=0;
   }
-  cout << endl;
+  for(i=0;i<dim;i++){
+    for(j=0;j<nnear[i];j++){
+      ddx=pow(x[i]-x[inear[i][j]],2);
+      ddy=pow(y[i]-y[inear[i][j]],2);
+      ddz=pow(z[i]-z[inear[i][j]],2);
+      dd=sqrt(ddx+ddy+ddz);
+
+      dsx=Derivsx(dd);
+      dsy=Derivsy(dd);
+      dsz=Derivsz(dd);
+
+      dphix=Derivphix(dd);
+      dphiy=Derivphiy(dd);
+      dphiz=Derivphiz(dd);
+
+      for(l=0;l<norbs;l++){
+	for(lp=0;l<norbs;l++){
+	  for(n=0;n<dim;n++){
+	    fx[i]=fx[i]-2*H[i+l][j+lp]*dsx*c[l][n]*c[lp][n];
+	    fy[i]=fy[i]-2*H[i+l][j+lp]*dsy*c[l][n]*c[lp][n];
+	    fz[i]=fz[i]-2*H[i+l][j+lp]*dsz*c[l][n]*c[lp][n];
+	  }
+	}
+      }
+      fx[i]=fx[i]-dphix;
+      fy[i]=fy[i]-dphiy;
+      fz[i]=fz[i]-dphiz;
+    }
+  }
 
   return 0;
 
