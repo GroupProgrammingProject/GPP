@@ -48,9 +48,6 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double H*,double c*,d
 
   return 0;
 
-}
-
-
 void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear, double *inear, double sx, double sy, double sz)
 {
 	double dx,dy,dz,dist;
