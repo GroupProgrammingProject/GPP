@@ -21,6 +21,32 @@ int forces(int dim,double *x,double *y,double *z,double H*,double c*,double rc,i
   return 0;
 
 }
+
+
+void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear, double *inear, double sx, double sy, double sz)
+{
+	double dist;
+	for (int i=0; i<N; i++) { nnear[i]=0; }
+	for (int i=0; i<N; i++)
+	{
+		for (int j=0; j<N; j++)
+		{
+			dx=x[i]-x[j];
+			dx=dx-sx*round(dx/sx);
+			dy=y[i]-y[j];
+			dy=dy-sy*round(dy/sy);
+			dz=z[i]-z[j];
+			dz=dz-sz*round(dz/sz);
+			dist=sqrt(dx*dx+dy*dy+dz*dz);
+			if (dist<rc && i!=j)
+			{
+				nnear[i]=nnear[i]+1;
+				inear[i][nnear[i]]=j;
+			}
+		}
+	}
+}
+
 /*
        program dinamica molecolare
 	implicit real*8 (a-h,o-z) 
