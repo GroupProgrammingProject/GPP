@@ -2,14 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "readinxyz.h"
-
-// Function to print contents of an std::vector
-template <typename T> void Print(std::vector<T>* vect){
-	for (typename std::vector<T>::iterator it=vect->begin(); it!=vect->end(); ++it){
-		std::cout<<*it<<"\t";
-	}
-	std::cout<<std::endl;
-} 
+#include "vectorfunctions.h"
 
 int main(int argc, char* argv[]){
 	std::vector<int> types;
@@ -25,5 +18,9 @@ int main(int argc, char* argv[]){
 	Print (Xptr);
 	Print (Yptr);
 	Print (Zptr);
+	
+	const char* filename="testz.txt";
+	Print(Zptr, filename);
+	
 return 0;
 }

@@ -1,10 +1,9 @@
-// Read in from file functionality
+// Read in from xyz file 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
 #include <vector>
-#include <iomanip>
 
 void ReadInXYZ (char* filename, std::vector<int>* atomtypes, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z);
 std::map<std::string, int> SetElementMap();
