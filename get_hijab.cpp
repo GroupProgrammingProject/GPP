@@ -3,10 +3,13 @@
 #include <cmath>
 #include <string>
 
-double Gethijab(int a, int b, double* d,double r,const std::string& typei,const std::string& typej);
+double Gethijab(int a, int b, double* d,double r,int typei,int typej);
+
+//std::string pointer
+//const std::string& name
 
 //Gethijab() returns value of non-scaled Hamiltionian matrix element h
-double Gethijab(int a, int b, double* d,double r,const std::string& typei,const std::string& typej){
+double Gethijab(int a, int b, double* d,double r,int typei,int typej){
 
 int i;
 double h,V[4];																//h and V[4] is only used locally in Gethijab()
@@ -14,7 +17,7 @@ double r_cutoff=2.6;														//where should I take r_cutoff from?
 double V_CC[4],V_CH[4],V_HH[4];
 V_CC[0]=-5;V_CC[1]=4.7;V_CC[2]=5.5;V_CC[3]=-1.55;				//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
 
-if(typei=="C" && typej=="C")											//add more if statements, when we have interaction parameters for other atoms
+if(typei==6 && typej==6)											//add more if statements, when we have interaction parameters for other atoms
 {for(i=0;i<4;i++){V[i]=V_CC[i];}}
 
 //start V&G routine
@@ -34,12 +37,12 @@ return h;
 	
 int main() {	//main does what hamiltonian.cpp would ask of Gethijab()
 
+//input from hamiltonian to Gethijab()
 int i,j,a,b;
 double h,d[3],r=1.73;
-const std::string typei("C");
-const std::string typej("C");
-
+int typei=6,typej=6;
 for(i=0;i<3;i++){d[i]=1;}	//dummy d vector
+//end listing input
 
 for(a=0;a<4;a++){
 	for(b=0;b<4;b++){
