@@ -1,12 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
-#include <string>
 
 double Gethijab(int i, int j,int a, int b, double* d,double r,int typei,int typej);
-
-//std::string pointer
-//const std::string& name
 
 //Gethijab() returns value of non-scaled Hamiltionian matrix element h
 double Gethijab(int i, int j,int a, int b, double* d,double r,int typei,int typej){
@@ -45,30 +40,5 @@ return h;
 } //get_hijab() ends
 
 	
-int main() {	//main does what hamiltonian.cpp would ask of Gethijab()
-
-//input from hamiltonian to Gethijab()
-int k,i,j,a,b;
-double h,d[3],r=1.73;
-int typei=6,typej=6;
-for(k=0;k<3;k++){d[k]=1;}	//dummy d vector
-//end listing input
-
-for(i=0;i<2;i++){
-	for(j=0;j<2;j++){
-		std::cout << "i and j are: " << i << " " << j << std::endl;
-		for(a=0;a<4;a++){
-			for(b=0;b<4;b++){
-				h=Gethijab(i,j,a,b,d,r,typei,typej);
-				std::cout << h << "	";
-			} //end b loop
-			std::cout << std::endl;
-		} //end a loop
-	} //end j loop
-} //end i loop
-
-return 0;
-} //main ends
-
 
 	
