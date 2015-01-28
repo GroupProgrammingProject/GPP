@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <cstdlib> 
 #include <stdio.h>
+
 using namespace std;
 
 int verlet(int, N, int nmd, double *m, double rc, double rv, double T, double dt, double *x, double *y, double *z, *nnear, *inear)
@@ -37,42 +38,92 @@ int verlet(int, N, int nmd, double *m, double rc, double rv, double T, double dt
 
 	}
 }
-int forces(int dim,int norbs,double *x,double *y,double *z,double H*,double c*,double rc,int *nnear,int *inear)
-{ int i,j,l,lp,n;
-  double dd,ddx,ddy,ddz,dsx,dsy,dsz,dphix,dphiy,dphiz,dphi;
+int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz)
+{ int k,i,j,l,lp,n; /* dummy indeces for cycles*/
+  double sumphi[dim],dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000;
   
-  for(i=0;i<dim:i++){
+  for(i=0;i<dim:i++){ /*initialisation of forces*/
     fx[i]=0;
     fy[i]=0;
     fz[i]=0;
+    sumphi[i]=0;
   }
   for(i=0;i<dim;i++){
     for(j=0;j<nnear[i];j++){
-      ddx=pow(x[i]-x[inear[i][j]],2);
-      ddy=pow(y[i]-y[inear[i][j]],2);
-      ddz=pow(z[i]-z[inear[i][j]],2);
-      dd=sqrt(ddx+ddy+ddz);
+      if(j!=i){
+	dd[1]=abs(x[i]-x[j]); /*Definition of vector distances*/
+	dd[2]=abs(y[i]-y[j]);
+	dd[3]=abs(z[i]-z[j]);
+	
+	for(k=0;k<3;k++){
+	  ddrx[k]=dd[k]; /*Initialisation vector dinstances to perform derivatives */
+	  ddrrx[k]=dd[k];
+	  ddlx[k]=dd[k];
+	  ddllx[k]=dd[k];
 
-      dsx=Derivsx(dd);
-      dsy=Derivsy(dd);
-      dsz=Derivsz(dd);
+	  ddry[k]=dd[k];
+	  ddrry[k]=dd[k];
+	  ddly[k]=dd[k];
+	  ddlly[k]=dd[k];
+	
+	  ddrz[k]=dd[k];
+	  ddrrz[k]=dd[k];
+	  ddlz[k]=dd[k];
+	  ddllz[k]=dd[k];
+	}
+	
+	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
+	
+	ddrx[1]=abs(x[i]+h-x[j]); 
+	ddrrx[1]=abs(x[i]+2*h-x[j]);
+	ddlx[1]=abs(x[i]-h-x[j]);
+	ddllx[1]=abs(x[i]-2*h-x[j]);
 
-      dphix=Derivphix(dd);
-      dphiy=Derivphiy(dd);
-      dphiz=Derivphiz(dd);
+	ddry[2]=abs(y[i]+h-y[j]);
+	ddrry[2]=abs(y[i]+2*h-y[j]);
+	ddly[2]=abs(y[i]-h-y[j]);
+	ddlly[2]=abs(y[i]-2*h-y[j]);
 
-      for(l=0;l<norbs;l++){
-	for(lp=0;l<norbs;l++){
-	  for(n=0;n<dim;n++){
-	    fx[i]=fx[i]-2*H[i+l][j+lp]*dsx*c[l][n]*c[lp][n];
-	    fy[i]=fy[i]-2*H[i+l][j+lp]*dsy*c[l][n]*c[lp][n];
-	    fz[i]=fz[i]-2*H[i+l][j+lp]*dsz*c[l][n]*c[lp][n];
+	ddrz[3]=abs(z[i]+h-z[j]);
+	ddrrz[3]=abs(z[i]+2*h-z[j]);
+	ddlz[3]=abs(z[i]-h-z[j]);
+	ddllz[3]=abs(z[i]-2*h-z[j]);
+
+	ddmrx=sqrt(ddrx[1]*ddrx[1]+ddrx[2]*ddrx[2]+ddrx[2]*ddrx[2]);
+	ddmry=sqrt(ddry[1]*ddry[1]+ddry[2]*ddry[2]+ddry[2]*ddry[2]);
+	ddmrz=sqrt(ddrx[1]*ddrz[1]+ddrz[2]*ddrz[2]+ddrz[2]*ddrz[2]);
+
+	ddmrrx=sqrt(ddrrx[1]*ddrrx[1]+ddrrx[2]*ddrrx[2]+ddrrx[2]*ddrrx[2]);
+	ddmrry=sqrt(ddrry[1]*ddrry[1]+ddrry[2]*ddrry[2]+ddrry[2]*ddrry[2]);
+	ddmrrz=sqrt(ddrrz[1]*ddrrz[1]+ddrrz[2]*ddrrz[2]+ddrrz[2]*ddrrz[2]);
+      
+	ddmlx=sqrt(ddlx[1]*ddlx[1]+ddlx[2]*ddlx[2]+ddlx[2]*ddlx[2]);
+	ddmly=sqrt(ddly[1]*ddly[1]+ddly[2]*ddly[2]+ddly[2]*ddly[2]);
+	ddmlz=sqrt(ddlz[1]*ddlz[1]+ddlz[2]*ddlz[2]+ddlz[2]*ddlz[2]);
+      
+	ddmllx=sqrt(ddllx[1]*ddllx[1]+ddllx[2]*ddllx[2]+ddllx[2]*ddllx[2]);
+	ddmlly=sqrt(ddlly[1]*ddlly[1]+ddlly[2]*ddlly[2]+ddlly[2]*ddlly[2]);
+	ddmllz=sqrt(ddllz[1]*ddllz[1]+ddllz[2]*ddllz[2]+ddllz[2]*ddllz[2]);
+     
+	sumphi=sumphi+o(ddm);
+	dsumphix=dsumphix+(-o(ddrrx)+8*o(ddrx)-8*o(ddlx)+o(ddllx))/(12*h);
+	dsumphiy=dsumphiy+(-o(ddrry)+8*o(ddry)-8*o(ddly)+o(ddlly))/(12*h);
+	dsumphix=dsumphix+(-o(ddrrz)+8*o(ddrz)-8*o(ddlz)+o(ddllz))/(12*h);
+
+	for(l=0;l<norbs;l++){
+	  for(lp=0;l<norbs;l++){
+	    for(n=0;n<dim;n++){ /*Calculation of band structure forces*/
+	      fx[i]=fx[i]-2*(-Gethijab(i,j,l,lp,ddrrx,6,6)+8*Gethijab(i,j,l,lp,ddrx,6,6)-8*Gethijab(i,j,l,lp,ddlx,6,6)+Gethijab(i,j,l,lp,ddllx,6,6))/(12*h)
+		*c[l][n]*c[lp][n];
+	      fy[i]=fy[i]-2*(-Gethijab(i,j,l,lp,ddrry,6,6)+8*Gethijab(i,j,l,lp,ddry,6,6)-8*Gethijab(i,j,l,lp,ddly,6,6)+Gethijab(i,j,l,lp,ddlly,6,6))/(12*h)
+		*c[l][n]*c[lp][n];
+	      fz[i]=fz[i]-2*(-Gethijab(i,j,l,lp,ddrrz,6,6)+8*Gethijab(i,j,l,lp,ddrz,6,6)-8*Gethijab(i,j,l,lp,ddlz,6,6)+Gethijab(i,j,l,lp,ddllz,6,6))/(12*h)
+		*c[l][n]*c[lp][n];
+	    }
 	  }
 	}
+	/* Repulsive forces are missing*/
       }
-      fx[i]=fx[i]-dphix;
-      fy[i]=fy[i]-dphiy;
-      fz[i]=fz[i]-dphiz;
     }
   }
 
