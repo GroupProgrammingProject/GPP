@@ -5,6 +5,9 @@
 #include "Gethijab.h"
 #include "S.h"
 
+// Need to make number of orbitals (currently m=4) a variable since needs to account for total number of electrons
+// WE DON'T Consider systems with odd numbers of electrons
+
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz
 void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz){
   int i, j, a, b;                                         // i,j loop over atoms; a,b loop over orbitals
@@ -29,7 +32,8 @@ void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::
       d[1]  = ry;
       d[2]  = rz;
       r     = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));     // Length |r[i] - r[j]|
-      sr    = S(r, typei, typej);                         // Scaling parameter
+      if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
+      else {sr    = S(r, typei, typej);}                  // Scaling parameter
       for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 	for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
@@ -44,21 +48,25 @@ void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::
   }                                                       // End loop over i
 
   std::cout << Hijab << std::endl;                        // Print Hamiltonian Matrix
-
-  VectorXd eigvals = Hijab.eigenvalues();
-
-  std::cout << "\nEigenvalues of Hijab are:\n" << std::endl;
-
-  std::cout << eigvals << std::endl;
-
-  double Ebs=0;
+  VectorXd eigvals = Hijab.eigenvalues();                 // Evaluate Eigenvalues
+  double eigvalarr[4*n];                                  // Create array of Eigenvalues
   for (i=0;i<4*n;i++) {
-    Ebs = Ebs + real(eigvals(i,0));}
+    eigvalarr[i] = real(eigvals(i,0));}
+  std::sort(eigvalarr,eigvalarr+4*n);                     // Sort array of eigenvalues
+  double Ebs=0;                                           // Introduce band structure energy
+  for (i=0;i<n;i++) {                                     // Fill each eigenstate with 2 electrons
+    Ebs = Ebs + 2*eigvalarr[i];}                          // and sum energies of filled states
 
-  std::cout << "\nEbs = " << Ebs << "eV" << std::endl;
+  std::cout << "\nEigenvalues of Hijab:\n" << std::endl;  // Output Eigenvalues
+  for (i=0;i<4*n;i++) {
+    std::cout << eigvalarr[i] << std::endl;}
+  std::cout << "\nEbs = " << Ebs << "eV" << std::endl;    // Output Band Structure Energy
 
-  Eigen::ComplexEigenSolver<MatrixXd> ces(Hijab);
+  // NOTE may be computing diagonalisation for a second time at this point
+  // This is clearly unnecessary
+  Eigen::ComplexEigenSolver<MatrixXd> ces(Hijab);         // Compute eigenvectors
 
+  // Uncomment to view eigenvectors
   /*std::cout << "\nEigenvectors of Hijab are:\n" << std::endl;
   
   for (i=0;i<4*n;i++) {
