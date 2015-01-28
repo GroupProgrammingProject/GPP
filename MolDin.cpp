@@ -7,6 +7,36 @@
 #include <stdio.h>
 using namespace std;
 
+int verlet(int, N, int nmd, double *m, double rc, double rv, double T, double dt, double *x, double *y, double *z, *nnear, *inear)
+{
+	double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold;
+	double boltz=1.38*pow(10,-23);
+	near_neigh(N,*x,*y,*z,rc,*nnear,*inear,sx,sy,sz);
+	for(int i=0; i<N; i++)
+	{
+		xold[i]=x[i];
+		yold[i]=y[i];
+		zold[i]=z[i];
+	}
+	forces(fx,fy,fz...);
+	velocity(N,*m,*vx,*vy,*vz,T,*vxm,*vym,*vzm);
+	
+	for(int imd=1; imd<=nmd; imd++)
+	{
+		x[i]=x[i]+vx[i]*dt+0.5*fx[i]*dt*dt/m;
+		y[i]=y[i]+vy[i]*dt+0.5*fy[i]*dt*dt/m;
+		z[i]=z[i]+vz[i]*dt+0.5*fz[i]*dt*dt/m;
+		dx=x[i]-xold[i];
+		dx=dx-sx*round(dx/sx);
+		dy=y[i]-yold[i];
+		dy=dy-sy*round(dy/sy);
+		dz=z[i]-zold[i];
+		dz=dz-sz*round(dz/sz);
+		dist=sqrt(dx*dx+dy*dy+dz*dz); //dmax
+		if (dist>dmax){dmax=dist;}
+
+	}
+}
 int forces(int dim,int norbs,double *x,double *y,double *z,double H*,double c*,double rc,int *nnear,int *inear)
 { int i,j,l,lp,n;
   double dd,ddx,ddy,ddz,dsx,dsy,dsz,dphix,dphiy,dphiz,dphi;
@@ -69,6 +99,45 @@ void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear
 				inear[i][nnear[i]]=j;
 			}
 		}
+	}
+}
+
+void velocity(int N, double *m, double *vx, double *vy, double *vz, double T, double Tp, double *vxm, double *vym, double *vzm)
+{
+	double *c, ke, m=m[1],boltz=1.38*pow(10,-23);
+	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg;
+	for (int i=0; i<N; i++)
+	{
+		vx[i]=0; vy[i]=0; vz[i]=0;
+		c[i]=sqrt(3*boltz*T/m[i])
+		vx[i]=c[i]*(2*rand(0)-1); //random number generator required
+		vy[i]=c[i]*(2*rand(0)-1);
+		vz[i]=c[i]*(2*rand(0)-1);
+
+		vxtot=vxtot+vx[i];
+		vytot=vytot+vy[i];
+		vztot=vztot+vz[i];
+	}
+	vxavg=vxtot/N;
+	vyavg=vytot/N;
+	vzavg=vztot/N;
+
+	for (int i=0; i<N; i++)
+	{
+		vx[i]=vx[i]-vxavg;
+		vy[i]=vy[i]-vyavg;
+		vz[i]=vz[i]-vzavg;
+		msvx=msvx+vx[i]*vx[i];
+		msvy=msvy+vy[i]*vy[i];
+		msvz=msvz+vz[i]*vz[i];
+	}
+	ke=0.5*m*(msvx+msvy+msvz); //must be adapted for different masses
+	Tp=2*ke/(3*boltz);
+	for(int i=0; i<N; i++)
+	{
+		vx[i]=vx[i]*sqrt(T/Tp);
+		vy[i]=vy[i]*sqrt(T/Tp);
+		vz[i]=vz[i]*sqrt(T/Tp);
 	}
 }
 
