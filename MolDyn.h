@@ -12,7 +12,9 @@
 #include "functions.h"
 #include "Gethijab.h"
 
-int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, int *nnear, int *inear, double *c,double sx,double sy,double sz);
+int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, double *c,double sx,double sy,double sz,int nnmax);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
+just define an array of dim 1); cut-off radius; verlet radius; initial temperature; timestep; xyz arrays; matrix of eigenvectors (N*N) (vectors as columns);
+cell sizes in xyz (put big numbers if you don't want PBCs) */
 
 int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz);
 
@@ -24,10 +26,11 @@ void near_neigh(int N, double *x, double *y, double *z, double rc, int *nnear, i
 
 using namespace std;
 //
-int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, int *nnear, int *inear, double *c,double sx,double sy,double sz)
+int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z,double *c,double sx,double sy,double sz,int nnmax)
 {
 	//Implement Velocity Verlet algorithm
   double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
+  int *nnear,*inear;
   double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
   fx= new double [N];
 	fy=new double [N];
@@ -44,6 +47,8 @@ int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double
 	vxm=new double [N];
 	vym=new double [N];
 	vzm=new double [N];
+	nnear=new int [N];
+	inear=new int [N*nnmax];
 	near_neigh(N,x,y,z,rc,nnear,inear,sx,sy,sz); 
 	for(int i=0; i<N; i++)
 	{
