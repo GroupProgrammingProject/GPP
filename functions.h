@@ -1,4 +1,4 @@
-#ifndef functions_h
+#fndef functions_h
 #define functions_h
 
 #include <cmath>
