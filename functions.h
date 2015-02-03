@@ -1,4 +1,4 @@
-#ifdef functions_h
+#ifndef functions_h
 #define functions_h
 
 #include <cmath>
@@ -135,3 +135,4 @@ void test (std::vector<double> &wektor){
 
 }
 
+#endif
