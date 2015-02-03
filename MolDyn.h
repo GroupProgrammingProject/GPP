@@ -17,6 +17,18 @@ int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T,
 	//Implement Velocity Verlet algorithm
 	double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=m[1],*fxn,*fyn,*fzn,kin;
 	double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
+	fx= new double [N];
+	fy=new double [N];
+	fz=new double [N];
+	vx=new double [N];
+	vy=new double [N];
+	vz=new double [N];
+	xold=new double [N];
+	yold=new double [N];
+	zold=new double [N];
+	fxn=new double [N];
+	fyn=new double [N];
+	fzn=new double [N];
 	near_neigh(N,*x,*y,*z,rc,*nnear,*inear,sx,sy,sz); 
 	for(int i=0; i<N; i++)
 	{
@@ -219,7 +231,7 @@ void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear
 
 void velocity(int N, double *m, double *vx, double *vy, double *vz, double T, double Tp, double *vxm, double *vym, double *vzm)
 {  //calculate velocities
-	double *c, ke, m=m[1],boltz=1.38*pow(10,-23); //for now, each mass is the same
+	double *c, ke, m=m[1],boltz=1/11603;//1.38*pow(10,-23); //for now, each mass is the same
 	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg;
 	double g=sqrt(3*boltz*T/m);
 	for (int i=0; i<N; i++)
