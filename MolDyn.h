@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 using namespace std;
-
+//
 int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T, double dt, double *x, double *y, double *z, double *nnear, double *inear, double *c)
 {
 	//Implement Velocity Verlet algorithm
@@ -211,7 +211,7 @@ void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 				nnear[i]=nnear[i]+1;
-				inear[i][nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
+				inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}
