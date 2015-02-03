@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <cstdlib> 
 #include <stdio.h>
+#include "functions.h"
 
 using namespace std;
 //
