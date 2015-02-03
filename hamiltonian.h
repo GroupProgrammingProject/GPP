@@ -12,7 +12,7 @@
 // WE DON'T Consider systems with odd numbers of electrons
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
-double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* H_MD, std::vector<double>* eigvects){
+double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* eigvects){
   
   int i, j, a, b;                                         // i,j loop over atoms; a,b loop over orbitals
   double d[3],r,rx,ry,rz;                                 // d is a 3d array of atom pair's connecting vector (varys within ij loop)
@@ -40,8 +40,6 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
 	  				else {hijab = Gethijab(i,j,a,b,d,typei,typej);} // Hamiltonian elements of ij interaction
-	  				(*H_MD).at((4*i+a)*4*n+(4*j+b)) = hijab;                 // Vector of interactions to pass to MD
-	  				(*H_MD).at((4*j+b)*4*n+(4*i+a)) = hijab;                 // Vector of interactions to pass to MD
 	  				Hijab(4*i+a,4*j+b)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 				}                                                 // End loop over b
