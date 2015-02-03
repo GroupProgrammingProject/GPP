@@ -7,7 +7,7 @@
 #include "vectorfunctions.h"
 #include "hamiltonian.h"
 #include "functions.h"
-//#include "MolDyn.h"
+#include "MolDyn.h"
 
 int main(int argc, char* argv[]){
 	// Read in types, 
@@ -28,27 +28,33 @@ int main(int argc, char* argv[]){
 // Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
 
-//test energy
-	std::cout << "Ebs = " << ebs << std::endl;
-
 	// Start MD routine: steepest descent
-	
 	// First call near_neigh()
-	int nnmax=10;	
-	std::vector<double> mass(n),nnear(n),inear(n*nnmax);		// Mass in kg?
+	int i,j,nnmax=10;	
+	std::vector<double> mass(n);
+	std::vector<int> nnear(n),inear(n*nnmax);		// Mass in kg?
+	double m=12;
+	for(i=0;i<n;i++){mass.at(i)=m;}
 	double rc=2.6;
 	double sx=10,sy=10,sz=10;
-//	near_neigh(n,&posx,&posy,&posz,rc,&nnear,&inear,sx,sy,sz);
+	near_neigh(n,&posx,&posy,&posz,rc,&nnear,&inear,sx,sy,sz);
+//test near_neigh
+//	for(i=0;i<n;i++){std::cout << "inear of atom " << i << " is " << inear.at(i) << std::endl;}
 
 	// Start forces convergence loop
 	int norbs=4;
 	std::vector<double> fx(n),fy(n),fz(n);
-/*	
-	while(convergence limit)
+	
+	int count=0;
+	while(count<5){
 	forces(n,norbs,&posx,&posy,&posz,&eigvects,rc,&nnear,&inear,&fx,&fy,&fz);
-	change positions of atoms
+	std::cout << "fx " << fx.at(0) << std::endl;
+	std::cout << "fy " << fy.at(0) << std::endl;
+	std::cout << "fz " << fz.at(0) << std::endl;
+	count++;
+//	change positions of atoms
+	}
 
-*/
 
 	//Plot positions!
 	

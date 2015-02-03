@@ -9,97 +9,119 @@
 #include <stdlib.h>
 #include <cstdlib> 
 #include <stdio.h>
+#include <vector>
 #include "functions.h"
 #include "Gethijab.h"
+#include <vector>
 
-int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, double *c,double sx,double sy,double sz,int nnmax);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
+//Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
+
+/*Change vector syntax as: std::vector<double>. Assignments xi=(*v).at(i). Inputs as pointer: std::vector<double>*, to call in functs ad &*/
+
+int verlet(int N, int nmd, int norbs, std::vector<double>* mass, double rc, double rv, double T, double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,int nnmax);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
 just define an array of dim 1); cut-off radius; verlet radius; initial temperature; timestep; xyz arrays; matrix of eigenvectors (N*N) (vectors as columns);
 cell sizes in xyz (put big numbers if you don't want PBCs) */
 
-int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz);
+void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz);
 
-void velocity(int N, double *mass, double *vx, double *vy, double *vz, double T);
+void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);
 
-void near_neigh(int N, double *x, double *y, double *z, double rc, int *nnear, int *inear, double sx, double sy, double sz);
+void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz);
 
 
 
-using namespace std;
+//using namespace std;
 //
-int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z,double *c,double sx,double sy,double sz,int nnmax)
+int verlet(int N, int nmd, int norbs, std::vector<double>* mass, double rc, double rv, double T, double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* c,double sx,double sy,double sz,int nnmax)
 {
 	//Implement Velocity Verlet algorithm
-  double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
-  int *nnear,*inear;
+//  double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
+		  std::vector<double> fx(N),fy(N),fz(N),vx(N),vy(N),vz(N),xold(N),yold(N),zold(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
+		  double m=(*mass).at(0),kin,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
+		 // int *nnear,*inear;
+	std::vector<int> nnear(N), inear(N*nnmax);
   double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
-  fx= new double [N];
-	fy=new double [N];
-	fz=new double [N];
-	vx=new double [N];
-	vy=new double [N];
-	vz=new double [N];
-	xold=new double [N];
-	yold=new double [N];
-	zold=new double [N];
-	fxn=new double [N];
-	fyn=new double [N];
-	fzn=new double [N];
-	vxm=new double [N];
-	vym=new double [N];
-	vzm=new double [N];
-	nnear=new int [N];
-	inear=new int [N*nnmax];
-	near_neigh(N,x,y,z,rc,nnear,inear,sx,sy,sz); 
+//  fx= new double [N];
+//	fy=new double [N];
+//	fz=new double [N];
+//	vx=new double [N];
+//	vy=new double [N];
+//	vz=new double [N];
+//	xold=new double [N];
+//	yold=new double [N];
+//	zold=new double [N];
+//	fxn=new double [N];
+//	fyn=new double [N];
+//	fzn=new double [N];
+//	vxm=new double [N];
+//	vym=new double [N];
+//	vzm=new double [N];
+//	nnear=new int [N];
+//	inear=new int [N*nnmax];
+	near_neigh(N,x,y,z,rc,&nnear,&inear,sx,sy,sz); 
 	for(int i=0; i<N; i++)
 	{
-		xold[i]=x[i];
-		yold[i]=y[i];
-		zold[i]=z[i];
+		xold.at(i)=(*x).at(i);
+		yold.at(i)=(*y).at(i);//[i]=y[i];
+		zold.at(i)=(*z).at(i);//zold[i]=z[i];
 	}
-	forces(N,norbs,x,y,z,c,rc,nnear,inear,fx,fy,fz); //calculate the forces
-	velocity(N,mass,vx,vy,vz,T);
+	forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fx,&fy,&fz); //calculate the forces
+	velocity(N,mass,&vx,&vy,&vz,T);
 	
 	for(int imd=1; imd<=nmd; imd++) //cycle through nmd steps
 	{
 		for(int i=0; i<N; i++)
 		{
-			x[i]=x[i]+vx[i]*dt+0.5*fx[i]*dt*dt/m;
-			y[i]=y[i]+vy[i]*dt+0.5*fy[i]*dt*dt/m;
-			z[i]=z[i]+vz[i]*dt+0.5*fz[i]*dt*dt/m;
+			(*x).at(i)=(*x).at(i)+vx.at(i)*dt+0.5*fx.at(i)*dt*dt/m;
+			(*y).at(i)=(*y).at(i)+vy.at(i)*dt+0.5*fy.at(i)*dt*dt/m;//[i]=y[i]+vy[i]*dt+0.5*fy[i]*dt*dt/m;
+			(*z).at(i)=(*z).at(i)+vz.at(i)*dt+0.5*fz.at(i)*dt*dt/m;//z[i]=z[i]+vz[i]*dt+0.5*fz[i]*dt*dt/m;
 
-			dx=x[i]-xold[i];
+			dx=(*x).at(i)-xold.at(i);
+			//dx=x[i]-xold[i];
 			dx=dx-sx*round(dx/sx);
-			dy=y[i]-yold[i];
+			dy=(*y).at(i)-yold.at(i);
 			dy=dy-sy*round(dy/sy);
-			dz=z[i]-zold[i];
+			dz=(*z).at(i)-zold.at(i);
 			dz=dz-sz*round(dz/sz);
 			dist=sqrt(dx*dx+dy*dy+dz*dz);
 			if (dist>dmax){dmax=dist;} //set dmax to largest dist so far
 		}
 		if(dmax>=0.4*(rv-rc)) //do the Verlet cages
 		{
-			near_neigh(N,x,y,z,rc,nnear,inear,sx,sy,sz);
+			near_neigh(N,x,y,z,rc,&nnear,&inear,sx,sy,sz);
 			for(int i=0; i<N; i++)
 			{
-				xold[i]=x[i];
-				yold[i]=y[i];
-				zold[i]=z[i];
+				xold.at(i)=(*x).at(i);
+				yold.at(i)=(*y).at(i);
+				zold.at(i)=(*z).at(i);
+				//xold[i]=x[i];
+				//yold[i]=y[i];
+				//zold[i]=z[i];
 			}
-			forces(N,norbs,x,y,z,c,rc,nnear,inear,fx,fy,fz);//recalculate forces
+			forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fx,&fy,&fz);//recalculate forces
 			for(int i=0; i<N; i++)//calculate new velocities
 			{
-				vx[i]=vx[i]+dt*(fx[i]+fxn[i])/(2*m);
-				vy[i]=vy[i]+dt*(fy[i]+fyn[i])/(2*m);
-				vz[i]=vz[i]+dt*(fz[i]+fzn[i])/(2*m);
-				fx[i]=fxn[i];
-				fy[i]=fyn[i];
-				fz[i]=fzn[i];
+				vx.at(i)=vx.at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
+				vy.at(i)=vy.at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
+				vz.at(i)=vz.at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
+//				vx[i]=vx[i]+dt*(fx[i]+fxn[i])/(2*m);
+//				vy[i]=vy[i]+dt*(fy[i]+fyn[i])/(2*m);
+//				vz[i]=vz[i]+dt*(fz[i]+fzn[i])/(2*m);
+				fx.at(i)=fxn.at(i);
+				fy.at(i)=fyn.at(i);
+				fz.at(i)=fzn.at(i);
+//				fx[i]=fxn[i];
+//				fy[i]=fyn[i];
+//				fz[i]=fzn[i];
 			}
 			for(int i=0; i<N; i++)//mean square velocities
 			{
-				svxm=svxm+vx[i]*vx[i];
-				svym=svym+vy[i]*vy[i];
-				svzm=svzm+vz[i]*vz[i];
+				svxm=svxm+vx.at(i)*vx.at(i);
+				svym=svym+vy.at(i)*vy.at(i);
+				svzm=svzm+vz.at(i)*vz.at(i);
+				//svxm=svxm+vx[i]*vx[i];
+				//svym=svym+vy[i]*vy[i];
+				//svzm=svzm+vz[i]*vz[i];
 			}
 			kin=0,5*m*(svxm+svym+svzm); //kinetic energy
 			Tf=2*kin/(3*boltz*N); //final temperature
@@ -110,167 +132,186 @@ int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double
 /*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
 nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-th nn to i-th atom (matrix); fx,fy,fz forces on each atom (arrays);
 maxnn=max number of nn */
-int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz)
+void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz)
 { int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
-  double dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000,sumphinn,sumphi;
+  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3);
+//   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
+	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/1000,sumphinn,sumphi;
 
   
   for(i=0;i<dim;i++){ /*initialisation of forces*/
-    fx[i]=0;
-    fy[i]=0;
-    fz[i]=0;
+    (*fx).at(i)=0;
+    (*fy).at(i)=0;
+    (*fz).at(i)=0;
     sumphinn=0;
   }
 
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
-    	for(k=0;k<nnear[i];k++){
-	dd[1]=abs(x[i]-x[inear[i*dim+k]]); /*Definition of vector distances*/
-	dd[2]=abs(y[i]-y[inear[i*dim+k]]);
-	dd[3]=abs(z[i]-z[inear[i*dim+k]]);
-
-	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
-	
-	sumphi=sumphi+o(ddm);
-	}
-    for(j=0;j<nnear[i];j++){ /*Cycle spanning the nearest neighbours of i*/
+    for(k=0;k<(*nnear).at(i);k++){
+      dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
+      dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
+      dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
+      
+      ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
+      
+      sumphi=sumphi+o(ddm);
+    }
+    for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       if(j!=i){ /*Check to avoid self interaction (redundant, but saves operations)*/
-	dd[1]=abs(x[i]-x[inear[i*dim+j]]); /*Definition of vector distances*/
-	dd[2]=abs(y[i]-y[inear[i*dim+j]]);
-	dd[3]=abs(z[i]-z[inear[i*dim+j]]);
-
-	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
+	dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
+	dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
+	dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
+	
+	ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
 	
 	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
-	  ddrx[k]=dd[k]; 
-	  ddrrx[k]=dd[k];
-	  ddlx[k]=dd[k];
-	  ddllx[k]=dd[k];
+	  ddrx.at(k)=dd.at(k); 
+	  ddrrx.at(k)=dd.at(k);
+	  ddlx.at(k)=dd.at(k);
+	  ddllx.at(k)=dd.at(k);
 
-	  ddry[k]=dd[k];
-	  ddrry[k]=dd[k];
-	  ddly[k]=dd[k];
-	  ddlly[k]=dd[k];
+	  ddry.at(k)=dd.at(k);
+	  ddrry.at(k)=dd.at(k);
+	  ddly.at(k)=dd.at(k);
+	  ddlly.at(k)=dd.at(k);
 	
-	  ddrz[k]=dd[k];
-	  ddrrz[k]=dd[k];
-	  ddlz[k]=dd[k];
-	  ddllz[k]=dd[k];
+	  ddrz.at(k)=dd.at(k);
+	  ddrrz.at(k)=dd.at(k);
+	  ddlz.at(k)=dd.at(k);
+	  ddllz.at(k)=dd.at(k);
 	}
 	
-	ddrx[1]=abs(x[i]+h-x[j]);  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
-	ddrrx[1]=abs(x[i]+2*h-x[j]);
-	ddlx[1]=abs(x[i]-h-x[j]);
-	ddllx[1]=abs(x[i]-2*h-x[j]);
+	ddrx.at(1)=abs((*x).at(i)+h-(*x).at(j));  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
+	ddrrx.at(1)=abs((*x).at(i)+2*h-(*x).at(j));
+	ddlx.at(1)=abs((*x).at(i)-h-(*x).at(j));
+	ddllx.at(1)=abs((*x).at(i)-2*h-(*x).at(j));
 
-	ddry[2]=abs(y[i]+h-y[j]);
-	ddrry[2]=abs(y[i]+2*h-y[j]);
-	ddly[2]=abs(y[i]-h-y[j]);
-	ddlly[2]=abs(y[i]-2*h-y[j]);
+	ddry.at(2)=abs((*y).at(i)+h-((*y)).at(j));
+	ddrry.at(2)=abs((*y).at(i)+2*h-(*y).at(j));
+	ddly.at(2)=abs((*y).at(i)-h-(*y).at(j));
+	ddlly.at(2)=abs((*y).at(i)-2*h-(*y).at(j));
 
-	ddrz[3]=abs(z[i]+h-z[j]);
-	ddrrz[3]=abs(z[i]+2*h-z[j]);
-	ddlz[3]=abs(z[i]-h-z[j]);
-	ddllz[3]=abs(z[i]-2*h-z[j]);
+	ddrz.at(3)=abs((*z).at(i)+h-(*z).at(j));
+	ddrrz.at(3)=abs((*z).at(i)+2*h-(*z).at(j));
+	ddlz.at(3)=abs((*z).at(i)-h-(*z).at(j));
+	ddllz.at(3)=abs((*z).at(i)-2*h-(*z).at(j));
 
-	ddmrx=sqrt(ddrx[1]*ddrx[1]+ddrx[2]*ddrx[2]+ddrx[2]*ddrx[2]);
-	ddmry=sqrt(ddry[1]*ddry[1]+ddry[2]*ddry[2]+ddry[2]*ddry[2]);
-	ddmrz=sqrt(ddrx[1]*ddrz[1]+ddrz[2]*ddrz[2]+ddrz[2]*ddrz[2]);
+	ddmrx=sqrt(ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2)+ddrx.at(3)*ddrx.at(3));
+	ddmry=sqrt(ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2)+ddry.at(3)*ddry.at(3));
+	ddmrz=sqrt(ddrx.at(1)*ddrz.at(1)+ddrz.at(2)*ddrz.at(2)+ddrz.at(3)*ddrz.at(3));
 
-	ddmrrx=sqrt(ddrrx[1]*ddrrx[1]+ddrrx[2]*ddrrx[2]+ddrrx[2]*ddrrx[2]);
-	ddmrry=sqrt(ddrry[1]*ddrry[1]+ddrry[2]*ddrry[2]+ddrry[2]*ddrry[2]);
-	ddmrrz=sqrt(ddrrz[1]*ddrrz[1]+ddrrz[2]*ddrrz[2]+ddrrz[2]*ddrrz[2]);
+	ddmrrx=sqrt(ddrrx.at(1)*ddrrx.at(1)+ddrrx.at(2)*ddrrx.at(2)+ddrrx.at(3)*ddrrx.at(3));
+	ddmrry=sqrt(ddrry.at(1)*ddrry.at(1)+ddrry.at(2)*ddrry.at(2)+ddrry.at(3)*ddrry.at(3));
+	ddmrrz=sqrt(ddrrz.at(1)*ddrrz.at(1)+ddrrz.at(2)*ddrrz.at(2)+ddrrz.at(3)*ddrrz.at(3));
       
-	ddmlx=sqrt(ddlx[1]*ddlx[1]+ddlx[2]*ddlx[2]+ddlx[2]*ddlx[2]);
-	ddmly=sqrt(ddly[1]*ddly[1]+ddly[2]*ddly[2]+ddly[2]*ddly[2]);
-	ddmlz=sqrt(ddlz[1]*ddlz[1]+ddlz[2]*ddlz[2]+ddlz[2]*ddlz[2]);
+	ddmlx=sqrt(ddlx.at(1)*ddlx.at(1)+ddlx.at(2)*ddlx.at(2)+ddlx.at(3)*ddlx.at(3));
+	ddmly=sqrt(ddly.at(1)*ddly.at(1)+ddly.at(2)*ddly.at(2)+ddly.at(3)*ddly.at(3));
+	ddmlz=sqrt(ddlz.at(1)*ddlz.at(1)+ddlz.at(2)*ddlz.at(2)+ddlz.at(3)*ddlz.at(3));
       
-	ddmllx=sqrt(ddllx[1]*ddllx[1]+ddllx[2]*ddllx[2]+ddllx[2]*ddllx[2]);
-	ddmlly=sqrt(ddlly[1]*ddlly[1]+ddlly[2]*ddlly[2]+ddlly[2]*ddlly[2]);
-	ddmllz=sqrt(ddllz[1]*ddllz[1]+ddllz[2]*ddllz[2]+ddllz[2]*ddllz[2]);
+	ddmllx=sqrt(ddllx.at(1)*ddllx.at(1)+ddllx.at(2)*ddllx.at(2)+ddllx.at(3)*ddllx.at(3));
+	ddmlly=sqrt(ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2)+ddlly.at(3)*ddlly.at(3));
+	ddmllz=sqrt(ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2)+ddllz.at(3)*ddllz.at(3));
+
+//	double h=Gethijab(i,j,l,lp,&ddrx,6,6);
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
 	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
-	      fx[i]=fx[i]-2*(-Gethijab(i,j,l,lp,ddrrx,6,6)+8*Gethijab(i,j,l,lp,ddrx,6,6)-8*Gethijab(i,j,l,lp,ddlx,6,6)+Gethijab(i,j,l,lp,ddllx,6,6))/(12*h)
-		*c[l*dim+n]*c[lp*dim+n];
-	      fy[i]=fy[i]-2*(-Gethijab(i,j,l,lp,ddrry,6,6)+8*Gethijab(i,j,l,lp,ddry,6,6)-8*Gethijab(i,j,l,lp,ddly,6,6)+Gethijab(i,j,l,lp,ddlly,6,6))/(12*h)
-		*c[l*dim+n]*c[lp*dim+n];
-	      fz[i]=fz[i]-2*(-Gethijab(i,j,l,lp,ddrrz,6,6)+8*Gethijab(i,j,l,lp,ddrz,6,6)-8*Gethijab(i,j,l,lp,ddlz,6,6)+Gethijab(i,j,l,lp,ddllz,6,6))/(12*h)
-		*c[l*dim+n]*c[lp*dim+n];
+	      (*fx).at(i)=(*fx).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrx,6,6)+8*Gethijab(i,j,l,lp,&ddrx,6,6)-8*Gethijab(i,j,l,lp,&ddlx,6,6)+Gethijab(i,j,l,lp,&ddllx,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+	      (*fy).at(i)=(*fy).at(i)-2*(-Gethijab(i,j,l,lp,&ddrry,6,6)+8*Gethijab(i,j,l,lp,&ddry,6,6)-8*Gethijab(i,j,l,lp,&ddly,6,6)+Gethijab(i,j,l,lp,&ddlly,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+	      (*fz).at(i)=(*fz).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrz,6,6)+8*Gethijab(i,j,l,lp,&ddrz,6,6)-8*Gethijab(i,j,l,lp,&ddlz,6,6)+Gethijab(i,j,l,lp,&ddllz,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
 	    }
 	  }
 	}
 
 	sumphinn=0;
 
-	for(m=0;m<nnear[inear[i*dim+j]];m++){
-	    dd[1]=abs(x[inear[i*dim+j]]-x[inear[inear[i*dim+j]*dim+m]]); /*Definition of vector distances*/
-	    dd[2]=abs(y[inear[i*dim+j]]-y[inear[inear[i*dim+j]*dim+m]]);
-	    dd[3]=abs(z[inear[i*dim+j]]-z[inear[inear[i*dim+j]*dim+m]]);
+	for(m=0;m<(*nnear).at((*inear).at(i*dim+j));m++){
+	  dd.at(1)=abs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
+	  dd.at(2)=abs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(3)=abs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
 		    
-	    ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
+	    ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
 	    
 	    sumphinn=sumphinn+o(ddm);
 	}
 	      /*calculation of repuslve forces*/
-	fx[i]=fx[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
-	fy[i]=fy[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
-	fz[i]=fz[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
+	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
+	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
+	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
 	
 	
       }
     }
   }
 
-  return 0;
+//  return 0;
 
 }
 
-void near_neigh(int N, double *x, double *y, double *z, double rc, int *nnear, int *inear, double sx, double sy, double sz)
+void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz)
 {  //determine the nearest neighbours for each atom
 	double dx,dy,dz,dist;
-	for (int i=0; i<N; i++) { nnear[i]=0; }
+	for (int i=0; i<N; i++) {(*nnear).at(i)=0;}// nnear[i]=0; }
 	for (int i=0; i<N; i++)
 	{
 		for (int j=0; j<N; j++)
 		{
-			dx=x[i]-x[j];
+			dx=(*x).at(i)-(*x).at(j);
+			dy=(*y).at(i)-(*y).at(j);
+			dz=(*z).at(i)-(*z).at(j);
+			//dx=x[i]-x[j];
 			dx=dx-sx*round(dx/sx);//if dx>sx, the distance to N.N. is dx-sx
-			dy=y[i]-y[j];
+//			std::cout << "check that new dx isn't zero, dx= " << dx << std::endl;
+			//dy=y[i]-y[j];
 			dy=dy-sy*round(dy/sy);
-			dz=z[i]-z[j];
+			//dz=z[i]-z[j];
 			dz=dz-sz*round(dz/sz);
 			dist=sqrt(dx*dx+dy*dy+dz*dz);
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
-				nnear[i]=nnear[i]+1;
-				inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
+			std::cout << "i and j are " << i << " " << j << std::endl;
+			(*nnear).at(i)++;
+			std::cout << "nnear at i is " << (*nnear).at(i) << std::endl;
+			(*inear).at(i*N+(*nnear).at(i))=j;
+			std::cout << "inear at " << i*N+(*nnear).at(i) << " is " << (*inear).at(i*N+(*nnear).at(i)) << " should be " << j << std::endl;
+			//	nnear[i]=nnear[i]+1;
+			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}
-}
+	std::cout << "all of inear is" << std::endl;
+	for(int i=0;i<4;i++){std::cout << (*inear).at(i) << std::endl;}
 
-void velocity(int N, double *mass, double *vx, double *vy, double *vz, double T)
+}	//ends near_neigh
+
+void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T)
 {  //calculate velocities
-	double c, ke, m=mass[1],boltz=1/11603;//1.38*pow(10,-23); //for now, each mass is the same
+	double c, ke, m=(*mass).at(1),boltz=1/11603;//1.38*pow(10,-23); //for now, each mass is the same
 	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg,Tp;
 	double g=sqrt(3*boltz*T/m);
 	for (int i=0; i<N; i++)
 	{
 	  
 	  srand (1);
-		vx[i]=0; vy[i]=0; vz[i]=0;
+	  (*vx).at(i)=0; (*vy).at(i)=0; (*vz).at(i)=0;
+	  (*vx).at(i)=c*(2*rand()-1);
+	  (*vy).at(i)=c*(2*rand()-1);
+	  (*vz).at(i)=c*(2*rand()-1);
+	  vxtot=vxtot+(*vx).at(i);
+	  vytot=vytot+(*vy).at(i);
+//		vx[i]=0; vy[i]=0; vz[i]=0;
 //		c[i]=sqrt(3*boltz*T/m[i])
 //		vx[i]=c[i]*(2*rand(0)-1); //random number generator required
 //		vy[i]=c[i]*(2*rand(0)-1);
 //		vz[i]=c[i]*(2*rand(0)-1);
-		vx[i]=c*(2*rand()-1);
-		vy[i]=c*(2*rand()-1);
-		vz[i]=c*(2*rand()-1);
-		vxtot=vxtot+vx[i];
-		vytot=vytot+vy[i];
-		vztot=vztot+vz[i];
+//		vx[i]=c*(2*rand()-1);
+//		vy[i]=c*(2*rand()-1);
+//		vz[i]=c*(2*rand()-1);
+//		vxtot=vxtot+vx[i];
+//		vytot=vytot+vy[i];
+//		vztot=vztot+vz[i];
 	}
 	vxavg=vxtot/N;
 	vyavg=vytot/N;
@@ -278,20 +319,30 @@ void velocity(int N, double *mass, double *vx, double *vy, double *vz, double T)
 
 	for (int i=0; i<N; i++)
 	{
-		vx[i]=vx[i]-vxavg;
-		vy[i]=vy[i]-vyavg;
-		vz[i]=vz[i]-vzavg;
-		msvx=msvx+vx[i]*vx[i];//mean square velocity
-		msvy=msvy+vy[i]*vy[i];
-		msvz=msvz+vz[i]*vz[i];
+		(*vx).at(i)=(*vx).at(i)-vxavg;
+		(*vy).at(i)=(*vy).at(i)-vyavg;
+		(*vz).at(i)=(*vz).at(i)-vzavg;
+		msvx=msvx+(*vx).at(i)*(*vx).at(i);
+		msvy=msvy+(*vy).at(i)*(*vy).at(i);
+		msvz=msvz+(*vz).at(i)*(*vz).at(i);
+//		vx[i]=vx[i]-vxavg;
+//		vy[i]=vy[i]-vyavg;
+//		vz[i]=vz[i]-vzavg;
+//		msvx=msvx+vx[i]*vx[i];//mean square velocity
+//		msvy=msvy+vy[i]*vy[i];
+//		msvz=msvz+vz[i]*vz[i];
 	}
 	ke=0.5*m*(msvx+msvy+msvz); //must be adapted for different masses
 	Tp=2*ke/(3*boltz);
 	for(int i=0; i<N; i++)
 	{
-		vx[i]=vx[i]*sqrt(T/Tp);
-		vy[i]=vy[i]*sqrt(T/Tp);
-		vz[i]=vz[i]*sqrt(T/Tp);
+		(*vx).at(i)=(*vx).at(i)*sqrt(T/Tp);
+		(*vy).at(i)=(*vy).at(i)*sqrt(T/Tp);
+		(*vz).at(i)=(*vz).at(i)*sqrt(T/Tp);
+
+//		vx[i]=vx[i]*sqrt(T/Tp);
+//		vy[i]=vy[i]*sqrt(T/Tp);
+//		vz[i]=vz[i]*sqrt(T/Tp);
 	}
 }
 
