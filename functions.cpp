@@ -1,10 +1,8 @@
 #include <cmath>
 #include <iostream>
-#include <iomanip>
+#include <vector>
 
-using namespace std;
-
-void hello() {cout <<"hello world"<<endl;}
+void hello() {std::cout <<"hello world"<<std::endl;}
 
 double ts (double r){
   double c0=6.7392620074314*pow(10,-3);
@@ -27,7 +25,7 @@ double to (double r){
   return to;
 }
 
-double s (double r){
+double s (double r,int type1, int type2){
   double r0=1.536329; //nearest-neighbour atomic separation
   double n=2;
   double nc=6.5;
@@ -35,12 +33,16 @@ double s (double r){
   double r1=2.45;
   double S;
   //constants 
-
-  if (r<r1){
-    S=pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)));
+  if(type1==6 &&type2==6){
+    if (r<r1){
+      S=pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)));
+    }
+    else{
+      S=ts(r);
+    }
   }
   else{
-    S=ts(r);
+    return 0;
   }
   return S;
 }
@@ -74,3 +76,44 @@ double f0(double x){
   return f0;
 }
 
+double d_f0(double x){
+  double c1=0.5721151498619;
+  double c2=-1.7896349903996*pow(10,-3);
+  double c3=2.3539221516757*pow(10,-5);
+  double c4=-1.24251169551587*pow(10,-7);
+
+  double f0=pow(x,3)*c4*4+pow(x,2)*c3*3+pow(x,1)*c2*2+c1;
+  return f0;
+}
+
+double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz, int i ){
+  double r;
+  double x=0;
+  int N=rx.size();
+  for (int j=0;j<N;j++){
+    if(i!=j){
+      r=sqrt(pow((rx[i]-rx[j]),2)+pow((ry[i]-ry[j]),2)+pow((rz[i]-rz[j]),2));
+      x=x+o(r);
+    };
+  };
+  return x;
+};
+
+double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz){
+  int N=rx.size();
+  double x;
+  double total;
+  for(int i;i<N;i++){
+    x=X(type,rx,ry,rz,i);
+    total=total+f0(x);
+  }
+
+}
+
+void test (std::vector<double> &wektor){
+  int N=wektor.size();
+  for (int i=0;i<N;i++){
+    std::cout<<wektor[i]<<std::endl;
+  }
+
+}
