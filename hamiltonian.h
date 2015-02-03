@@ -3,13 +3,13 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include "Gethijab.h"
-#include "S.h"
+#include "functions2.h"
 
 // Need to make number of orbitals (currently m=4) a variable since needs to account for total number of electrons
 // WE DON'T Consider systems with odd numbers of electrons
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz
-void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz){
+double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz){
   int i, j, a, b;                                         // i,j loop over atoms; a,b loop over orbitals
   double d[3], r;                                         // 3d array of atom pair's connecting vector (varys within ij loop)
   double rx, ry, rz;
@@ -33,7 +33,7 @@ void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::
       d[2]  = rz;
       r     = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));     // Length |r[i] - r[j]|
       if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
-      else {sr    = S(r, typei, typej);}                  // Scaling parameter
+      else {sr    = s(r, typei, typej);}                  // Scaling parameter
       for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 	for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
@@ -73,5 +73,7 @@ void Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::
     std::cout << "\nFor eigenvalue " << eigvals(i,0) << ":\n" << std::endl;    
     std::cout << ces.eigenvectors().col(i) << std::endl;
     }*/
+
+  return Ebs;
 
 }
