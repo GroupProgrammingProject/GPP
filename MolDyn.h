@@ -9,15 +9,47 @@
 #include <stdlib.h>
 #include <cstdlib> 
 #include <stdio.h>
+#include "functions.h"
+#include "Gethijab.h"
+
+int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, double *c,double sx,double sy,double sz,int nnmax);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
+just define an array of dim 1); cut-off radius; verlet radius; initial temperature; timestep; xyz arrays; matrix of eigenvectors (N*N) (vectors as columns);
+cell sizes in xyz (put big numbers if you don't want PBCs) */
+
+int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz);
+
+void velocity(int N, double *mass, double *vx, double *vy, double *vz, double T);
+
+void near_neigh(int N, double *x, double *y, double *z, double rc, int *nnear, int *inear, double sx, double sy, double sz);
+
+
 
 using namespace std;
-
-int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T, double dt, double *x, double *y, double *z, double *nnear, double *inear, double *c)
+//
+int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z,double *c,double sx,double sy,double sz,int nnmax)
 {
 	//Implement Velocity Verlet algorithm
-	double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=m[1],*fxn,*fyn,*fzn,kin;
-	double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
-	near_neigh(N,*x,*y,*z,rc,*nnear,*inear,sx,sy,sz); 
+  double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
+  int *nnear,*inear;
+  double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
+  fx= new double [N];
+	fy=new double [N];
+	fz=new double [N];
+	vx=new double [N];
+	vy=new double [N];
+	vz=new double [N];
+	xold=new double [N];
+	yold=new double [N];
+	zold=new double [N];
+	fxn=new double [N];
+	fyn=new double [N];
+	fzn=new double [N];
+	vxm=new double [N];
+	vym=new double [N];
+	vzm=new double [N];
+	nnear=new int [N];
+	inear=new int [N*nnmax];
+	near_neigh(N,x,y,z,rc,nnear,inear,sx,sy,sz); 
 	for(int i=0; i<N; i++)
 	{
 		xold[i]=x[i];
@@ -25,7 +57,7 @@ int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T,
 		zold[i]=z[i];
 	}
 	forces(N,norbs,x,y,z,c,rc,nnear,inear,fx,fy,fz); //calculate the forces
-	velocity(N,*m,*vx,*vy,*vz,T,*vxm,*vym,*vzm);
+	velocity(N,mass,vx,vy,vz,T);
 	
 	for(int imd=1; imd<=nmd; imd++) //cycle through nmd steps
 	{
@@ -49,25 +81,25 @@ int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T,
 			near_neigh(N,x,y,z,rc,nnear,inear,sx,sy,sz);
 			for(int i=0; i<N; i++)
 			{
-				xold(i)=x(i);
-				yold(i)=y(i);
-				zold(i)=z(i);
+				xold[i]=x[i];
+				yold[i]=y[i];
+				zold[i]=z[i];
 			}
 			forces(N,norbs,x,y,z,c,rc,nnear,inear,fx,fy,fz);//recalculate forces
 			for(int i=0; i<N; i++)//calculate new velocities
 			{
-				vx(i)=vx(i)+dt*(fx(i)+fxn(i))/(2*m);
-				vy(i)=vy(i)+dt*(fy(i)+fyn(i))/(2*m);
-				vz(i)=vz(i)+dt*(fz(i)+fzn(i))/(2*m);
-				fx(i)=fxn(i);
-				fy(i)=fyn(i);
-				fz(i)=fzn(i);
+				vx[i]=vx[i]+dt*(fx[i]+fxn[i])/(2*m);
+				vy[i]=vy[i]+dt*(fy[i]+fyn[i])/(2*m);
+				vz[i]=vz[i]+dt*(fz[i]+fzn[i])/(2*m);
+				fx[i]=fxn[i];
+				fy[i]=fyn[i];
+				fz[i]=fzn[i];
 			}
 			for(int i=0; i<N; i++)//mean square velocities
 			{
-				svxm=svxm+vx(i)*vx(i);
-				svym=svym+vy(i)*vy(i);
-				svzm=svzm+vz(i)*vz(i);
+				svxm=svxm+vx[i]*vx[i];
+				svym=svym+vy[i]*vy[i];
+				svzm=svzm+vz[i]*vz[i];
 			}
 			kin=0,5*m*(svxm+svym+svzm); //kinetic energy
 			Tf=2*kin/(3*boltz*N); //final temperature
@@ -78,16 +110,16 @@ int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T,
 /*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
 nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-th nn to i-th atom (matrix); fx,fy,fz forces on each atom (arrays);
 maxnn=max number of nn */
-int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz,int maxnn)
+int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz)
 { int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
   double dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000,sumphinn,sumphi;
 
   
-  for(i=0;i<dim:i++){ /*initialisation of forces*/
+  for(i=0;i<dim;i++){ /*initialisation of forces*/
     fx[i]=0;
     fy[i]=0;
     fz[i]=0;
-    sumphinn[i]=0;
+    sumphinn=0;
   }
 
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
@@ -170,7 +202,7 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,i
 	  }
 	}
 
-	sumphinn=0
+	sumphinn=0;
 
 	for(m=0;m<nnear[inear[i*dim+j]];m++){
 	    dd[1]=abs(x[inear[i*dim+j]]-x[inear[inear[i*dim+j]*dim+m]]); /*Definition of vector distances*/
@@ -182,9 +214,9 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,i
 	    sumphinn=sumphinn+o(ddm);
 	}
 	      /*calculation of repuslve forces*/
-	fx[i]=fx[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddlmx)+o(ddmllx))/(12*h);
-	fy[i]=fy[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddlmy)+o(ddmlly))/(12*h);
-	fz[i]=fz[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddlmz)+o(ddmllz))/(12*h);
+	fx[i]=fx[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
+	fy[i]=fy[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
+	fz[i]=fz[i]-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
 	
 	
       }
@@ -193,7 +225,9 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,i
 
   return 0;
 
-void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear, double *inear, double sx, double sy, double sz)
+}
+
+void near_neigh(int N, double *x, double *y, double *z, double rc, int *nnear, int *inear, double sx, double sy, double sz)
 {  //determine the nearest neighbours for each atom
 	double dx,dy,dz,dist;
 	for (int i=0; i<N; i++) { nnear[i]=0; }
@@ -211,27 +245,29 @@ void near_neigh(int N, double *x, double *y, double *z, double rc, double *nnear
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 				nnear[i]=nnear[i]+1;
-				inear[i][nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
+				inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}
 }
 
-void velocity(int N, double *m, double *vx, double *vy, double *vz, double T, double Tp, double *vxm, double *vym, double *vzm)
+void velocity(int N, double *mass, double *vx, double *vy, double *vz, double T)
 {  //calculate velocities
-	double *c, ke, m=m[1],boltz=1.38*pow(10,-23); //for now, each mass is the same
-	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg;
+	double c, ke, m=mass[1],boltz=1/11603;//1.38*pow(10,-23); //for now, each mass is the same
+	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg,Tp;
 	double g=sqrt(3*boltz*T/m);
 	for (int i=0; i<N; i++)
 	{
+	  
+	  srand (1);
 		vx[i]=0; vy[i]=0; vz[i]=0;
 //		c[i]=sqrt(3*boltz*T/m[i])
 //		vx[i]=c[i]*(2*rand(0)-1); //random number generator required
 //		vy[i]=c[i]*(2*rand(0)-1);
 //		vz[i]=c[i]*(2*rand(0)-1);
-	   vx[i]=c*(2*rand(0)-1);
-		vy[i]=c*(2*rand(0)-1);
-		vz[i]=c*(2*rand(0)-1);
+		vx[i]=c*(2*rand()-1);
+		vy[i]=c*(2*rand()-1);
+		vz[i]=c*(2*rand()-1);
 		vxtot=vxtot+vx[i];
 		vytot=vytot+vy[i];
 		vztot=vztot+vz[i];

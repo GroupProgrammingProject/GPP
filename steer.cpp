@@ -16,18 +16,16 @@ int main(int argc, char* argv[]){
 	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
 	// Number of atoms
 	int n=type.size();
-	// Create empty arrays needed for MD
+	// Create empty eigenvector array needed for MD
 	std::vector<double> eigvects(16*n*n);
 	// Energies from TB model
 	double ebs,erep,etot;
 
-	// Starting TB	module: calculating energies
+	// Starting TB	module: calculating energies and eigenvectors
 	ebs=Hamiltonian(n,&type,&posx,&posy,&posz,&eigvects);
-	//H_MD and eigvects have now also been populated
 	erep=Erep(type,posx,posy,posz);
 // Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
 	
-
 return 0;
 }
