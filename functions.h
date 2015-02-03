@@ -1,9 +1,12 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <cmath>
 #include <iostream>
 #include <vector>
+//scaling functions, notations as in the paper 
 
-void hello() {std::cout <<"hello world"<<std::endl;}
-
+//tail function for s(r)
 double ts (double r){
   double c0=6.7392620074314*pow(10,-3);
   double c1=-8.1885359517898*pow(10,-2);
@@ -14,6 +17,8 @@ double ts (double r){
   double ts=pow((r-r1),3)*c3+pow((r-r1),2)*c2+(r-r1)*c1+c0;
   return ts;
 }
+
+//tail function for phi(r)
 double to (double r){
   double c0=2.2504290109*pow(10,-8);
   double c1=-1.4408640561*pow(10,-6);
@@ -24,7 +29,8 @@ double to (double r){
   double to=pow((r-d1),3)*c3+pow((r-d1),2)*c2+(r-d1)*c1+c0;
   return to;
 }
-
+ 
+//function s(r), including the tail and the atom types
 double s (double r,int type1, int type2){
   double r0=1.536329; //nearest-neighbour atomic separation
   double n=2;
@@ -33,20 +39,22 @@ double s (double r,int type1, int type2){
   double r1=2.45;
   double S;
   //constants 
-  if(type1==6 &&type2==6){
+   if(type1==6 &&type2==6){
     if (r<r1){
       S=pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)));
     }
     else{
       S=ts(r);
     }
-  }
-  else{
+    }
+ 
+   else{
     return 0;
   }
   return S;
 }
 
+//phi(r) functions including the til function
 double o (double r){
   double o0=8.18555;
   double m=3.30304;
@@ -65,6 +73,7 @@ double o (double r){
   return O;
 }
 
+//f polynomial needed for repulsive energy
 double f0(double x){
   double c0=-2.5909765118191;
   double c1=0.5721151498619;
@@ -76,6 +85,7 @@ double f0(double x){
   return f0;
 }
 
+//derevative of f polynomial needed for MD
 double d_f0(double x){
   double c1=0.5721151498619;
   double c2=-1.7896349903996*pow(10,-3);
@@ -86,6 +96,7 @@ double d_f0(double x){
   return f0;
 }
 
+//X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
 double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz, int i ){
   double r;
   double x=0;
@@ -99,21 +110,16 @@ double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &
   return x;
 };
 
+//total repulsive energy - sum over all atoms of f(X_i)
 double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz){
   int N=rx.size();
   double x;
   double total;
-  for(int i;i<N;i++){
+  for(int i=0;i<N;i++){
     x=X(type,rx,ry,rz,i);
     total=total+f0(x);
   }
-
+  return total;
 }
 
-void test (std::vector<double> &wektor){
-  int N=wektor.size();
-  for (int i=0;i<N;i++){
-    std::cout<<wektor[i]<<std::endl;
-  }
-
-}
+#endif
