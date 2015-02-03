@@ -1,3 +1,6 @@
+#ifndef GETHIJAB_H
+#define GETHIJAB_H
+
 #include <iostream>
 #include <cmath>
 
@@ -37,6 +40,4 @@ else{h=d[a-1]*d[b-1]*(V[2]-V[3]);}										//pp_sigma and pp_pi off-diagonal
 return h;
 } //Gethijab() ends
 
-	
-
-	
+#endif	

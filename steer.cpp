@@ -7,23 +7,31 @@
 #include "vectorfunctions.h"
 #include "hamiltonian.h"
 #include "functions.h"
-#include "Gethijab.h"
-#include "MolDyn.h"
+//#include "MolDyn.h"
 
 int main(int argc, char* argv[]){
 	// Read in types, 
-	std::vector<int> types;
-	std::vector<double> X, Y, Z;
-	std::vector<int>* typeptr = &types;
-	std::vector<double>* Xptr = &X;
-	std::vector<double>* Yptr = &Y;
-	std::vector<double>* Zptr = &Z;
+	std::vector<int> type;
+	std::vector<double> posx, posy, posz;
+	std::vector<int>* typeptr = &type;
+	std::vector<double>* Xptr = &posx;
+	std::vector<double>* Yptr = &posy;
+	std::vector<double>* Zptr = &posz;
 	ReadInXYZ (argv[1], typeptr, Xptr, Yptr, Zptr);
 // Debug output
-Print (typeptr);
+/*Print (typeptr);
 Print (Xptr);
 Print (Yptr);
 Print (Zptr);
+*/
+	double ebs;
+	// Number of atoms
+	int n=type.size();
+	Matrix Hamiltonian;
+	Matrix* Hamiltonianptr=&Hamiltonian;
+
+	ebs=Hamiltonian(n,typeptr,Xptr,Yptr,Zptr);
+	std::cout << "Ebs=" << ebs << " eV" << std::endl;
 	
 return 0;
 }

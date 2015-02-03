@@ -1,3 +1,6 @@
+#ifndef HAMILTONIAN_H
+#define HAMILTONIAN_H
+
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
@@ -78,3 +81,5 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
     }*/
   return Ebs;
 }
+
+#endif
