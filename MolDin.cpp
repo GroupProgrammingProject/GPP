@@ -178,9 +178,9 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,i
 	    sumphinn=sumphinn+o(ddm);
 	}
 	      /*calculation of repuslve forces*/
-	fx[i]=fx[i]+(d_f(sum)+d_f(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddlmx)+o(ddmllx))/(12*h);
-	fy[i]=fy[i]+(d_f(sum)+d_f(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddlmy)+o(ddmlly))/(12*h);
-	fz[i]=fz[i]+(d_f(sum)+d_f(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddlmz)+o(ddmllz))/(12*h);
+	fx[i]=fx[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddlmx)+o(ddmllx))/(12*h);
+	fy[i]=fy[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddlmy)+o(ddmlly))/(12*h);
+	fz[i]=fz[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddlmz)+o(ddmllz))/(12*h);
 	
 	
       }
