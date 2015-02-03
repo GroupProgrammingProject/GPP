@@ -1,3 +1,6 @@
+#ifndef VECTORFUNCTIONS_H
+#define VECTORFUNCTIONS_H
+
 // Some vector functions not included in the std::vector library
 #include <iostream>
 #include <fstream>
@@ -22,4 +25,4 @@ template <typename T> void Print(std::vector<T>* vect, const char* filename){
 	}
 } 
 
-
+#endif

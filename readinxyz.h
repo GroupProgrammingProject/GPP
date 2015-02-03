@@ -1,3 +1,6 @@
+#ifndef READINXYZ_H
+#define READINXYZ_H
+
 // Read in from xyz file 
 #include <iostream>
 #include <fstream>
@@ -36,3 +39,4 @@ void ReadInXYZ(char* filename, std::vector<int>* atomtypes, std::vector<double>*
 		zvect->push_back(z);
 	}
 }
+#endif
