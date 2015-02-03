@@ -75,26 +75,42 @@ int verlet(int N, int nmd, int norbs, double *m, double rc, double rv, double T,
 	}
 }
 
+/*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
+nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-th nn to i-th atom (matrix); fx,fy,fz forces on each atom (arrays);
+maxnn=max number of nn */
+int forces(int dim,int norbs,double *x,double *y,double *z,double *c,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz,int maxnn)
+{ int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
+  double dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000,sumphinn,sumphi;
 
-int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz)
-{ int k,i,j,l,lp,n; /* dummy indeces for cycles*/
-  double sumphi[dim],dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000;
   
   for(i=0;i<dim:i++){ /*initialisation of forces*/
     fx[i]=0;
     fy[i]=0;
     fz[i]=0;
-    sumphi[i]=0;
+    sumphinn[i]=0;
   }
-  for(i=0;i<dim;i++){
-    for(j=0;j<nnear[i];j++){
-      if(j!=i){
-	dd[1]=abs(x[i]-x[j]); /*Definition of vector distances*/
-	dd[2]=abs(y[i]-y[j]);
-	dd[3]=abs(z[i]-z[j]);
+
+  for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
+    sumphi=0;
+    	for(k=0;k<nnear[i];k++){
+	dd[1]=abs(x[i]-x[inear[i*dim+k]]); /*Definition of vector distances*/
+	dd[2]=abs(y[i]-y[inear[i*dim+k]]);
+	dd[3]=abs(z[i]-z[inear[i*dim+k]]);
+
+	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
 	
-	for(k=0;k<3;k++){
-	  ddrx[k]=dd[k]; /*Initialisation vector dinstances to perform derivatives */
+	sumphi=sumphi+o(ddm);
+	}
+    for(j=0;j<nnear[i];j++){ /*Cycle spanning the nearest neighbours of i*/
+      if(j!=i){ /*Check to avoid self interaction (redundant, but saves operations)*/
+	dd[1]=abs(x[i]-x[inear[i*dim+j]]); /*Definition of vector distances*/
+	dd[2]=abs(y[i]-y[inear[i*dim+j]]);
+	dd[3]=abs(z[i]-z[inear[i*dim+j]]);
+
+	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
+	
+	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
+	  ddrx[k]=dd[k]; 
 	  ddrrx[k]=dd[k];
 	  ddlx[k]=dd[k];
 	  ddllx[k]=dd[k];
@@ -110,9 +126,7 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,i
 	  ddllz[k]=dd[k];
 	}
 	
-	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
-	
-	ddrx[1]=abs(x[i]+h-x[j]); 
+	ddrx[1]=abs(x[i]+h-x[j]);  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
 	ddrrx[1]=abs(x[i]+2*h-x[j]);
 	ddlx[1]=abs(x[i]-h-x[j]);
 	ddllx[1]=abs(x[i]-2*h-x[j]);
@@ -142,25 +156,37 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,i
 	ddmllx=sqrt(ddllx[1]*ddllx[1]+ddllx[2]*ddllx[2]+ddllx[2]*ddllx[2]);
 	ddmlly=sqrt(ddlly[1]*ddlly[1]+ddlly[2]*ddlly[2]+ddlly[2]*ddlly[2]);
 	ddmllz=sqrt(ddllz[1]*ddllz[1]+ddllz[2]*ddllz[2]+ddllz[2]*ddllz[2]);
-     
-	sumphi=sumphi+o(ddm);
-	dsumphix=dsumphix+(-o(ddrrx)+8*o(ddrx)-8*o(ddlx)+o(ddllx))/(12*h);
-	dsumphiy=dsumphiy+(-o(ddrry)+8*o(ddry)-8*o(ddly)+o(ddlly))/(12*h);
-	dsumphix=dsumphix+(-o(ddrrz)+8*o(ddrz)-8*o(ddlz)+o(ddllz))/(12*h);
 
-	for(l=0;l<norbs;l++){
-	  for(lp=0;l<norbs;l++){
-	    for(n=0;n<dim;n++){ /*Calculation of band structure forces*/
+	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
+	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
+	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
 	      fx[i]=fx[i]-2*(-Gethijab(i,j,l,lp,ddrrx,6,6)+8*Gethijab(i,j,l,lp,ddrx,6,6)-8*Gethijab(i,j,l,lp,ddlx,6,6)+Gethijab(i,j,l,lp,ddllx,6,6))/(12*h)
-		*c[l][n]*c[lp][n];
+		*c[l*dim+n]*c[lp*dim+n];
 	      fy[i]=fy[i]-2*(-Gethijab(i,j,l,lp,ddrry,6,6)+8*Gethijab(i,j,l,lp,ddry,6,6)-8*Gethijab(i,j,l,lp,ddly,6,6)+Gethijab(i,j,l,lp,ddlly,6,6))/(12*h)
-		*c[l][n]*c[lp][n];
+		*c[l*dim+n]*c[lp*dim+n];
 	      fz[i]=fz[i]-2*(-Gethijab(i,j,l,lp,ddrrz,6,6)+8*Gethijab(i,j,l,lp,ddrz,6,6)-8*Gethijab(i,j,l,lp,ddlz,6,6)+Gethijab(i,j,l,lp,ddllz,6,6))/(12*h)
-		*c[l][n]*c[lp][n];
+		*c[l*dim+n]*c[lp*dim+n];
 	    }
 	  }
 	}
-	/* Repulsive forces are missing*/
+
+	sumphinn=0
+
+	for(m=0;m<nnear[inear[i*dim+j]];m++){
+	    dd[1]=abs(x[inear[i*dim+j]]-x[inear[inear[i*dim+j]*dim+m]]); /*Definition of vector distances*/
+	    dd[2]=abs(y[inear[i*dim+j]]-y[inear[inear[i*dim+j]*dim+m]]);
+	    dd[3]=abs(z[inear[i*dim+j]]-z[inear[inear[i*dim+j]*dim+m]]);
+		    
+	    ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
+	    
+	    sumphinn=sumphinn+o(ddm);
+	}
+	      /*calculation of repuslve forces*/
+	fx[i]=fx[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddlmx)+o(ddmllx))/(12*h);
+	fy[i]=fy[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddlmy)+o(ddmlly))/(12*h);
+	fz[i]=fz[i]-(d_f(sum)+d_f(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddlmz)+o(ddmllz))/(12*h);
+	
+	
       }
     }
   }
