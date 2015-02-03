@@ -10,6 +10,7 @@
 #include <cstdlib> 
 #include <stdio.h>
 #include "functions.h"
+#include "Gethijab.h"
 
 int verlet(int N, int nmd, int norbs, double *mass, double rc, double rv, double T, double dt, double *x, double *y, double *z, int *nnear, int *inear, double *c,double sx,double sy,double sz);
 
