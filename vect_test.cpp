@@ -2,12 +2,14 @@
 #include <vector>
 #include <cmath>
 #include "hamiltonian.h"
+#include "functions.h"
 
 int main() {
   std::vector<int> type(2);
   std::vector<double> posx(2);
   std::vector<double> posy(2);
   std::vector<double> posz(2);
+  typedef Eigen::Matrix<std::complex<double>, Eigen::Dynamic, 1> VectorXd;
   int n = 2;
   type.at(0) = 6;
   type.at(1) = 6;
@@ -18,7 +20,13 @@ int main() {
   posz.at(0) = 0.0000;
   posz.at(1) = 0.0000;
 
-  Hamiltonian(n, &type, &posx, &posy, &posz);
+  double Ebs=Hamiltonian(n, &type, &posx, &posy, &posz);
+  double Erep=Erep(type,posx,posy,posz);
+  double Etot=Ebs+Erep;
+  
+  std::cout << "Ebs = " << Ebs << " eV" << std::endl;
+  std::cout << "Erep = " << Erep << " eV" << std::endl;
+  std::cout << "Etot = " << Etot << " eV" << std::endl;
 
   return 0;
 }

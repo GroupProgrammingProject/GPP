@@ -35,7 +35,7 @@ else{h=d[a-1]*d[b-1]*(V[2]-V[3]);}										//pp_sigma and pp_pi off-diagonal
 //V&G routine ends
 
 return h;
-} //get_hijab() ends
+} //Gethijab() ends
 
 	
 
