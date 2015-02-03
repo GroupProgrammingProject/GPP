@@ -4,10 +4,12 @@
 #include <iostream>
 #include <cmath>
 
-double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej);
+//double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej);
+double Gethijab(int i, int j,int a, int b, std::vector<double>* d,int typei,int typej);
 
 //Gethijab() returns value of non-scaled Hamiltionian matrix element h
-double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej){
+//double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej){
+double Gethijab(int i, int j,int a, int b, std::vector<double>* d,int typei,int typej){
 
 int k; //for looping
 double h,Es,Ep,V[4];														//h,Es,Ep and V[4] is only used locally in Gethijab()
@@ -30,11 +32,11 @@ if(i==j){
 }
 else if(a*b==0){
 	if(a==b){h=V[0];}														//ss_sigma
-	else if(a==0){h=V[1]*d[b-1];}										//sp_sigma row
-	else if(b==0){h=-V[1]*d[a-1];}										//sp_sigma column
+	else if(a==0){h=V[1]*(*d).at(b-1);}										//sp_sigma row
+	else if(b==0){h=-V[1]*(*d).at(a-1);}										//sp_sigma column
 }
-else if(a==b){h=V[2]*pow(d[a-1],2)+V[3]-V[3]*pow(d[a-1],2);}		//pp_sigma and pp_pi diagonal
-else{h=d[a-1]*d[b-1]*(V[2]-V[3]);}										//pp_sigma and pp_pi off-diagonal
+else if(a==b){h=V[2]*pow((*d).at(a-1),2)+V[3]-V[3]*pow((*d).at(a-1),2);}		//pp_sigma and pp_pi diagonal
+else{h=(*d).at(a-1)*(*d).at(b-1)*(V[2]-V[3]);}										//pp_sigma and pp_pi off-diagonal
 //V&G routine ends
 
 return h;
