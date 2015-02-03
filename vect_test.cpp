@@ -10,7 +10,6 @@ int main() {
   std::vector<double> posy(2);
   std::vector<double> posz(2);
   int i,j,n = 2;
-  std::vector<double> H_MD(16*n*n);
   std::vector<double> eigvects(16*n*n);
 
   type.at(0) = 6;
@@ -22,7 +21,7 @@ int main() {
   posz.at(0) = 0.0000;
   posz.at(1) = 0.0000;
 
-  double ebs = Hamiltonian(n, &type, &posx, &posy, &posz, &H_MD, &eigvects);
+  double ebs = Hamiltonian(n, &type, &posx, &posy, &posz, &eigvects);
   double erep = Erep(type, posx, posy, posz);  
   double etot = ebs + erep;
 
