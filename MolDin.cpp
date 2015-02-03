@@ -7,10 +7,12 @@
 #include <stdio.h>
 
 using namespace std;
-
-int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz)
+/*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
+nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-th nn to i-th atom (matrix); fx,fy,fz forces on each atom (arrays);
+maxnn=max number of nn */
+int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,int *nnear,int *inear,double *fx,double *fy,double *fz,int maxnn)
 { int k,i,j,l,lp,n; /* dummy indeces for cycles*/
-  double sumphi[dim],dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000;
+  double sumphi[dim],dd[3],ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3],drepx,drepy,drepz,h=rc/1000,znn[maxnn];
   
   for(i=0;i<dim:i++){ /*initialisation of forces*/
     fx[i]=0;
@@ -18,15 +20,16 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,i
     fz[i]=0;
     sumphi[i]=0;
   }
-  for(i=0;i<dim;i++){
-    for(j=0;j<nnear[i];j++){
-      if(j!=i){
+
+  for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
+    for(j=0;j<nnear[i];j++){ /*Cycle spanning the nearest neighbours of i*/
+      if(j!=i){ /*Check to avoid self interaction (redundant, but saves operations)*/
 	dd[1]=abs(x[i]-x[j]); /*Definition of vector distances*/
 	dd[2]=abs(y[i]-y[j]);
 	dd[3]=abs(z[i]-z[j]);
 	
-	for(k=0;k<3;k++){
-	  ddrx[k]=dd[k]; /*Initialisation vector dinstances to perform derivatives */
+	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
+	  ddrx[k]=dd[k]; 
 	  ddrrx[k]=dd[k];
 	  ddlx[k]=dd[k];
 	  ddllx[k]=dd[k];
@@ -44,7 +47,7 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,i
 	
 	ddm=sqrt(dd[1]*dd[1]+dd[2]*dd[2]+dd[2]*dd[2]); /*Modulus of distance*/
 	
-	ddrx[1]=abs(x[i]+h-x[j]); 
+	ddrx[1]=abs(x[i]+h-x[j]);  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
 	ddrrx[1]=abs(x[i]+2*h-x[j]);
 	ddlx[1]=abs(x[i]-h-x[j]);
 	ddllx[1]=abs(x[i]-2*h-x[j]);
@@ -80,9 +83,9 @@ int forces(int dim,int norbs,double *x,double *y,double *z,double c*,double rc,i
 	dsumphiy=dsumphiy+(-o(ddrry)+8*o(ddry)-8*o(ddly)+o(ddlly))/(12*h);
 	dsumphix=dsumphix+(-o(ddrrz)+8*o(ddrz)-8*o(ddlz)+o(ddllz))/(12*h);
 
-	for(l=0;l<norbs;l++){
-	  for(lp=0;l<norbs;l++){
-	    for(n=0;n<dim;n++){ /*Calculation of band structure forces*/
+	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
+	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
+	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
 	      fx[i]=fx[i]-2*(-Gethijab(i,j,l,lp,ddrrx,6,6)+8*Gethijab(i,j,l,lp,ddrx,6,6)-8*Gethijab(i,j,l,lp,ddlx,6,6)+Gethijab(i,j,l,lp,ddllx,6,6))/(12*h)
 		*c[l][n]*c[lp][n];
 	      fy[i]=fy[i]-2*(-Gethijab(i,j,l,lp,ddrry,6,6)+8*Gethijab(i,j,l,lp,ddry,6,6)-8*Gethijab(i,j,l,lp,ddly,6,6)+Gethijab(i,j,l,lp,ddlly,6,6))/(12*h)
