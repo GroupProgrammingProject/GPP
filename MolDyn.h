@@ -1,3 +1,7 @@
+#ifndef MOLDYN_H
+#define MOLDYN_H
+
+// Functionality for molecular dynamics
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -606,3 +610,5 @@ void velocity(int N, double *m, double *vx, double *vy, double *vz, double T, do
   	end
 
 */
+
+#endif
