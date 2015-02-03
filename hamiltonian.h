@@ -32,7 +32,7 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
       d[0]=rx; d[1]=ry; d[2]=rz;
       r = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));	       // Length |r[i] - r[j]|
       	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
-      	else {sr    = S(r, typei, typej);}                  // Scaling parameter
+      	else {sr    = s(r, typei, typej);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
@@ -76,5 +76,5 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
     std::cout << "\nFor eigenvalue " << ces.eigenvalues().row(i) << ":\n" << std::endl;    
     std::cout << ces.eigenvectors().col(i) << std::endl;
     }*/
-return Ebs;
+  return Ebs;
 }
