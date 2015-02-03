@@ -9,8 +9,10 @@ int main() {
   std::vector<double> posx(2);
   std::vector<double> posy(2);
   std::vector<double> posz(2);
-  typedef Eigen::Matrix<std::complex<double>, Eigen::Dynamic, 1> VectorXd;
-  int n = 2;
+  int i,j,n = 2;
+  std::vector<double> H_MD(16*n*n);
+  std::vector<double> eigvects(16*n*n);
+
   type.at(0) = 6;
   type.at(1) = 6;
   posx.at(0) = 0.0000;
@@ -20,7 +22,7 @@ int main() {
   posz.at(0) = 0.0000;
   posz.at(1) = 0.0000;
 
-  double ebs = Hamiltonian(n, &type, &posx, &posy, &posz);
+  double ebs = Hamiltonian(n, &type, &posx, &posy, &posz, &H_MD, &eigvects);
   double erep = Erep(type, posx, posy, posz);  
   double etot = ebs + erep;
 
