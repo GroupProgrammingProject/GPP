@@ -1,5 +1,5 @@
-#ifdef functions_h
-#define functions_h
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
 #include <cmath>
 #include <iostream>
@@ -135,3 +135,4 @@ void test (std::vector<double> &wektor){
 
 }
 
+#endif

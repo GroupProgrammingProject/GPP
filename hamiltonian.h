@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include "Gethijab.h"
-#include "functions2.h"
+#include "functions.h"
 
 // Need to make number of orbitals (currently m=4) a variable since needs to account for total number of electrons
 // WE DON'T Consider systems with odd numbers of electrons

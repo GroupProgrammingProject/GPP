@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "hamiltonian.h"
-#include "functions2.h"
+#include "functions.h"
 
 int main() {
   std::vector<int> type(2);
@@ -13,7 +13,7 @@ int main() {
   type.at(0) = 6;
   type.at(1) = 6;
   posx.at(0) = 0.0000;
-  posx.at(1) = 0.5000;
+  posx.at(1) = 1.2400;
   posy.at(0) = 0.0000;
   posy.at(1) = 0.0000;
   posz.at(0) = 0.0000;
