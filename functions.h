@@ -128,13 +128,5 @@ double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double
   return total;
 }
 
-//some test functions, diregard them
-/*void test (std::vector<double> &wektor){
-  int N=wektor.size();
-  for (int i=0;i<N;i++){
-    std::cout<<wektor[i]<<std::endl;
-  }
-
-  }*/
 
 #endif
