@@ -136,35 +136,35 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 { int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
   std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3);
 //   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
-	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/1000,sumphinn,sumphi;
+	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/10000,sumphinn,sumphi;
 
-  
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
     (*fy).at(i)=0;
     (*fz).at(i)=0;
-    sumphinn=0;
   }
 
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
-      dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
-      dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
-      dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
+      dd.at(0)=((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
+      dd.at(1)=((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
+      dd.at(2)=((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
       
-      ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
+      
+      ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
       
       sumphi=sumphi+o(ddm);
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
-      if(j!=i){ /*Check to avoid self interaction (redundant, but saves operations)*/
-	dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
-	dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
-	dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
+      /*Check to avoid self interaction (redundant, but saves operations)*/
+	dd.at(0)=((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
+	dd.at(1)=((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
+	dd.at(2)=((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
+
 	
-	ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
-	
+	ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
+
 	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
 	  ddrx.at(k)=dd.at(k); 
 	  ddrrx.at(k)=dd.at(k);
@@ -182,57 +182,63 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	  ddllz.at(k)=dd.at(k);
 	}
 	
-	ddrx.at(1)=abs((*x).at(i)+h-(*x).at(j));  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
-	ddrrx.at(1)=abs((*x).at(i)+2*h-(*x).at(j));
-	ddlx.at(1)=abs((*x).at(i)-h-(*x).at(j));
-	ddllx.at(1)=abs((*x).at(i)-2*h-(*x).at(j));
+	/*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
+	ddrx.at(0)=ddrx.at(0)+h; 
+	ddrrx.at(0)=ddrrx.at(0)+2*h;
+	ddlx.at(0)=ddlx.at(0)-h;
+	ddllx.at(0)=ddllx.at(0)-2*h;
 
-	ddry.at(2)=abs((*y).at(i)+h-((*y)).at(j));
-	ddrry.at(2)=abs((*y).at(i)+2*h-(*y).at(j));
-	ddly.at(2)=abs((*y).at(i)-h-(*y).at(j));
-	ddlly.at(2)=abs((*y).at(i)-2*h-(*y).at(j));
+	ddry.at(1)=ddry.at(1)+h; 
+	ddrry.at(1)=ddrry.at(1)+2*h;
+	ddly.at(1)=ddly.at(1)-h;
+	ddlly.at(1)=ddlly.at(1)-2*h;
 
-	ddrz.at(3)=abs((*z).at(i)+h-(*z).at(j));
-	ddrrz.at(3)=abs((*z).at(i)+2*h-(*z).at(j));
-	ddlz.at(3)=abs((*z).at(i)-h-(*z).at(j));
-	ddllz.at(3)=abs((*z).at(i)-2*h-(*z).at(j));
+	ddrz.at(2)=ddrz.at(2)+h; 
+	ddrrz.at(2)=ddrrz.at(2)+2*h;
+	ddlz.at(2)=ddlz.at(2)-h;
+	ddllz.at(2)=ddllz.at(2)-2*h;
 
-	ddmrx=sqrt(ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2)+ddrx.at(3)*ddrx.at(3));
-	ddmry=sqrt(ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2)+ddry.at(3)*ddry.at(3));
-	ddmrz=sqrt(ddrx.at(1)*ddrz.at(1)+ddrz.at(2)*ddrz.at(2)+ddrz.at(3)*ddrz.at(3));
+	ddmrx=sqrt(ddrx.at(0)*ddrx.at(0)+ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2));
+	ddmry=sqrt(ddry.at(0)*ddry.at(0)+ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2));
+	ddmrz=sqrt(ddrz.at(0)*ddrz.at(0)+ddrz.at(1)*ddrz.at(1)+ddrz.at(2)*ddrz.at(2));
 
-	ddmrrx=sqrt(ddrrx.at(1)*ddrrx.at(1)+ddrrx.at(2)*ddrrx.at(2)+ddrrx.at(3)*ddrrx.at(3));
-	ddmrry=sqrt(ddrry.at(1)*ddrry.at(1)+ddrry.at(2)*ddrry.at(2)+ddrry.at(3)*ddrry.at(3));
-	ddmrrz=sqrt(ddrrz.at(1)*ddrrz.at(1)+ddrrz.at(2)*ddrrz.at(2)+ddrrz.at(3)*ddrrz.at(3));
+	ddmrrx=sqrt(ddrrx.at(0)*ddrrx.at(0)+ddrrx.at(1)*ddrrx.at(1)+ddrrx.at(2)*ddrrx.at(2));
+	ddmrry=sqrt(ddrry.at(0)*ddrry.at(0)+ddrry.at(1)*ddrry.at(1)+ddrry.at(2)*ddrry.at(2));
+	ddmrrz=sqrt(ddrrz.at(0)*ddrrz.at(0)+ddrrz.at(1)*ddrrz.at(1)+ddrrz.at(2)*ddrrz.at(2));
       
-	ddmlx=sqrt(ddlx.at(1)*ddlx.at(1)+ddlx.at(2)*ddlx.at(2)+ddlx.at(3)*ddlx.at(3));
-	ddmly=sqrt(ddly.at(1)*ddly.at(1)+ddly.at(2)*ddly.at(2)+ddly.at(3)*ddly.at(3));
-	ddmlz=sqrt(ddlz.at(1)*ddlz.at(1)+ddlz.at(2)*ddlz.at(2)+ddlz.at(3)*ddlz.at(3));
+	ddmlx=sqrt(ddlx.at(0)*ddlx.at(0)+ddlx.at(1)*ddlx.at(1)+ddlx.at(2)*ddlx.at(2));
+	ddmly=sqrt(ddly.at(0)*ddly.at(0)+ddly.at(1)*ddly.at(1)+ddly.at(2)*ddly.at(2));
+	ddmlz=sqrt(ddlz.at(0)*ddlz.at(0)+ddlz.at(1)*ddlz.at(1)+ddlz.at(2)*ddlz.at(2));
       
-	ddmllx=sqrt(ddllx.at(1)*ddllx.at(1)+ddllx.at(2)*ddllx.at(2)+ddllx.at(3)*ddllx.at(3));
-	ddmlly=sqrt(ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2)+ddlly.at(3)*ddlly.at(3));
-	ddmllz=sqrt(ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2)+ddllz.at(3)*ddllz.at(3));
-
-//	double h=Gethijab(i,j,l,lp,&ddrx,6,6);
+	ddmllx=sqrt(ddllx.at(0)*ddllx.at(0)+ddllx.at(1)*ddllx.at(1)+ddllx.at(2)*ddllx.at(2));
+	ddmlly=sqrt(ddlly.at(0)*ddlly.at(0)+ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2));
+	ddmllz=sqrt(ddllz.at(0)*ddllz.at(0)+ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2));
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
-	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
-	      (*fx).at(i)=(*fx).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrx,6,6)+8*Gethijab(i,j,l,lp,&ddrx,6,6)-8*Gethijab(i,j,l,lp,&ddlx,6,6)+Gethijab(i,j,l,lp,&ddllx,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
-	      (*fy).at(i)=(*fy).at(i)-2*(-Gethijab(i,j,l,lp,&ddrry,6,6)+8*Gethijab(i,j,l,lp,&ddry,6,6)-8*Gethijab(i,j,l,lp,&ddly,6,6)+Gethijab(i,j,l,lp,&ddlly,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
-	      (*fz).at(i)=(*fz).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrz,6,6)+8*Gethijab(i,j,l,lp,&ddrz,6,6)-8*Gethijab(i,j,l,lp,&ddlz,6,6)+Gethijab(i,j,l,lp,&ddllz,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+	    for(n=0;n<(dim);n++){ /*Cycle spanning the level of the eigenvector*/
+	      (*fx).at(i)=(*fx).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrx,6,6)*s(ddmrrx,6,6)+8*Gethijab(i,j,l,lp,&ddrx,6,6)*s(ddmrx,6,6)-8*Gethijab(i,j,l,lp,&ddlx,6,6)*s(ddmlx,6,6)+Gethijab(i,j,l,lp,&ddllx,6,6)*s(ddmllx,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+
+	      (*fy).at(i)=(*fy).at(i)-2*(-Gethijab(i,j,l,lp,&ddrry,6,6)*s(ddmrry,6,6)+8*Gethijab(i,j,l,lp,&ddry,6,6)*s(ddmry,6,6)-8*Gethijab(i,j,l,lp,&ddly,6,6)*s(ddmly,6,6)+Gethijab(i,j,l,lp,&ddlly,6,6)*s(ddmlly,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+
+	      (*fz).at(i)=(*fz).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrz,6,6)*s(ddmrrz,6,6)+8*Gethijab(i,j,l,lp,&ddrz,6,6)*s(ddmrz,6,6)-8*Gethijab(i,j,l,lp,&ddlz,6,6)*s(ddmlz,6,6)+Gethijab(i,j,l,lp,&ddllz,6,6)*s(ddmllz,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
 	    }
 	  }
 	}
 
+	std::cout << (*fx).at(i) << std::endl;
+	std::cout << (*fy).at(i) << std::endl;
+	std::cout << (*fz).at(i) << std::endl;
+	
+	
 	sumphinn=0;
 
 	for(m=0;m<(*nnear).at((*inear).at(i*dim+j));m++){
-	  dd.at(1)=abs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
-	  dd.at(2)=abs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
-	  dd.at(3)=abs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(0)=abs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
+	  dd.at(1)=abs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(2)=abs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
 		    
-	    ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
+	    ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
 	    
 	    sumphinn=sumphinn+o(ddm);
 	}
@@ -242,7 +248,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
 	
 	
-      }
+      
     }
   }
 
@@ -271,18 +277,12 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			dist=sqrt(dx*dx+dy*dy+dz*dz);
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
-			std::cout << "i and j are " << i << " " << j << std::endl;
 			(*nnear).at(i)++;
-			std::cout << "nnear at i is " << (*nnear).at(i) << std::endl;
-			(*inear).at(i*N+(*nnear).at(i))=j;
-			std::cout << "inear at " << i*N+(*nnear).at(i) << " is " << (*inear).at(i*N+(*nnear).at(i)) << " should be " << j << std::endl;
-			//	nnear[i]=nnear[i]+1;
-			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
+			(*inear).at(i*N+(*nnear).at(i)-1)=j;
+		     
 			}
 		}
 	}
-	std::cout << "all of inear is" << std::endl;
-	for(int i=0;i<4;i++){std::cout << (*inear).at(i) << std::endl;}
 
 }	//ends near_neigh
 

@@ -57,7 +57,6 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
   for (i=0;i<4*n;i++) {eigvalarr[i] = real(eigvals(i,0));}  // Separate real values of eigvals
   std::sort(eigvalarr,eigvalarr+4*n); 
   for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr[i];}           // Fill lowest eigenstates with 2 electrons and sum energies of filled states
-
   MatrixComplex eigvectors = ces.eigenvectors();					// Retrieve Eigenvectors
   for(i=0;i<4*n;i++){
 	  for(j=0;j<4*n;j++){
