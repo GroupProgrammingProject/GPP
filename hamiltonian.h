@@ -64,10 +64,10 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
 	  }
   }
 
-//  std::cout << "\nEigenvalues of Hijab:\n" << std::endl;  // Output Eigenvalues
-//  for (i=0;i<4*n;i++) {
-//    std::cout << eigvalarr[i] << std::endl;}
-//  std::cout << "\nEbs = " << Ebs << "eV" << std::endl;    // Output Band Structure Energy
+  std::cout << "\nEigenvalues of Hijab:\n" << std::endl;  // Output Eigenvalues
+  for (i=0;i<4*n;i++) {
+    std::cout << eigvalarr[i] << std::endl;}
+  std::cout << "\nEbs = " << Ebs << "eV" << std::endl;    // Output Band Structure Energy
 
   // Uncomment to view eigenvectors
 /*  std::cout << "\nEigenvectors of Hijab are:\n" << std::endl;

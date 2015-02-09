@@ -37,14 +37,16 @@ double s (double r,int type1, int type2){
   double nc=6.5;
   double rc=2.18;
   double r1=2.45;
+  double rcutoff=2.6;
   double S;
   //constants 
    if(type1==6 &&type2==6){
-    if (r<r1){
+    if (r<=r1){
       S=pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)));
     }
-    else{
+    else if(r<=rcutoff && r>r1){
       S=ts(r);
+    
     }
     }
  
@@ -62,13 +64,17 @@ double o (double r){
   double dc=2.1052;
   double d0=1.64;
   double d1=2.57;
+  double rcutoff =2.6;
   double O;
 
-  if (r<d1){
+  if (r<=d1){
     O=o0*pow(d0/r,m)*exp(m*(-pow(r/dc,mc)+pow(d0/dc,mc)));
   }
-  else{
+  else if (r<=rcutoff && r>d1){
     O=to(r);
+  }
+  else{
+    return 0;
   }
   return O;
 }
@@ -121,5 +127,14 @@ double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double
   }
   return total;
 }
+
+//some test functions, diregard them
+/*void test (std::vector<double> &wektor){
+  int N=wektor.size();
+  for (int i=0;i<N;i++){
+    std::cout<<wektor[i]<<std::endl;
+  }
+
+  }*/
 
 #endif
