@@ -47,7 +47,7 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-// 	std::cout << Hijab << std::endl;
+ 	std::cout << Hijab << std::endl;
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 //	Eigen::ComplexEigenSolver<MatrixXd> ces(Hijab);
@@ -62,8 +62,8 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
   }
 
   std::sort(eigvalarr.begin(),eigvalarr.end());
-  std::cout << "After sorting" << std::endl;
-  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+//  std::cout << "After sorting" << std::endl;
+//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 
 //	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
 
