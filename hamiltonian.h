@@ -41,59 +41,46 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
 	  				else {hijab = Gethijab(i,j,a,b,d,typei,typej);} // Hamiltonian elements of ij interaction
 	  				Hijab(4*i+a,4*j+b)     = sr*hijab;              // Scale hijab and populate matrix Hijab
-	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
+//	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 				}                                                 // End loop over b
       	}                                                   // End loop over a
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-// 	std::cout << Hijab << std::endl;
+// 	std::cout << Hijab << std::endl;		//print out Hamiltonian
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
-//	Eigen::ComplexEigenSolver<MatrixXd> ces(Hijab);
-//  VectorXd eigvals = ces.eigenvalues();                     // Retrieve Eigenvalues
 
   typedef std::pair<double,int> pair;
   std::vector<pair> eigvalarr;
-  for(i=0;i<4*n;i++){
-  		eigvalarr.push_back(pair(es.eigenvalues()[i],i));
-//		eigvalarr.push_back(pair(real(ces.eigenvalues()[i]),i));
-//  		std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;
-  }
+  for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		//reads in eigenvalues and their index into eigvalarr
+  std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
+  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
-  std::sort(eigvalarr.begin(),eigvalarr.end());
-  std::cout << "After sorting" << std::endl;
-  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
-
+//  std::cout << "After sorting" << std::endl;
+//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 //	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
-
-  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           // Fill lowest eigenstates with 2 electrons and sum energies of filled states
-
-//  MatrixComplex eigvectors = ces.eigenvectors();					// Retrieve Eigenvectors
-
+	
 //  std::cout << "Eigenvector matrix" << std::endl;
-//  std::cout << es.eigenvectors() << std::endl;
-//	std::cout << ces.eigenvectors() << std::endl;
-  for(i=0;i<4*n;i++){
+//  std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
+
+  for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
-//		std::cout << "index of current eigval is " << ind << std::endl;
 	  for(j=0;j<4*n;j++){
-			(*eigvects).at(i*4*n+j)=es.eigenvectors().row(j).col(ind).value();
-//real(eigvectors(j,ind));
-//			std::cout << (*eigvects).at(j*4*n+i) << std::endl;
+			(*eigvects).at(2*i*4*n+j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
+			(*eigvects).at((2*i+1)*4*n+j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
   }
 
 /*
-  std::cout << "Sorted eigenvectors in matrix:" << std::endl;
+  std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
   for(i=0;i<4*n;i++){
 		for(j=0;j<4*n;j++){
-			std::cout << (*eigvects).at(j*4*n+i) << "		";
+			std::cout << (*eigvects).at(j*4*n+i) << "\t\t";
 		}
 	std::cout << std::endl;
 	}
 */
-
 
   return Ebs;
 }
