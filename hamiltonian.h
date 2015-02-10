@@ -30,7 +30,7 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
 		ry=ry/r;
 		rz=rz/r;
       d.at(0)=rx; d.at(1)=ry; d.at(2)=rz;
-		  	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
+		  	if (i == j) {sr = 1;}                               // Don't apply scaling function if i=j
       	else {sr    = s(r);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
