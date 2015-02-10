@@ -23,9 +23,9 @@ int main(int argc, char* argv[]){
 
 	// Starting TB	module: calculating energies and eigenvectors
 	ebs=Hamiltonian(n,&type,&posx,&posy,&posz,&eigvects);
-	erep=Erep(type,posx,posy,posz);
+	erep=Erep(&type,&posx,&posy,&posz);
 // Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
-	
+
 return 0;
 }
