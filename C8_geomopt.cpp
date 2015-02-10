@@ -6,19 +6,11 @@
 #include "functions.h"
 
 int main() {
-  std::vector<int> type(8);
-  std::vector<double> posx(8);
-  std::vector<double> posy(8);
-  std::vector<double> posz(8);
-  int n = 8;
-  type.at(0) = 6;
-  type.at(1) = 6;
-  type.at(2) = 6;
-  type.at(3) = 6;
-  type.at(4) = 6;
-  type.at(5) = 6;
-  type.at(6) = 6;
-  type.at(7) = 6;
+  int n=8;
+  std::vector<double> posx(n);
+  std::vector<double> posy(n);
+  std::vector<double> posz(n);
+  std::vector<double> eigvects(16*n*n);
   posx.at(0) = 0.0000;
   posy.at(0) = 0.0000;
   posy.at(1) = 0.0000;
@@ -46,8 +38,8 @@ int main() {
     posx.at(6) = 6*bond;
     posx.at(7) = 7*bond;
 
-    double ebs = Hamiltonian(n, &type, &posx, &posy, &posz);
-    double erep = Erep(type, posx, posy, posz);  
+    double ebs = Hamiltonian(n, &posx, &posy, &posz, &eigvects);
+    double erep = Erep(&posx, &posy, &posz);  
     double etot = ebs + erep;
     output << bond << "\t" << etot << "\n";
   }
