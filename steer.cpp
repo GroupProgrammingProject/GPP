@@ -10,6 +10,8 @@
 #include "MolDyn.h"
 
 int main(int argc, char* argv[]){
+	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
+	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	// Read in types, 
 	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
