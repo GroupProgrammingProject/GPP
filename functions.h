@@ -103,7 +103,7 @@ double d_f0(double x){
 }
 
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
-double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz, int i ){
+double X (std::vector<int> *type, std::vector<double> *rx, std::vector<double> *ry,std::vector<double> *rz, int i ){
   double r;
   double x=0;
   int N=rx.size();
@@ -117,12 +117,12 @@ double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &
 };
 
 //total repulsive energy - sum over all atoms of f(X_i)
-double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz){
+double Erep (std::vector<int> *type, std::vector<double> *rx, std::vector<double> *ry,std::vector<double> *rz){
   int N=rx.size();
   double x;
   double total;
   for(int i=0;i<N;i++){
-    x=X(type,rx,ry,rz,i);
+    x=X(&type,&rx,&ry,&rz,i);
     total=total+f0(x);
   }
   return total;
