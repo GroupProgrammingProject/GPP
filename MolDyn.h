@@ -146,24 +146,28 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
     sumphinn=0;
   }
 
+  
+
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
-      dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
-      dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
-      dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
+      std::cout << "FINE" << std::endl;
+      dd.at(0)=fabs((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
+      dd.at(1)=fabs((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
+      dd.at(2)=fabs((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
       
       ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
       
       sumphi=sumphi+o(ddm);
+   
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       if(j!=i){ /*Check to avoid self interaction (redundant, but saves operations)*/
-	dd.at(1)=abs((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
-	dd.at(2)=abs((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
-	dd.at(3)=abs((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
+	dd.at(0)=fabs((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
+	dd.at(1)=fabs((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
+	dd.at(2)=fabs((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
 	
-	ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
+	ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
 	
 	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
 	  ddrx.at(k)=dd.at(k); 
@@ -182,20 +186,21 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	  ddllz.at(k)=dd.at(k);
 	}
 	
-	ddrx.at(1)=abs((*x).at(i)+h-(*x).at(j));  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
-	ddrrx.at(1)=abs((*x).at(i)+2*h-(*x).at(j));
-	ddlx.at(1)=abs((*x).at(i)-h-(*x).at(j));
-	ddllx.at(1)=abs((*x).at(i)-2*h-(*x).at(j));
+	/*Change indeces of second particle
+	ddrx.at(1)=fabs((*x).at(i)+h-(*x).at(j));  /*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
+	ddrrx.at(1)=fabs((*x).at(i)+2*h-(*x).at(j));
+	ddlx.at(1)=fabs((*x).at(i)-h-(*x).at(j));
+	ddllx.at(1)=fabs((*x).at(i)-2*h-(*x).at(j));
 
-	ddry.at(2)=abs((*y).at(i)+h-((*y)).at(j));
-	ddrry.at(2)=abs((*y).at(i)+2*h-(*y).at(j));
-	ddly.at(2)=abs((*y).at(i)-h-(*y).at(j));
-	ddlly.at(2)=abs((*y).at(i)-2*h-(*y).at(j));
+	ddry.at(2)=fabs((*y).at(i)+h-((*y)).at(j));
+	ddrry.at(2)=fabs((*y).at(i)+2*h-(*y).at(j));
+	ddly.at(2)=fabs((*y).at(i)-h-(*y).at(j));
+	ddlly.at(2)=fabs((*y).at(i)-2*h-(*y).at(j));
 
-	ddrz.at(3)=abs((*z).at(i)+h-(*z).at(j));
-	ddrrz.at(3)=abs((*z).at(i)+2*h-(*z).at(j));
-	ddlz.at(3)=abs((*z).at(i)-h-(*z).at(j));
-	ddllz.at(3)=abs((*z).at(i)-2*h-(*z).at(j));
+	ddrz.at(3)=fabs((*z).at(i)+h-(*z).at(j));
+	ddrrz.at(3)=fabs((*z).at(i)+2*h-(*z).at(j));
+	ddlz.at(3)=fabs((*z).at(i)-h-(*z).at(j));
+	ddllz.at(3)=fabs((*z).at(i)-2*h-(*z).at(j));
 
 	ddmrx=sqrt(ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2)+ddrx.at(3)*ddrx.at(3));
 	ddmry=sqrt(ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2)+ddry.at(3)*ddry.at(3));
@@ -230,9 +235,9 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	sumphinn=0;
 
 	for(m=0;m<(*nnear).at((*inear).at(i*dim+j));m++){
-	  dd.at(1)=abs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
-	  dd.at(2)=abs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
-	  dd.at(3)=abs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(1)=fabs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
+	  dd.at(2)=fabs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(3)=fabs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
 		    
 	    ddm=sqrt(dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)+dd.at(3)*dd.at(3)); /*Modulus of distance*/
 	    
