@@ -28,8 +28,9 @@ int main() {
   posz.at(6) = 0.0000;
   posy.at(7) = 0.0000;
   posz.at(7) = 0.0000;
+
   std::ofstream output("C8bondenergy.dat");
-  for (double bond=0.9;bond<=5;bond=bond+0.01){
+  for (double bond=1;bond<=2;bond=bond+0.01){
     posx.at(1) = bond;
     posx.at(2) = 2*bond;
     posx.at(3) = 3*bond;
