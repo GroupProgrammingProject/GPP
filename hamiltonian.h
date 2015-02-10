@@ -29,9 +29,12 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
       rx    = (*posx).at(i)-(*posx).at(j);
       ry    = (*posy).at(i)-(*posy).at(j);                // Cartesian elements of vector r[i] - r[j]
       rz    = (*posz).at(i)-(*posz).at(j);
-      d[0]=rx; d[1]=ry; d[2]=rz;
       r = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));	       // Length |r[i] - r[j]|
-      	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
+ 		rx=rx/r;
+		ry=ry/r;
+		rz=rz/r;
+      d[0]=rx; d[1]=ry; d[2]=rz;
+		  	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
       	else {sr    = s(r);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
@@ -52,7 +55,7 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
   std::vector<pair> eigvalarr;
   for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		//reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
-  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
 //  std::cout << "After sorting" << std::endl;
 //  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}

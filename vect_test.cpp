@@ -5,7 +5,7 @@
 #include "functions.h"
 
 int main() {
-  int n=3;
+  int n=2;
 //  std::vector<int> type(n);
   std::vector<double> posx(n);
   std::vector<double> posy(n);
@@ -17,14 +17,14 @@ int main() {
 //  type.at(1) = 6;
 //  type.at(2) = 6;
   posx.at(0) = 0.0000;
-  posx.at(1) = 1.2400;
-  posx.at(2) = 2.4800;
+  posx.at(1) = 1.3000;
+//  posx.at(2) = 2.4800;
   posy.at(0) = 0.0000;
   posy.at(1) = 0.0000;
-  posy.at(2) = 0.0000;
+//  posy.at(2) = 0.0000;
   posz.at(0) = 0.0000;
   posz.at(1) = 0.0000;
-  posz.at(2) = 0.0000;
+//  posz.at(2) = 0.0000;
 
   double ebs = Hamiltonian(n,&posx, &posy, &posz, &eigvects);
   double erep = Erep(&posx, &posy, &posz);  
