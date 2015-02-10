@@ -32,10 +32,13 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
       rx    = (*posx).at(i)-(*posx).at(j);
       ry    = (*posy).at(i)-(*posy).at(j);                // Cartesian elements of vector r[i] - r[j]
       rz    = (*posz).at(i)-(*posz).at(j);
-      d[0]=rx; d[1]=ry; d[2]=rz;
       r = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));	       // Length |r[i] - r[j]|
-      	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
-      	else {sr    = s(r, typei, typej);}                  // Scaling parameter
+		rx = rx/r;
+		ry = ry/r;
+		rz = rz/r;
+      d[0]=rx; d[1]=ry; d[2]=rz;
+      	if (i == j) {sr = 1;}                               // Don't apply scaling function if i=j
+			else {sr    = s(r, typei, typej);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
@@ -47,7 +50,7 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-// 	std::cout << Hijab << std::endl;		//print out Hamiltonian
+  std::cout << Hijab << std::endl;		//print out Hamiltonian
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 
@@ -55,10 +58,10 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
   std::vector<pair> eigvalarr;
   for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		//reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
-  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
-//  std::cout << "After sorting" << std::endl;
-//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+  std::cout << "After sorting" << std::endl;
+  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 //	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
 	
 //  std::cout << "Eigenvector matrix" << std::endl;
