@@ -4,21 +4,13 @@
 #include <vector>
 #include <cmath>
 
-// Function to calculate the number of nearest neighbours
-void NumNearestNeighbours(std::vector<double>* nnear, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz){
-	
-}
+// Function declarations
+void DistanceComp(std::vector<double>* r, std::vector<double>* pos);
+double GetSign(double a, double b);
+void GetDistanceComponents(std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
+void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
+void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc);
 
-// Function that calculates the nearest neighbour of every atom
-// inear is the vector in which the indices will be printed
-void NearestNeighbours(std::vector<double>* inear, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rv){
-	// Delete all elements in inear
-	inear->clear();
-	int numatoms=posx->size();
-	for (int i=0; i<numatoms; i++){
-		
-	}
-}
 
 // Function to generate sign for distances
 // Sign convention to have distances signed according to sign a-b, ie ij element has sign pos[i]-pos[j]
@@ -45,6 +37,51 @@ void GetDistanceComponents(std::vector<double>* rx, std::vector<double>* ry, std
 	DistanceComp(ry, posy);
 	DistanceComp(rz, posz);
 }
+
+// Function to calculate the distances between atoms
+void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz){
+	int numatoms=posx->size();
+	GetDistanceComponents(rx, ry, rz, posx, posy, posz);
+	for (int i=0; i<numatoms*numatoms; i++){
+		double distx=rx->at(i);
+		double disty=ry->at(i);
+		double distz=rz->at(i);
+		modr->at(i)=sqrt(distx*distx+disty*disty+distz*distz);
+	}
+}
+
+// Function to calculate the distances between atoms and set all values above rc to zero
+void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc){
+	int numatoms=posx->size();
+	GetDistanceComponents(rx, ry, rz, posx, posy, posz);
+	for (int i=0; i<numatoms*numatoms; i++){
+		double distx=rx->at(i);
+		double disty=ry->at(i);
+		double distz=rz->at(i);
+		modr->at(i)=sqrt(distx*distx+disty*disty+distz*distz);
+		if (modr->at(i)>rc){modr->at(i)=0;}
+		else{;}
+	}
+}
+
+// Function to calculate the number of nearest neighbours
+void NumNearestNeighbours(std::vector<int>* nnear){
+	
+}
+
+
+// Function that calculates the nearest neighbours of every atom
+// Nearest neighbours are the neighbours within a radius rv
+// inear is the vector in which the indices will be printed
+void NearestNeighbours(std::vector<int>* inear, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, double rv){
+	// Delete all elements in inear
+	inear->clear();
+	int numatoms=rx->size();
+	for (int i=0; i<numatoms; i++){
+		
+	}
+}
+
 
 /*
 
