@@ -31,52 +31,48 @@ double to (double r){
 }
  
 //function s(r), including the tail and the atom types
-double s (double r,int type1, int type2){
+double s (double r){
   double r0=1.536329; //nearest-neighbour atomic separation
   double n=2;
   double nc=6.5;
   double rc=2.18;
   double r1=2.45;
-  double rcutoff=2.6;
+  double rcut=2.6;
   double S;
   //constants 
-   if(type1==6 &&type2==6){
-    if (r<=r1){
+    if (r<r1){
       S=pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)));
     }
-    else if(r<=rcutoff && r>r1){
+    else if(r>=r1 && r<rcut){
       S=ts(r);
-    
     }
-    }
- 
    else{
     return 0;
-  }
-  return S;
+   }
+	return S;
 }
 
 //phi(r) functions including the til function
 double o (double r){
-  double o0=8.18555;
+  double phi0=8.18555;
   double m=3.30304;
   double mc=8.6655;
   double dc=2.1052;
   double d0=1.64;
   double d1=2.57;
-  double rcutoff =2.6;
-  double O;
+  double dcut=2.6;
+  double phi;
 
-  if (r<=d1){
-    O=o0*pow(d0/r,m)*exp(m*(-pow(r/dc,mc)+pow(d0/dc,mc)));
+  if (r<d1){
+    phi=phi0*pow(d0/r,m)*exp(m*(-pow(r/dc,mc)+pow(d0/dc,mc)));
   }
-  else if (r<=rcutoff && r>d1){
-    O=to(r);
+  else if(r>=d1 && r<dcut){
+    phi=to(r);
   }
   else{
-    return 0;
+  		phi=0;
   }
-  return O;
+  return phi;
 }
 
 //f polynomial needed for repulsive energy
@@ -103,13 +99,13 @@ double d_f0(double x){
 }
 
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
-double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz, int i ){
+double X (std::vector<double>* rx, std::vector<double>* ry,std::vector<double>* rz, int i ){
   double r;
   double x=0;
-  int N=rx.size();
+  int N=rx->size();
   for (int j=0;j<N;j++){
     if(i!=j){
-      r=sqrt(pow((rx[i]-rx[j]),2)+pow((ry[i]-ry[j]),2)+pow((rz[i]-rz[j]),2));
+      r=sqrt(pow((rx->at(i)-rx->at(j)),2)+pow((ry->at(i)-ry->at(j)),2)+pow((rz->at(i)-rz->at(j)),2));
       x=x+o(r);
     };
   };
@@ -117,24 +113,15 @@ double X (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &
 };
 
 //total repulsive energy - sum over all atoms of f(X_i)
-double Erep (std::vector<int> &type, std::vector<double> &rx, std::vector<double> &ry,std::vector<double> &rz){
-  int N=rx.size();
+double Erep (std::vector<double>* rx, std::vector<double>* ry,std::vector<double>* rz){
+  int N=rx->size();
   double x;
   double total;
   for(int i=0;i<N;i++){
-    x=X(type,rx,ry,rz,i);
+    x=X(rx,ry,rz,i);
     total=total+f0(x);
   }
   return total;
 }
-
-//some test functions, diregard them
-/*void test (std::vector<double> &wektor){
-  int N=wektor.size();
-  for (int i=0;i<N;i++){
-    std::cout<<wektor[i]<<std::endl;
-  }
-
-  }*/
 
 #endif
