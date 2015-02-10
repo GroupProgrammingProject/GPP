@@ -16,6 +16,7 @@ int main(int argc, char* argv[]){
 	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
 	// Number of atoms
 	int n=type.size();
+	std::cout << "Read in n=" << n << std::endl;
 	// Create empty arrays needed for MD
 	std::vector<double> eigvects(16*n*n);
 	// Energies from TB model
