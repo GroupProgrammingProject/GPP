@@ -8,9 +8,6 @@
 #include "Gethijab.h"
 #include "functions.h"
 
-// Need to make number of orbitals (currently m=4) a variable since needs to account for total number of electrons
-// WE DON'T Consider systems with odd numbers of electrons
-
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
 double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* eigvects){
   
@@ -20,8 +17,6 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
   double sr,hijab;                                        // hijab: unscaled matrix element, sr: scaling function value at r
   double Ebs=0;														 // Band structure energy to be returned
   typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> MatrixXd;
-  typedef Eigen::Matrix<std::complex<double>, Eigen::Dynamic, 1> VectorXd;
-  typedef Eigen::Matrix<std::complex<double>, Eigen::Dynamic, Eigen::Dynamic> MatrixComplex;
   
   MatrixXd Hijab(4*n,4*n);											 // Hamiltonian matrix for diagonalization
 
@@ -48,7 +43,6 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-// 	std::cout << Hijab << std::endl;		//print out Hamiltonian
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 
@@ -58,13 +52,7 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
   std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
   for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
-//  std::cout << "After sorting" << std::endl;
-//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
-//	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
-	
-//  std::cout << "Eigenvector matrix" << std::endl;
-//  std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
-
+  // Filling up eigvects, doubling the vectors of the states that are occupied
   for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
@@ -73,8 +61,16 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
 	  }
   }
 
+// Uncomment any section to print output for testing
 
-/*  std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
+/* 	std::cout << Hijab << std::endl;		//print out Hamiltonian
+  std::cout << "After sorting" << std::endl;
+  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+	
+  std::cout << "Eigenvector matrix" << std::endl;
+  std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
+
+  std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
   for(i=0;i<4*n;i++){
 		for(j=0;j<4*n;j++){
 			std::cout << (*eigvects).at(i*4*n+j) << "\t\t";
