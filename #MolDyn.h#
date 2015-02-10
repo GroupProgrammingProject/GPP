@@ -214,7 +214,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	ddmlly=sqrt(ddlly.at(0)*ddlly.at(0)+ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2));
 	ddmllz=sqrt(ddllz.at(0)*ddllz.at(0)+ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2));
 
-	std::cout << "fine" << std::endl;
+	Std::cout << "fine" << std::endl;
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;l++){ /*Cycle spanning the second orbital type*/
