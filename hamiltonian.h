@@ -8,9 +8,6 @@
 #include "Gethijab.h"
 #include "functions.h"
 
-// Need to make number of orbitals (currently m=4) a variable since needs to account for total number of electrons
-// WE DON'T Consider systems with odd numbers of electrons
-
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
 double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* eigvects){
   
@@ -47,7 +44,7 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-  std::cout << Hijab << std::endl;		//print out Hamiltonian
+  //std::cout << Hijab << std::endl;		//print out Hamiltonian
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 
@@ -57,8 +54,8 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
   std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
   for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
-  std::cout << "After sorting" << std::endl;
-  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+  //std::cout << "After sorting" << std::endl;
+  //for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 //	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
 	
 //  std::cout << "Eigenvector matrix" << std::endl;
