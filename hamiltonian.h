@@ -47,7 +47,7 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-// 	std::cout << Hijab << std::endl;		//print out Hamiltonian
+ 	std::cout << Hijab << std::endl;		//print out Hamiltonian
 
   Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 
