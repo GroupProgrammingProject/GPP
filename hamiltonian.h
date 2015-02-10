@@ -15,7 +15,8 @@
 double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* eigvects){
   
   int i, j, a, b;                                         // i,j loop over atoms; a,b loop over orbitals
-  double d[3],r,rx,ry,rz;                                 // d is a 3d array of atom pair's connecting vector (varys within ij loop)
+  double r,rx,ry,rz;                                 // d is a 3d array of atom pair's connecting vector (varys within ij loop)
+  std::vector<double> d(3);
   double sr,hijab;                                        // hijab: unscaled matrix element, sr: scaling function value at r
   double Ebs=0;														 // Band structure energy to be returned
   typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> MatrixXd;
@@ -33,13 +34,13 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
  		rx=rx/r;
 		ry=ry/r;
 		rz=rz/r;
-      d[0]=rx; d[1]=ry; d[2]=rz;
+      d.at(0)=rx; d.at(1)=ry; d.at(2)=rz;
 		  	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
       	else {sr    = s(r);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
-	  				else {hijab = Gethijab(i,j,a,b,d);} // Hamiltonian elements of ij interaction
+	  				else {hijab = Gethijab(i,j,a,b,&d);} // Hamiltonian elements of ij interaction
 	  				Hijab(4*i+a,4*j+b)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 //	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 				}                                                 // End loop over b
