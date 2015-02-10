@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 
-void ReadInXYZ (char* filename, std::vector<int>* atomtypes, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z);
+void ReadInXYZ (char* filename, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z);
 std::map<std::string, int> SetElementMap();
 
 // Function to initiate a map to translate element symbol to integer values corresponding to its atomic number
@@ -20,7 +20,7 @@ std::map<std::string, int> SetElementMap(){
 }
 
 // Reads in 4 vectors from cell file: elements, x , y and z coords
-void ReadInXYZ(char* filename, std::vector<int>* atomtypes, std::vector<double>* xvect, std::vector<double>* yvect, std::vector<double>* zvect){
+void ReadInXYZ(char* filename,std::vector<double>* xvect, std::vector<double>* yvect, std::vector<double>* zvect){
 	std::ifstream infile(filename);
 	// Initiate the map of elements (symbol-> atomic number)
 	std::map<std::string, int> elmap=SetElementMap();
@@ -33,7 +33,6 @@ void ReadInXYZ(char* filename, std::vector<int>* atomtypes, std::vector<double>*
 	double x, y, z;
 	std::string type;
 	while (infile>>type>>x>>y>>z){
-		atomtypes->push_back(elmap[type]);	
 		xvect->push_back(x);
 		yvect->push_back(y);
 		zvect->push_back(z);
