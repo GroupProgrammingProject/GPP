@@ -10,12 +10,16 @@
 #include "MolDyn.h"
 
 int main(int argc, char* argv[]){
-  	// Read in types, 
+
+	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
+	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
+	// Read in types, 
 	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
 	// Number of atoms
 	int n=type.size();
+	std::cout << "Read in n=" << n << std::endl;
 	// Create empty arrays needed for MD
 	std::vector<double> eigvects(16*n*n);
 	// Energies from TB model
