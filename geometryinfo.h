@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cmath>
+#include "vectorfunctions.h"
 
 // Function declarations
 void DistanceComp(std::vector<double>* r, std::vector<double>* pos);
@@ -52,25 +53,25 @@ void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::v
 	}
 }
 
-// Function to calculate the number of nearest neighbours
-void NumNearestNeighbours(std::vector<int>* nnear){
-	
-}
-
 
 // Function that calculates the nearest neighbours of every atom
 // Nearest neighbours are the neighbours within a radius rv
 // inear is the vector in which the indices will be printed
-// 
-void NearestNeighbours(std::vector<int>* inear, std::vector<int>* nnear, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, double rv){
-	// Set all elements in inear and nnear to 0
-	std::fill(inear->begin(), inear->end(), 0);
-	std::fill(nnear->begin(), inear->end(), 0);
-
-	int numatoms=rx->size();
+void NearestNeighbours(std::vector<int>* inear, std::vector<int>* nnear, std::vector<double>* modr, double rv){
+	int numatoms=nnear->size();
 	for (int i=0; i<numatoms; i++){
-		for (int j =0; j<numatoms && j!=i; )
-		
+		int nnearcounter=0;
+		for (int j =0; j<numatoms; j++){
+std::cout<<i<<j<<std::endl;
+			double dist = modr->at(i*numatoms+j);
+			if (dist<rv && dist!=0){
+				nnearcounter++;
+// BUG IN THE CODE!!!!!!!!!
+				inear->at(i*numatoms+j)=j;
+			}
+			else {inear->at(i*numatoms+j)=-1;}
+		}
+		nnear->at(i)=nnearcounter;
 	}
 }
 
