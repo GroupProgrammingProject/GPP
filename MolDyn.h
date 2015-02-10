@@ -215,7 +215,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	ddmllz=sqrt(ddllz.at(0)*ddllz.at(0)+ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2));
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
+	  for(lp=0;lp<norbs;l++){ /*Cycle spanning the second orbital type*/
 	    for(n=0;n<(dim);n++){ /*Cycle spanning the level of the eigenvector*/
 	      (*fx).at(i)=(*fx).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrx,6,6)*s(ddmrrx,6,6)+8*Gethijab(i,j,l,lp,&ddrx,6,6)*s(ddmrx,6,6)-8*Gethijab(i,j,l,lp,&ddlx,6,6)*s(ddmlx,6,6)+Gethijab(i,j,l,lp,&ddllx,6,6)*s(ddmllx,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
 
