@@ -102,8 +102,7 @@ double d_f0(double x){
 double X (std::vector<double>* modr,int n, int i ){
   double r;
   double x=0;
-  int N=rx->size();
-  for (int j=0;j<N;j++){
+  for (int j=0;j<n;j++){
     if(i!=j){
       r=modr->at(i*n+j);
       x=x+o(r);
