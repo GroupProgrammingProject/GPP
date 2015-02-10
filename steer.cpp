@@ -10,7 +10,7 @@
 #include "MolDyn.h"
 
 int main(int argc, char* argv[]){
-	// Read in types, 
+  	// Read in types, 
 	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
