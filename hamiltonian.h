@@ -15,9 +15,7 @@
 double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* eigvects){
   
   int i, j, a, b;                                         // i,j loop over atoms; a,b loop over orbitals
-  double r,rx,ry,rz;                                 // d is a 3d array of atom pair's connecting vector (varys within ij loop)
-//	double d[3];
-  std::vector<double> d(3);
+  double d[3],r,rx,ry,rz;                                 // d is a 3d array of atom pair's connecting vector (varys within ij loop)
   double sr,hijab;                                        // hijab: unscaled matrix element, sr: scaling function value at r
   double Ebs=0;														 // Band structure energy to be returned
   int  typei, typej;                                      // Atomic numbers of atoms i and j
@@ -34,49 +32,56 @@ double Hamiltonian(int n, std::vector<int>* type, std::vector<double>* posx, std
       rx    = (*posx).at(i)-(*posx).at(j);
       ry    = (*posy).at(i)-(*posy).at(j);                // Cartesian elements of vector r[i] - r[j]
       rz    = (*posz).at(i)-(*posz).at(j);
-//    d[0]=rx; d[1]=ry; d[2]=rz;
-		d.at(0)=rx;d.at(1)=ry;d.at(2)=rz;
+      d[0]=rx; d[1]=ry; d[2]=rz;
       r = sqrt(pow(rx,2)+ pow(ry,2) + pow(rz,2));	       // Length |r[i] - r[j]|
       	if (r == 0) {sr = 1;}                               // Don't apply scaling function if i=j
       	else {sr    = s(r, typei, typej);}                  // Scaling parameter
       	for (a=0;a<4;a++) {                                 // Cycle through orbitals of atom i
 				for (b=0;b<4;b++) {                               // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
-	  				else {hijab = Gethijab(i,j,a,b,&d,typei,typej);} // Hamiltonian elements of ij interaction
+	  				else {hijab = Gethijab(i,j,a,b,d,typei,typej);} // Hamiltonian elements of ij interaction
 	  				Hijab(4*i+a,4*j+b)     = sr*hijab;              // Scale hijab and populate matrix Hijab
-	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
+//	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 				}                                                 // End loop over b
       	}                                                   // End loop over a
     	}                                                     // End loop over j
   	}                                                       // End loop over i
 
-  Eigen::ComplexEigenSolver<MatrixXd> ces(Hijab);         // Compute eigenvectors and eigenvalues
+ 	std::cout << Hijab << std::endl;		//print out Hamiltonian
 
-  VectorXd eigvals = ces.eigenvalues();                     // Retrieve Eigenvalues
-  double eigvalarr[4*n];                                  
-  for (i=0;i<4*n;i++) {eigvalarr[i] = real(eigvals(i,0));}  // Separate real values of eigvals
-  std::sort(eigvalarr,eigvalarr+4*n); 
-  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr[i];}           // Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);         // Compute eigenvectors and eigenvalues
 
-  MatrixComplex eigvectors = ces.eigenvectors();					// Retrieve Eigenvectors
-  for(i=0;i<4*n;i++){
+  typedef std::pair<double,int> pair;
+  std::vector<pair> eigvalarr;
+  for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		//reads in eigenvalues and their index into eigvalarr
+  std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
+  for (i=0;i<n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+
+//  std::cout << "After sorting" << std::endl;
+//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+//	std::cout << "Difference of degenerate values is" << eigvalarr.at(3).first-eigvalarr.at(4).first << std::endl;
+	
+//  std::cout << "Eigenvector matrix" << std::endl;
+//  std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
+
+  for(i=0;i<2*n;i++){
+  		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
-			(*eigvects).at(i*4*n+j)=real(eigvectors(i,j));
+			(*eigvects).at(2*i*4*n+j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
+			(*eigvects).at((2*i+1)*4*n+j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
   }
 
-//  std::cout << "\nEigenvalues of Hijab:\n" << std::endl;  // Output Eigenvalues
-//  for (i=0;i<4*n;i++) {
-//    std::cout << eigvalarr[i] << std::endl;}
-//  std::cout << "\nEbs = " << Ebs << "eV" << std::endl;    // Output Band Structure Energy
+/*
+  std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
+  for(i=0;i<4*n;i++){
+		for(j=0;j<4*n;j++){
+			std::cout << (*eigvects).at(j*4*n+i) << "\t\t";
+		}
+	std::cout << std::endl;
+	}
+*/
 
-  // Uncomment to view eigenvectors
-/*  std::cout << "\nEigenvectors of Hijab are:\n" << std::endl;
-  std::cout << Eigenvectors << std::endl;
-  for (i=0;i<4*n;i++) {
-    std::cout << "\nFor eigenvalue " << ces.eigenvalues().row(i) << ":\n" << std::endl;    
-    std::cout << ces.eigenvectors().col(i) << std::endl;
-    }*/
   return Ebs;
 }
 
