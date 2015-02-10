@@ -6,28 +6,16 @@
 
 // Function declarations
 void DistanceComp(std::vector<double>* r, std::vector<double>* pos);
-double GetSign(double a, double b);
 void GetDistanceComponents(std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc);
 
 
-// Function to generate sign for distances
-// Sign convention to have distances signed according to sign a-b, ie ij element has sign pos[i]-pos[j]
-double GetSign(double a, double b){
-	double result=1;
-	if (a-b<0){result=-1;}
-	return(result);
-}
-
 // Function to calculate one component of the distances between atoms
 void DistanceComp(std::vector<double>* r, std::vector<double>* pos){
 	int numatoms=pos->size();
 	for (int i=0; i<numatoms; i++){
-		for (int j=0; j<numatoms; j++){
-			double sign = GetSign(pos->at(i), pos->at(j));
-			r->at(numatoms*i+j)=sign*sqrt((pos->at(i)-pos->at(j))*(pos->at(i)-pos->at(j)));
-		}
+		for (int j=0; j<numatoms; j++){r->at(numatoms*i+j)=pos->at(i)-pos->at(j);}
 	}
 }
 
@@ -73,11 +61,15 @@ void NumNearestNeighbours(std::vector<int>* nnear){
 // Function that calculates the nearest neighbours of every atom
 // Nearest neighbours are the neighbours within a radius rv
 // inear is the vector in which the indices will be printed
-void NearestNeighbours(std::vector<int>* inear, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, double rv){
-	// Delete all elements in inear
-	inear->clear();
+// 
+void NearestNeighbours(std::vector<int>* inear, std::vector<int>* nnear, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, double rv){
+	// Set all elements in inear and nnear to 0
+	std::fill(inear->begin(), inear->end(), 0);
+	std::fill(nnear->begin(), inear->end(), 0);
+
 	int numatoms=rx->size();
 	for (int i=0; i<numatoms; i++){
+		for (int j =0; j<numatoms && j!=i; )
 		
 	}
 }
