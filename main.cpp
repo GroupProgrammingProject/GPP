@@ -21,6 +21,7 @@ int main(int argc, char* argv[]){
 	// Number of atoms
 	int n=posx.size();
 	// Calculate distances
+	Eigen::MatrixXd*
 	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	// Create empty arrays needed for MD
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot;
 
-	// Starting TB	module: calculating energies
+/*	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
@@ -38,6 +39,6 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-
+*/
 return 0;
 }
