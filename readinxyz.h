@@ -25,11 +25,11 @@ void ReadInXYZ(char* filename,std::vector<double>* xvect, std::vector<double>* y
 	// Initiate the map of elements (symbol-> atomic number)
 	std::map<std::string, int> elmap=SetElementMap();
 	// First two lines are handled seperately and are not to be stored
-	int num;
-	char skip[2];
-	infile>>num;
-	infile>>skip>>skip>>skip>>skip;
-	// Store the molecule type and x, y, z positions
+	std::string skipline1, skipline2;
+	std::getline(infile, skipline1);
+	std::getline(infile, skipline2);
+
+	// Store the molecule x, y, z positions, type is disregarded since it will always be C
 	double x, y, z;
 	std::string type;
 	while (infile>>type>>x>>y>>z){

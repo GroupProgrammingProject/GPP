@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 	// Read in types, 
 	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
+	ReadInXYZ (argv[1], &posx, &posy, &posz);
 	// Number of atoms
 	int n=type.size();
 	// Create empty eigenvector array needed for MD
