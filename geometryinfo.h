@@ -3,31 +3,20 @@
 
 #include <vector>
 #include <cmath>
+#include "vectorfunctions.h"
 
 // Function declarations
 void DistanceComp(std::vector<double>* r, std::vector<double>* pos);
-double GetSign(double a, double b);
 void GetDistanceComponents(std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc);
 
 
-// Function to generate sign for distances
-// Sign convention to have distances signed according to sign a-b, ie ij element has sign pos[i]-pos[j]
-double GetSign(double a, double b){
-	double result=1;
-	if (a-b<0){result=-1;}
-	return(result);
-}
-
 // Function to calculate one component of the distances between atoms
 void DistanceComp(std::vector<double>* r, std::vector<double>* pos){
 	int numatoms=pos->size();
 	for (int i=0; i<numatoms; i++){
-		for (int j=0; j<numatoms; j++){
-			double sign = GetSign(pos->at(i), pos->at(j));
-			r->at(numatoms*i+j)=sign*sqrt((pos->at(i)-pos->at(j))*(pos->at(i)-pos->at(j)));
-		}
+		for (int j=0; j<numatoms; j++){r->at(numatoms*i+j)=pos->at(i)-pos->at(j);}
 	}
 }
 
@@ -64,21 +53,25 @@ void GetAllDistances (std::vector<double>* modr, std::vector<double>* rx, std::v
 	}
 }
 
-// Function to calculate the number of nearest neighbours
-void NumNearestNeighbours(std::vector<int>* nnear){
-	
-}
-
 
 // Function that calculates the nearest neighbours of every atom
 // Nearest neighbours are the neighbours within a radius rv
 // inear is the vector in which the indices will be printed
-void NearestNeighbours(std::vector<int>* inear, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, double rv){
-	// Delete all elements in inear
-	inear->clear();
-	int numatoms=rx->size();
+void NearestNeighbours(std::vector<int>* inear, std::vector<int>* nnear, std::vector<double>* modr, double rv){
+	int numatoms=nnear->size();
 	for (int i=0; i<numatoms; i++){
-		
+		int nnearcounter=0;
+		for (int j =0; j<numatoms; j++){
+std::cout<<i<<j<<std::endl;
+			double dist = modr->at(i*numatoms+j);
+			if (dist<rv && dist!=0){
+				nnearcounter++;
+// BUG IN THE CODE!!!!!!!!!
+				inear->at(i*numatoms+j)=j;
+			}
+			else {inear->at(i*numatoms+j)=-1;}
+		}
+		nnear->at(i)=nnearcounter;
 	}
 }
 
