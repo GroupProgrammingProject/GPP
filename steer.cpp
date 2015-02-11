@@ -10,21 +10,23 @@
 #include "MolDyn.h"
 
 int main(int argc, char* argv[]){
+
+	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
+	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	// Read in types, 
-	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
+	ReadInXYZ (argv[1], &posx, &posy, &posz);
 	// Number of atoms
-	int n=type.size();
+	int n=posx.size();
 	// Create empty arrays needed for MD
 	std::vector<double> eigvects(16*n*n);
 	// Energies from TB model
 	double ebs,erep,etot;
 
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&type,&posx,&posy,&posz,&eigvects);
+	ebs=Hamiltonian(n,&posx,&posy,&posz,&eigvects);
 	//H_MD and eigvects have now also been populated
-	erep=Erep(type,posx,posy,posz);
+	erep=Erep(posx,posy,posz);
 // Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
 

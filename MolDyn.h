@@ -136,7 +136,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 { int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
   std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3);
 //   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
-	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/10000,sumphinn,sumphi;
+	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/1000,sumphinn,sumphi;
 
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -216,12 +216,12 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
-	    for(n=0;n<(dim);n++){ /*Cycle spanning the level of the eigenvector*/
-	      (*fx).at(i)=(*fx).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrx,6,6)*s(ddmrrx,6,6)+8*Gethijab(i,j,l,lp,&ddrx,6,6)*s(ddmrx,6,6)-8*Gethijab(i,j,l,lp,&ddlx,6,6)*s(ddmlx,6,6)+Gethijab(i,j,l,lp,&ddllx,6,6)*s(ddmllx,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
-
-	      (*fy).at(i)=(*fy).at(i)-2*(-Gethijab(i,j,l,lp,&ddrry,6,6)*s(ddmrry,6,6)+8*Gethijab(i,j,l,lp,&ddry,6,6)*s(ddmry,6,6)-8*Gethijab(i,j,l,lp,&ddly,6,6)*s(ddmly,6,6)+Gethijab(i,j,l,lp,&ddlly,6,6)*s(ddmlly,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
-
-	      (*fz).at(i)=(*fz).at(i)-2*(-Gethijab(i,j,l,lp,&ddrrz,6,6)*s(ddmrrz,6,6)+8*Gethijab(i,j,l,lp,&ddrz,6,6)*s(ddmrz,6,6)-8*Gethijab(i,j,l,lp,&ddlz,6,6)*s(ddmlz,6,6)+Gethijab(i,j,l,lp,&ddllz,6,6)*s(ddmllz,6,6))/(12*h)*(*c).at(l*dim+n)*(*c).at(lp*dim+n);
+	    if(l!=lp||(lp==0 && lp==0)){
+	      for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
+		(*fx).at(i)=(*fx).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrx)+8*Gethijab(i,j,l,lp,&ddrx)-8*Gethijab(i,j,l,lp,&ddlx)+Gethijab(i,j,l,lp,&ddllx))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
+		(*fy).at(i)=(*fy).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrry)+8*Gethijab(i,j,l,lp,&ddry)-8*Gethijab(i,j,l,lp,&ddly)+Gethijab(i,j,l,lp,&ddlly))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
+		(*fz).at(i)=(*fz).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrz)+8*Gethijab(i,j,l,lp,&ddrz)-8*Gethijab(i,j,l,lp,&ddlz)+Gethijab(i,j,l,lp,&ddllz))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
+	      }
 	    }
 	  }
 	}
@@ -278,8 +278,11 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 			(*nnear).at(i)++;
+			std::cout << "nnear at i is " << (*nnear).at(i) << std::endl;
 			(*inear).at(i*N+(*nnear).at(i)-1)=j;
-		     
+			std::cout << "inear at " << i*N+(*nnear).at(i)-1 << " is " << (*inear).at(i*N+(*nnear).at(i)-1) << " should be " << j << std::endl;
+			//	nnear[i]=nnear[i]+1;
+			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}

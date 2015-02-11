@@ -4,23 +4,19 @@
 #include <iostream>
 #include <cmath>
 
-//double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej);
-double Gethijab(int i, int j,int a, int b, std::vector<double>* d,int typei,int typej);
+double Gethijab(int i, int j,int a, int b, std::vector<double>* d);
 
 //Gethijab() returns value of non-scaled Hamiltionian matrix element h
-//double Gethijab(int i, int j,int a, int b, double* d,int typei,int typej){
-double Gethijab(int i, int j,int a, int b, std::vector<double>* d,int typei,int typej){
+double Gethijab(int i, int j,int a, int b, std::vector<double>* d){
 
 int k; //for looping
 double h,Es,Ep,V[4];														//h,Es,Ep and V[4] is only used locally in Gethijab()
 double Es_C=-2.99,Ep_C=3.71;											//C orbital energies Es and Ep
-double V_CC[4],V_CH[4],V_HH[4];
+double V_CC[4];
 V_CC[0]=-5;V_CC[1]=4.7;V_CC[2]=5.5;V_CC[3]=-1.55;				//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
 
-if(typei==6 && typej==6){												//add more if statements, when we have interaction parameters for other atoms
-	Es=Es_C;Ep=Ep_C;
+	Es=Es_C;Ep=Ep_C;						//set all parameters to teh values for Xu's carbon
 	for(k=0;k<4;k++){V[k]=V_CC[k];}
-}
 
 //start V&G routine
 if(i==j){
@@ -42,4 +38,5 @@ else{h=(*d).at(a-1)*(*d).at(b-1)*(V[2]-V[3]);}										//pp_sigma and pp_pi off
 return h;
 } //Gethijab() ends
 
-#endif	
+	
+#endif
