@@ -14,8 +14,9 @@ int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	// Read in types, 
+	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &posx, &posy, &posz);
+	ReadInXYZ (argv[1], &type,&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	// Create empty arrays needed for MD
@@ -26,7 +27,7 @@ int main(int argc, char* argv[]){
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&posx,&posy,&posz,&eigvects);
 	//H_MD and eigvects have now also been populated
-	erep=Erep(posx,posy,posz);
+	erep=Erep(&posx,&posy,&posz);
 // Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
 
@@ -46,17 +47,8 @@ int main(int argc, char* argv[]){
 	// Start forces convergence loop
 	int norbs=4;
 	std::vector<double> fx(n),fy(n),fz(n);
-	
-	//	int count=0;
-	//	while(count<5){
 	forces(n,norbs,&posx,&posy,&posz,&eigvects,rc,&nnear,&inear,&fx,&fy,&fz);
-	//	std::cout << "fx " << fx.at(0) << std::endl;
-	//	std::cout << "fy " << fy.at(0) << std::endl;
-	//	std::cout << "fz " << fz.at(0) << std::endl;
-	//	count++;
 //	change positions of atoms
-//	}
-	
 
 	//Plot positions!
 	

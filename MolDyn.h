@@ -136,7 +136,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 { int k,i,j,l,lp,n,m; /* dummy indeces for cycles*/
   std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3);
 //   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
-	double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=rc/1000,sumphinn,sumphi;
+  double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=0.001,sumphinn,sumphi,dualeigen;
 
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -144,24 +144,24 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
     (*fz).at(i)=0;
   }
 
+  
+
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
-      dd.at(0)=((*x).at(i)-(*x).at((*inear).at(i*dim+k))); /*Definition of vector distances*/
-      dd.at(1)=((*y).at(i)-(*y).at((*inear).at(i*dim+k)));
-      dd.at(2)=((*z).at(i)-(*z).at((*inear).at(i*dim+k)));
-      
+      dd.at(0)=(*x).at(i)-(*x).at((*inear).at(i*dim+k)); /*Definition of vector distances*/
+      dd.at(1)=(*y).at(i)-(*y).at((*inear).at(i*dim+k));
+      dd.at(2)=(*z).at(i)-(*z).at((*inear).at(i*dim+k));
       
       ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
       
       sumphi=sumphi+o(ddm);
+   
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
-      /*Check to avoid self interaction (redundant, but saves operations)*/
-	dd.at(0)=((*x).at(i)-(*x).at((*inear).at(i*dim+j))); /*Definition of vector distances*/
-	dd.at(1)=((*y).at(i)-(*y).at((*inear).at(i*dim+j)));
-	dd.at(2)=((*z).at(i)-(*z).at((*inear).at(i*dim+j)));
-
+	dd.at(0)=(*x).at(i)-(*x).at((*inear).at(i*dim+j)); /*Definition of vector distances*/
+	dd.at(1)=(*y).at(i)-(*y).at((*inear).at(i*dim+j));
+	dd.at(2)=(*z).at(i)-(*z).at((*inear).at(i*dim+j));
 	
 	ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
 
@@ -183,20 +183,23 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	}
 	
 	/*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
-	ddrx.at(0)=ddrx.at(0)+h; 
-	ddrrx.at(0)=ddrrx.at(0)+2*h;
-	ddlx.at(0)=ddlx.at(0)-h;
-	ddllx.at(0)=ddllx.at(0)-2*h;
+	ddrx.at(0)=dd.at(0)+h;  
+	ddrrx.at(0)=dd.at(0)+2*h;
+	ddlx.at(0)=dd.at(0)-h;
+	ddllx.at(0)=dd.at(0)-2*h;
 
-	ddry.at(1)=ddry.at(1)+h; 
-	ddrry.at(1)=ddrry.at(1)+2*h;
-	ddly.at(1)=ddly.at(1)-h;
-	ddlly.at(1)=ddlly.at(1)-2*h;
+	ddry.at(1)=dd.at(1)+h;  
+	ddrry.at(1)=dd.at(1)+2*h;
+	ddly.at(1)=dd.at(1)-h;
+	ddlly.at(1)=dd.at(1)-2*h;
 
-	ddrz.at(2)=ddrz.at(2)+h; 
-	ddrrz.at(2)=ddrrz.at(2)+2*h;
-	ddlz.at(2)=ddlz.at(2)-h;
-	ddllz.at(2)=ddllz.at(2)-2*h;
+	ddrz.at(2)=dd.at(2)+h;  
+	ddrrz.at(2)=dd.at(2)+2*h;
+	ddlz.at(2)=dd.at(2)-h;
+	ddllz.at(2)=dd.at(2)-2*h;
+
+	std::cout << "i is " << i << std::endl;
+	std::cout << "j is " << j << std::endl;
 
 	ddmrx=sqrt(ddrx.at(0)*ddrx.at(0)+ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2));
 	ddmry=sqrt(ddry.at(0)*ddry.at(0)+ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2));
@@ -209,34 +212,51 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	ddmlx=sqrt(ddlx.at(0)*ddlx.at(0)+ddlx.at(1)*ddlx.at(1)+ddlx.at(2)*ddlx.at(2));
 	ddmly=sqrt(ddly.at(0)*ddly.at(0)+ddly.at(1)*ddly.at(1)+ddly.at(2)*ddly.at(2));
 	ddmlz=sqrt(ddlz.at(0)*ddlz.at(0)+ddlz.at(1)*ddlz.at(1)+ddlz.at(2)*ddlz.at(2));
-      
+
 	ddmllx=sqrt(ddllx.at(0)*ddllx.at(0)+ddllx.at(1)*ddllx.at(1)+ddllx.at(2)*ddllx.at(2));
 	ddmlly=sqrt(ddlly.at(0)*ddlly.at(0)+ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2));
 	ddmllz=sqrt(ddllz.at(0)*ddllz.at(0)+ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2));
 
+
+//	double h=Gethijab(i,j,l,lp,&ddrx,6,6);
+
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;l<norbs;l++){ /*Cycle spanning the second orbital type*/
-	    if(l!=lp||(lp==0 && lp==0)){
-	      for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
-		(*fx).at(i)=(*fx).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrx)+8*Gethijab(i,j,l,lp,&ddrx)-8*Gethijab(i,j,l,lp,&ddlx)+Gethijab(i,j,l,lp,&ddllx))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
-		(*fy).at(i)=(*fy).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrry)+8*Gethijab(i,j,l,lp,&ddry)-8*Gethijab(i,j,l,lp,&ddly)+Gethijab(i,j,l,lp,&ddlly))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
-		(*fz).at(i)=(*fz).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrz)+8*Gethijab(i,j,l,lp,&ddrz)-8*Gethijab(i,j,l,lp,&ddlz)+Gethijab(i,j,l,lp,&ddllz))/(12*h)*(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
+	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
+//	    if((l!=0 && lp!=0)||(l==0 && lp==0)){
+	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
+		 dualeigen=(*c).at(l+i+n*dim)*(*c).at(lp+j+n*dim);
+		 
+		 (*fx).at(i)=(*fx).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,j,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,j,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,j,l,lp,&ddllx)*s(ddmllx))/(12*h)*dualeigen;
+		 (*fy).at(i)=(*fy).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrry)*s(ddmrrx)+8*Gethijab(i,j,l,lp,&ddry)*s(ddmrx)-8*Gethijab(i,j,l,lp,&ddly)*s(ddmlx)+Gethijab(i,j,l,lp,&ddlly)*s(ddmllx))/(12*h)*dualeigen;
+		 (*fz).at(i)=(*fz).at(i)-2*2*(-Gethijab(i,j,l,lp,&ddrrz)*s(ddmrrx)+8*Gethijab(i,j,l,lp,&ddrz)*s(ddmrx)-8*Gethijab(i,j,l,lp,&ddlz)*s(ddmlx)+Gethijab(i,j,l,lp,&ddllz)*s(ddmllx))/(12*h)*dualeigen;
+		
+		 //	std::cout << "l is " << l << std::endl;
+		 //std::cout << "lp is " << lp << std::endl;
+		 //std::cout << "dualeigen=" << dualeigen << std::endl;
+		 std::cout << "i is " << i << " and j is " << j << std::endl;
+		 std::cout << "l is " << l << " and l' is " << lp << std::endl;
+		 std::cout << "fx(" << i << ")=" << (*fx).at(i) << std::endl;
+		 std::cout << "fy(" << i << ")=" << (*fy).at(i) << std::endl;
+		 std::cout << "fz(" << i << ")=" << (*fz).at(i) << std::endl;
+
+		 std::cout << std::endl;
+		
 	      }
 	    }
 	  }
-	}
+//	}
 
-	std::cout << (*fx).at(i) << std::endl;
-	std::cout << (*fy).at(i) << std::endl;
-	std::cout << (*fz).at(i) << std::endl;
-	
-	
+//	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
+//	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
+//	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
+//	std::cout << std::endl;
+
 	sumphinn=0;
 
 	for(m=0;m<(*nnear).at((*inear).at(i*dim+j));m++){
-	  dd.at(0)=abs((*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m))); /*Definition of vector distances*/
-	  dd.at(1)=abs((*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
-	  dd.at(2)=abs((*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m)));
+	  dd.at(0)=(*x).at((*inear).at(i*dim+j))-(*x).at((*inear).at((*inear).at(i*dim+j)*dim+m)); /*Definition of vector distances*/
+	  dd.at(1)=(*y).at((*inear).at(i*dim+j))-(*y).at((*inear).at((*inear).at(i*dim+j)*dim+m));
+	  dd.at(2)=(*z).at((*inear).at(i*dim+j))-(*z).at((*inear).at((*inear).at(i*dim+j)*dim+m));
 		    
 	    ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
 	    
@@ -251,9 +271,6 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
       
     }
   }
-
-//  return 0;
-
 }
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz)
@@ -278,15 +295,12 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 			(*nnear).at(i)++;
-			std::cout << "nnear at i is " << (*nnear).at(i) << std::endl;
-			(*inear).at(i*N+(*nnear).at(i)-1)=j;
-			std::cout << "inear at " << i*N+(*nnear).at(i)-1 << " is " << (*inear).at(i*N+(*nnear).at(i)-1) << " should be " << j << std::endl;
+			(*inear).at(i*N+(*nnear).at(i)-1)=j;;
 			//	nnear[i]=nnear[i]+1;
 			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}
-
 }	//ends near_neigh
 
 void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T)
