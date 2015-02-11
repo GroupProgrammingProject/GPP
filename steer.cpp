@@ -47,16 +47,10 @@ int main(int argc, char* argv[]){
 	// Start forces convergence loop
 	int norbs=4;
 	std::vector<double> fx(n),fy(n),fz(n);
-	
-	int count=0;
-	while(count<5){
+
 	forces(n,norbs,&posx,&posy,&posz,&eigvects,rc,&nnear,&inear,&fx,&fy,&fz);
-	std::cout << "fx " << fx.at(0) << std::endl;
-	std::cout << "fy " << fy.at(0) << std::endl;
-	std::cout << "fz " << fz.at(0) << std::endl;
-	count++;
 //	change positions of atoms
-	}
+
 
 
 	//Plot positions!
