@@ -62,8 +62,8 @@ void NearestNeighbours(Eigen::MatrixXi* inear, std::vector<int>* nnear, Eigen::M
 	int numatoms=nnear->size();
 	for (int i=0; i<numatoms; i++){
 		int nnearcounter=0;
+		int k=0;
 		for (int j =0; j<numatoms; j++){
-			int k=0;
 			double dist = (*modr)(i, j);
 			if (dist<rv && dist!=0){
 				nnearcounter++;
