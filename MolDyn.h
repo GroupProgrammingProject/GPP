@@ -151,7 +151,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
-      nearlabel=(*inear).at(i*dim+k);
+      nearlabel=(*inear).at(i*10+k);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
       dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
       dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
@@ -162,7 +162,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
    
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
-      nearlabel=(*inear).at(i*dim+j);
+      nearlabel=(*inear).at(i*10+j);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
 	dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
 	dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
@@ -201,9 +201,6 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	ddrrz.at(2)=dd.at(2)+2*h;
 	ddlz.at(2)=dd.at(2)-h;
 	ddllz.at(2)=dd.at(2)-2*h;
-
-	//std::cout << "i is " << i << std::endl;
-	//std::cout << "j is " << nearlabel << std::endl;
 
 	ddmrx=sqrt(ddrx.at(0)*ddrx.at(0)+ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2));
 	ddmry=sqrt(ddry.at(0)*ddry.at(0)+ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2));
@@ -246,12 +243,12 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	      //derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
 	      //derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
 
-	    derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/h;
-	    derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/h;
-	    derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/h;
+	    derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
+	    derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
+	    derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
 
-	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
-		 dualeigen=(*c).at(l+i+n*dim)*(*c).at(lp+nearlabel+n*dim);
+	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the eigenvector*/
+		 dualeigen=(*c).at(l+i+n*4*dim)*(*c).at(lp+nearlabel+n*4*dim);
 
 		 (*fx).at(i)=(*fx).at(i)-2*2*derivx*dualeigen;
 		 (*fy).at(i)=(*fy).at(i)-2*2*derivy*dualeigen;
@@ -310,7 +307,7 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 			(*nnear).at(i)++;
-			(*inear).at(i*N+(*nnear).at(i)-1)=j;;
+			(*inear).at(i*10+(*nnear).at(i)-1)=j;;
 			//	nnear[i]=nnear[i]+1;
 			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
