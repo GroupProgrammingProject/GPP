@@ -186,13 +186,13 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    //derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
-	      //derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
-	      //derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
+	    derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
+	      derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
+	      derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
 
-	    derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
-	    derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
-	    derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
+	    // derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
+	    //derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
+	    //derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
 
 	    for(n=0;n<norbs*dim;n++){ /*Cycle spanning the level of the eigenvector*/
 		 dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);
@@ -200,10 +200,8 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 		 (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
 		 (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
 		 (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
-
-	       
-				
-	       }
+			
+	    }
 	  }
 	}
 
@@ -225,9 +223,9 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	    sumphinn=sumphinn+o(ddm);
 	}
 	      /*calculation of repuslve forces*/
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
-	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
-	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
+	//	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
+	//(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
+	//(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
 	
       
     }
