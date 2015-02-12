@@ -7,6 +7,7 @@
 #include "hamiltonian.h"
 #include "functions.h"
 #include "geometryinfo.h"
+#include "ScaleGeom.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -20,10 +21,11 @@ int main(int argc, char* argv[]){
 	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
-
-	// "Copy" "unit cell" of structure
+	std::cout << "n = " << n <<std::endl;
+	std::vector<double> posxnew(n), posynew(n), posznew(n);
 
 	// Scale cell size
+	//ScaleGeom(n, 1.2, 1.2, 1.2, &posx, &posy, &posz, &posxnew, &posynew, &posznew);
 
 	// Calculate distances
 	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
