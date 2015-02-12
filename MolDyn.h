@@ -18,7 +18,7 @@
 
 /*Change vector syntax as: std::vector<double>. Assignments xi=(*v).at(i). Inputs as pointer: std::vector<double>*, to call in functs ad &*/
 
-int verlet(int N, int nmd, int norbs, std::vector<double>* mass, double rc, double rv, double T, double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,int nnmax);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
+int verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
 just define an array of dim 1); cut-off radius; verlet radius; initial temperature; timestep; xyz arrays; matrix of eigenvectors (N*N) (vectors as columns);
 cell sizes in xyz (put big numbers if you don't want PBCs) */
 
@@ -32,87 +32,32 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 
 //using namespace std;
 //
-int verlet(int N, int nmd, int norbs, std::vector<double>* mass, double rc, double rv, double T, double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* c,double sx,double sy,double sz,int nnmax)
+/*double verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear)
 {
 	//Implement Velocity Verlet algorithm
 //  double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
-		  std::vector<double> fx(N),fy(N),fz(N),vx(N),vy(N),vz(N),xold(N),yold(N),zold(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
-		  double m=(*mass).at(0),kin,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
+		  std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
 		 // int *nnear,*inear;
-	std::vector<int> nnear(N), inear(N*nnmax);
-  double boltz=1/11603;//Boltzmann's constant in eV/K  1.38*pow(10,-23);
-//  fx= new double [N];
-//	fy=new double [N];
-//	fz=new double [N];
-//	vx=new double [N];
-//	vy=new double [N];
-//	vz=new double [N];
-//	xold=new double [N];
-//	yold=new double [N];
-//	zold=new double [N];
-//	fxn=new double [N];
-//	fyn=new double [N];
-//	fzn=new double [N];
-//	vxm=new double [N];
-//	vym=new double [N];
-//	vzm=new double [N];
-//	nnear=new int [N];
-//	inear=new int [N*nnmax];
-	near_neigh(N,x,y,z,rc,&nnear,&inear,sx,sy,sz); 
-	for(int i=0; i<N; i++)
-	{
-		xold.at(i)=(*x).at(i);
-		yold.at(i)=(*y).at(i);//[i]=y[i];
-		zold.at(i)=(*z).at(i);//zold[i]=z[i];
-	}
+  double boltz=1./11603;
+  int N=(*x).size();
+  
 	forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fx,&fy,&fz); //calculate the forces
-	velocity(N,mass,&vx,&vy,&vz,T);
 	
-	for(int imd=1; imd<=nmd; imd++) //cycle through nmd steps
-	{
 		for(int i=0; i<N; i++)
 		{
 			(*x).at(i)=(*x).at(i)+vx.at(i)*dt+0.5*fx.at(i)*dt*dt/m;
-			(*y).at(i)=(*y).at(i)+vy.at(i)*dt+0.5*fy.at(i)*dt*dt/m;//[i]=y[i]+vy[i]*dt+0.5*fy[i]*dt*dt/m;
-			(*z).at(i)=(*z).at(i)+vz.at(i)*dt+0.5*fz.at(i)*dt*dt/m;//z[i]=z[i]+vz[i]*dt+0.5*fz[i]*dt*dt/m;
+			(*y).at(i)=(*y).at(i)+vy.at(i)*dt+0.5*fy.at(i)*dt*dt/m;
+			(*z).at(i)=(*z).at(i)+vz.at(i)*dt+0.5*fz.at(i)*dt*dt/m;
 
-			dx=(*x).at(i)-xold.at(i);
-			//dx=x[i]-xold[i];
-			dx=dx-sx*round(dx/sx);
-			dy=(*y).at(i)-yold.at(i);
-			dy=dy-sy*round(dy/sy);
-			dz=(*z).at(i)-zold.at(i);
-			dz=dz-sz*round(dz/sz);
-			dist=sqrt(dx*dx+dy*dy+dz*dz);
-			if (dist>dmax){dmax=dist;} //set dmax to largest dist so far
-		}
-		if(dmax>=0.4*(rv-rc)) //do the Verlet cages
-		{
-			near_neigh(N,x,y,z,rc,&nnear,&inear,sx,sy,sz);
-			for(int i=0; i<N; i++)
-			{
-				xold.at(i)=(*x).at(i);
-				yold.at(i)=(*y).at(i);
-				zold.at(i)=(*z).at(i);
-				//xold[i]=x[i];
-				//yold[i]=y[i];
-				//zold[i]=z[i];
-			}
-			forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fx,&fy,&fz);//recalculate forces
+			forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fxn,&fyn,&fzn);//recalculate forces
 			for(int i=0; i<N; i++)//calculate new velocities
 			{
 				vx.at(i)=vx.at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
 				vy.at(i)=vy.at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
 				vz.at(i)=vz.at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
-//				vx[i]=vx[i]+dt*(fx[i]+fxn[i])/(2*m);
-//				vy[i]=vy[i]+dt*(fy[i]+fyn[i])/(2*m);
-//				vz[i]=vz[i]+dt*(fz[i]+fzn[i])/(2*m);
 				fx.at(i)=fxn.at(i);
 				fy.at(i)=fyn.at(i);
 				fz.at(i)=fzn.at(i);
-//				fx[i]=fxn[i];
-//				fy[i]=fyn[i];
-//				fz[i]=fzn[i];
 			}
 			for(int i=0; i<N; i++)//mean square velocities
 			{
@@ -123,10 +68,12 @@ int verlet(int N, int nmd, int norbs, std::vector<double>* mass, double rc, doub
 				//svym=svym+vy[i]*vy[i];
 				//svzm=svzm+vz[i]*vz[i];
 			}
-			kin=0,5*m*(svxm+svym+svzm); //kinetic energy
+			kin=0.5*m*(svxm+svym+svzm); //kinetic energy
 			Tf=2*kin/(3*boltz*N); //final temperature
 		}
-	}
+		
+		return Tf;
+	
 }
 
 /*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
@@ -149,7 +96,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
-      nearlabel=(*inear).at(i*dim+k);
+      nearlabel=(*inear).at(i*10+k);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
       dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
       dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
@@ -160,7 +107,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
    
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
-      nearlabel=(*inear).at(i*dim+j);
+      nearlabel=(*inear).at(i*10+j);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
 	dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
 	dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
@@ -199,9 +146,6 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	ddrrz.at(2)=dd.at(2)+2*h;
 	ddlz.at(2)=dd.at(2)-h;
 	ddllz.at(2)=dd.at(2)-2*h;
-
-	//std::cout << "i is " << i << std::endl;
-	//std::cout << "j is " << nearlabel << std::endl;
 
 	ddmrx=sqrt(ddrx.at(0)*ddrx.at(0)+ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2));
 	ddmry=sqrt(ddry.at(0)*ddry.at(0)+ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2));
@@ -247,27 +191,22 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	    derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
 	    derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
 	    derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
-	    std::cout << Gethijab(i,nearlabel,l,lp,&ddrz) << " " <<s(ddmrz) << " " << Gethijab(i,nearlabel,l,lp,&ddlz) << " " << s(ddmlz) << std::endl;
-	    std::cout << i << " " << l << " " << nearlabel << " " << lp << " " << derivz << std::endl;
-//		 std::cout << (*c).at(l+i*ndim) << "  " << (*c).at(lp+nearlabel+n*dim) << std:: endl;
-//		 std::cout << derivx*dualeigen << std::endl;
-//		 std::cout << derivy*dualeigen << std::endl;
-//		 std::cout << derivz*dualeigen << std::endl;
-	    for(n=0;n<dim;n++){ /*Cycle spanning the level of the level of the eigenvector*/
-		 dualeigen=(*c).at(l+i+n*dim)*(*c).at(lp+nearlabel+n*dim);
-		 //	 std::cout << (*c).at(l+i+n*dim) << "  " << (*c).at(lp+nearlabel+n*dim) << std:: endl;
-		 (*fx).at(i)=(*fx).at(i)-2*2*derivx*dualeigen;
-		 (*fy).at(i)=(*fy).at(i)-2*2*derivy*dualeigen;
-		 (*fz).at(i)=(*fz).at(i)-2*2*derivz*dualeigen;
-//		 std::cout << (*fx).at(i) << "  " << (*fy).at(i) << "  " << (*fz).at(i) << std::endl;		
-	       }
+	    
+		 for(n=0;n<norbs*dim;n++){ /*Cycle spanning the level of the eigenvector*/
+		 	dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);
+
+		 	(*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
+		 	(*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
+		 	(*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
+	    }
 	  }
 	}
 
-//	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
-//	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
-//	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
-//	std::cout << std::endl;
+	std::cout << "i=" << i << " j=" << nearlabel << std::endl;
+	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
+	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
+	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
+	std::cout << std::endl;
 
 	sumphinn=0;
 
@@ -314,7 +253,7 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 			(*nnear).at(i)++;
-			(*inear).at(i*N+(*nnear).at(i)-1)=j;;
+			(*inear).at(i*10+(*nnear).at(i)-1)=j;;
 			//	nnear[i]=nnear[i]+1;
 			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
