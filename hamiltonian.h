@@ -37,7 +37,7 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
 	  				if (sr == 0) {hijab = 0;}                       // If scaling function gives 0, no need to calc hijab
 	  				else {hijab = Gethijab(i,j,a,b,&d);} // Hamiltonian elements of ij interaction
 	  				Hijab(4*i+a,4*j+b)     = sr*hijab;              // Scale hijab and populate matrix Hijab
-//	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
+	  				Hijab(4*j+b,4*i+a)     = sr*hijab;              // Scale hijab and populate matrix Hijab
 				}                                                 // End loop over b
       	}                                                   // End loop over a
     	}                                                     // End loop over j
@@ -63,8 +63,8 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
 
 // Uncomment any section to print output for testing
 
-/* 	std::cout << Hijab << std::endl;		//print out Hamiltonian
-  std::cout << "After sorting" << std::endl;
+ 	std::cout << Hijab << std::endl;		//print out Hamiltonian
+	/*  std::cout << "After sorting" << std::endl;
   for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 	
   std::cout << "Eigenvector matrix" << std::endl;
