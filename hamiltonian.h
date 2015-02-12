@@ -9,22 +9,21 @@
 #include "functions.h"
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
-double Hamiltonian(int n, std::vector<double>* modr, std::vector<double>* rx, std::vector<double>* ry, std::vector<double>* rz, std::vector<double>* eigvects, bool verbose){
+double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
   
   int i, j, a, b;                                          // i,j loop over atoms; a,b loop over orbitals
   double r,rxloc, ryloc, rzloc;                            // temporary parameters to store interatomic distances
   std::vector<double> d(3);                                // d is a 3d array of atom pair's connecting vector (varys within ij loop)
   double sr,hijab;                                         // hijab: unscaled matrix element, sr: scaling function value at r
   double Ebs=0;										   			  // Band structure energy to be returned
-  typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> MatrixXd;
-  MatrixXd Hijab(4*n,4*n);			   							  // Hamiltonian matrix for diagonalization
+  Eigen::MatrixXd Hijab(4*n,4*n);			   							  // Hamiltonian matrix for diagonalization
 
   for (i=0;i<n;i++) {                                      // Cycle through atoms i
     for (j=0;j<=i;j++) {                                   // Cycle through atoms j (note upper triangular matrix)
-		r = (*modr).at(i*n + j);
- 		rxloc = (*rx).at(i*n + j)/r;
- 		ryloc = (*ry).at(i*n + j)/r;
- 		rzloc = (*rz).at(i*n + j)/r;
+		r = (*modr)(i, j);
+ 		rxloc = (*rx)(i, j)/r;
+ 		ryloc = (*ry)(i, j)/r;
+ 		rzloc = (*rz)(i, j)/r;
       d.at(0)=rxloc; d.at(1)=ryloc; d.at(2)=rzloc;
 		  	if (i == j) {sr = 1;}                             // Don't apply scaling function if i=j
       	else {sr    = s(r);}                              // Scaling parameter
@@ -39,7 +38,7 @@ double Hamiltonian(int n, std::vector<double>* modr, std::vector<double>* rx, st
     	}                                                    // End loop over j
   	}                                                       // End loop over i
 
-  Eigen::SelfAdjointEigenSolver<MatrixXd> es(Hijab);       // Compute eigenvectors and eigenvalues
+  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(Hijab);       // Compute eigenvectors and eigenvalues
 
   typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
   std::vector<pair> eigvalarr;                                             
@@ -50,8 +49,8 @@ double Hamiltonian(int n, std::vector<double>* modr, std::vector<double>* rx, st
   for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
-			(*eigvects).at(2*i*4*n+j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
-			(*eigvects).at((2*i+1)*4*n+j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
+			(*eigvects)(2*i,j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
+			(*eigvects)(2*i+1,j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
   }
 
@@ -67,7 +66,7 @@ double Hamiltonian(int n, std::vector<double>* modr, std::vector<double>* rx, st
 	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
 	 for(i=0;i<4*n;i++){
 		for(j=0;j<4*n;j++){
-		  std::cout << (*eigvects).at(i*4*n+j) << "\t\t";
+		  std::cout << (*eigvects)(j,i) << "\t\t";
 		}
 		std::cout << std::endl;
 	 }
