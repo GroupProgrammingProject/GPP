@@ -21,8 +21,11 @@ int main(int argc, char* argv[]){
 	// Number of atoms
 	int n=posx.size();
 	// Calculate distances
-	Eigen::MatrixXd*
-	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
+	Eigen::MatrixXd modr(n,n);
+	Eigen::MatrixXd rx(n,n);
+	Eigen::MatrixXd ry(n,n);
+	Eigen::MatrixXd rz(n,n);
+//	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	// Create empty arrays needed for MD
 	std::vector<double> eigvects(16*n*n);
