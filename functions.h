@@ -98,6 +98,17 @@ double d_f0(double x){
   return f0;
 }
 
+//derivative of phi(r) needed for MD
+//double 
+double d_o(double r)
+{
+	double m=3.30304;
+	double mc=8.6655;
+	double dc=2.1052;
+	double dphi=-(m/r)*o(r)*(1+mc*(r/dc)^m);
+	return dphi;
+}
+
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
 double X (std::vector<double>* rx, std::vector<double>* ry,std::vector<double>* rz, int i ){
   double r;
