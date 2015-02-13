@@ -47,7 +47,33 @@ int main(int argc, char* argv[]){
 	// Start forces convergence loop
 	int norbs=4;
 	std::vector<double> fx(n),fy(n),fz(n);
-	forces(n,norbs,&posx,&posy,&posz,&eigvects,rc,&nnear,&inear,&fx,&fy,&fz);
+	double h=0.01;
+	
+	FILE *start = fopen("start.txt", "w");
+	for(int i=0;i<n;i++){
+	  fprintf(start,"%f\t%f\t%f\n",posx.at(i),posy.at(i),posz.at(i));
+	}
+
+	for(int i=0;i<10000;i++){
+	  forces(n,norbs,&posx,&posy,&posz,&eigvects,rc,&nnear,&inear,&fx,&fy,&fz);
+	  for(int j=0;j<n;j++){
+	    posx.at(j)=posx.at(j)+h*fx.at(j);
+	    posy.at(j)=posy.at(j)+h*fy.at(j);
+	    posz.at(j)=posz.at(j)+h*fz.at(j);
+	  }
+	}
+
+	FILE *end = fopen("end.txt", "w");
+	for(int i=0;i<n;i++){
+	  fprintf(end,"%f\t%f\t%f\n",posx.at(i),posy.at(i),posz.at(i));
+	}	
+       
+     	for(int i=0;i<n;i++){
+	  std::cout << "fx(" << i << ")=" << fx.at(i) << std::endl;
+	  std::cout << "fy(" << i << ")=" << fy.at(i) << std::endl;
+	  std::cout << "fz(" << i << ")=" << fz.at(i) << std::endl;
+	  std::cout << std::endl;
+	}
 //	change positions of atoms
 
 	//Plot positions!

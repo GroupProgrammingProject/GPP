@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
 	ReadInXYZ (argv[1], &posx, &posy, &posz);
 
 	// Test distance function
-	const int N=posx.size();
+	const int N=posx.size(
 	Eigen::MatrixXd rx (N, N);
 	Eigen::MatrixXd ry (N, N);
 	Eigen::MatrixXd rz (N, N);

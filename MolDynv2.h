@@ -81,15 +81,16 @@ nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-t
 maxnn=max number of nn */
 void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
-  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3),fxr(dim),fyr(dim),fzr(dim);
+  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3);
 //   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
   double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=0.001,sumphinn,sumphi,dualeigen,derivx,derivy,derivz;
-  double fxtot=0.0, fytot=0.0, fztot=0.0;
+	
 
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
     (*fy).at(i)=0;
     (*fz).at(i)=0;
+    sumphinn=0;
   }
 
   
@@ -110,11 +111,11 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       nearlabel=(*inear).at(i*10+j);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
-		dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
-		dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
+	dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
+	dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
 	
-		ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
-
+	ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
+	
 	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
 	  ddrx.at(k)=dd.at(k); 
 	  ddrrx.at(k)=dd.at(k);
@@ -183,15 +184,6 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 
 //	double h=Gethijab(i,j,l,lp,&ddrx,6,6);
 
-//	for(l=0; l<norbs; l++){
-//			  for(lp=0;lp<norbs;lp++){
-//						 for(n=0;n<norbs*dim;n++){
-//									double eig1=(*c).at(l+i*norbs+n*norbs*dim), eig2=(*c).at(lp+nearlabel*norbs+n*norbs*dim);
-//									std::cout << "i=" << i <<" j=" << nearlabel << " l= " << l << " lp=" << lp << " n=" << n << " eig1=" << eig1 << " eig2=" << eig2 << std::endl;
-//						 }
-//			  }
-//	}
-
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
 	    derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
@@ -213,6 +205,8 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	  }
 	}
 
+	//std::cout << "i=" << i << " j=" << nearlabel << std::endl;
+	//std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
 	//std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
 	//std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
 	//std::cout << std::endl;
@@ -227,42 +221,19 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	    ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
 	    
 	    sumphinn=sumphinn+o(ddm);
-
 	}
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
-	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmry)-o(ddmly))/(2*h);
-	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrz)-o(ddmlz))/(2*h);
-/*
-	fxr.at(i)=fxr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
-	fyr.at(i)=fyr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmry)-o(ddmly))/(2*h);	
-	fzr.at(i)=fzr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrz)-o(ddmlz))/(2*h);
-*/
-	std::cout << "i=" << i << " j=" << nearlabel << std::endl;
-	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
-	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
-	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
-/*	      //calculation of repuslve forces
+	      /*calculation of repuslve forces*/
 	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
 	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
 	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
-	*/
+	
       
     }
-	 fxtot=fxtot+(*fx).at(i);
-	 fytot=fytot+(*fy).at(i);
-	 fztot=fztot+(*fz).at(i);
-//	 fxtot=fxtot+fxr.at(i);
-//	 fytot=fytot+fyr.at(i);
-//	 fztot=fztot+fzr.at(i);
   }
-  std::cout << fxtot << std::endl; //check that total forces are zero
-  std::cout << fytot << std::endl;
-  std::cout << fztot << std::endl;
 }
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz)
-{  
-		  //determine the nearest neighbours for each atom
+{  //determine the nearest neighbours for each atom
 	double dx,dy,dz,dist;
 	for (int i=0; i<N; i++) {(*nnear).at(i)=0;}// nnear[i]=0; }
 	for (int i=0; i<N; i++)
