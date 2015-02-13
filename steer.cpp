@@ -8,6 +8,7 @@
 #include "hamiltonian.h"
 #include "functions.h"
 #include "MolDyn.h"
+#include "Hamder.h"
 
 int main(int argc, char* argv[]){
 
@@ -68,12 +69,13 @@ int main(int argc, char* argv[]){
 	  fprintf(end,"%f\t%f\t%f\n",posx.at(i),posy.at(i),posz.at(i));
 	}	
        
-     	for(int i=0;i<n;i++){
+   for(int i=0;i<n;i++){
 	  std::cout << "fx(" << i << ")=" << fx.at(i) << std::endl;
 	  std::cout << "fy(" << i << ")=" << fy.at(i) << std::endl;
 	  std::cout << "fz(" << i << ")=" << fz.at(i) << std::endl;
 	  std::cout << std::endl;
 	}
+	
 //	change positions of atoms
 
 	//Plot positions!

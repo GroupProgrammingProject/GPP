@@ -12,6 +12,7 @@
 #include <vector>
 #include "functions.h"
 #include "Gethijab.h"
+#include "Hamder.h"
 #include <vector>
 
 //Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
@@ -198,6 +199,9 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	      derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
 	      derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
 
+			//test Hamder.h
+//			double testh=Hamder(i,nearlabel,l,lp,&ddrx,ddmrx);
+//			std::cout << testh << std::endl;
 	    // derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
 	    //derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
 	    //derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
@@ -236,12 +240,13 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	fxr.at(i)=fxr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
 	fyr.at(i)=fyr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmry)-o(ddmly))/(2*h);	
 	fzr.at(i)=fzr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrz)-o(ddmlz))/(2*h);
-*/
+
 	std::cout << "i=" << i << " j=" << nearlabel << std::endl;
 	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
 	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
 	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
-/*	      //calculation of repuslve forces
+*/
+	/*	      //calculation of repuslve forces
 	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
 	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
 	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
@@ -255,9 +260,11 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 //	 fytot=fytot+fyr.at(i);
 //	 fztot=fztot+fzr.at(i);
   }
+/*
   std::cout << fxtot << std::endl; //check that total forces are zero
   std::cout << fytot << std::endl;
   std::cout << fztot << std::endl;
+*/
 }
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz)
