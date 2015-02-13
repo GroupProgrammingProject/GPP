@@ -18,6 +18,18 @@ double ts (double r){
   return ts;
 }
 
+//derivative of s(r) with respect to dx
+double dts (double r,double dx){
+  double c0=6.7392620074314*pow(10,-3);
+  double c1=-8.1885359517898*pow(10,-2);
+  double c2=0.1932365259144;
+  double c3=0.3542874332380;
+  double r1=2.45;
+
+  double dts=dx*(c1+2*c2*(r-r1)+3*c3((r+r1)*(r+r1)-2*r1*r))/r;
+  return dts;
+}
+
 //tail function for phi(r)
 double to (double r){
   double c0=2.2504290109*pow(10,-8);
@@ -52,7 +64,29 @@ double s (double r){
 	return S;
 }
 
-//phi(r) functions including the til function
+//derivative of s(r) with respect to dx
+double ds (double r,double dx){
+  double r0=1.536329; //nearest-neighbour atomic separation
+  double n=2;
+  double nc=6.5;
+  double rc=2.18;
+  double r1=2.45;
+  double rcut=2.6;
+  double dS;
+  //constants 
+    if (r<r1){
+      dS=(pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)))*n*dx*(1+nc*pow(r/rc,nc)))/(r*r);
+    }
+    else if(r>=r1 && r<rcut){
+      dS=dts(r);
+    }
+   else{
+    return 0;
+   }
+	return dS;
+}
+
+//phi(r) functions including the tail function
 double o (double r){
   double phi0=8.18555;
   double m=3.30304;

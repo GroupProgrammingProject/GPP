@@ -63,9 +63,9 @@ double Hamiltonian(int n, std::vector<double>* posx, std::vector<double>* posy, 
 
 // Uncomment any section to print output for testing
 
- 	std::cout << Hijab << std::endl;		//print out Hamiltonian
-	  std::cout << "After sorting" << std::endl;
-  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+// 	std::cout << Hijab << std::endl;		//print out Hamiltonian
+//	  std::cout << "After sorting" << std::endl;
+//  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 	
   /*  std::cout << "Eigenvector matrix" << std::endl;
   std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
