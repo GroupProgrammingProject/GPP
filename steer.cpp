@@ -8,7 +8,6 @@
 #include "hamiltonian.h"
 #include "functions.h"
 #include "MolDyn.h"
-#include "Hamder.h"
 
 int main(int argc, char* argv[]){
 
