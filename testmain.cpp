@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rz (N, N);
 	Eigen::MatrixXd modr (N, N);
 	std::vector<int>nnear(N);
-	Eigen::MatrixXi inear = Eigen::MatrixXi::Constant(N, 10, -123456);					// Random number to indicate that a value has been unassigned
+	Eigen::MatrixXi inear = Eigen::MatrixXi::Constant(N, 10, -111);					// Random number to indicate that a value has been unassigned
 	double rc=2.6, rv=4;
 	GetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, rc);
 	NearestNeighbours(&inear, &nnear, &modr, rv);
@@ -33,10 +33,5 @@ std::cout<<modr<<std::endl;
 Print(&nnear);
 std::cout<<inear<<std::endl;
 	
-	
-	bool recalculate=RecalculateNearestNeighbours(&refposx, &posy, &posz, &posx, &posy, &posz, rc, rv);
-	std::cout<<"Recalculate: "<<recalculate<<std::endl;
-	
-
 return 0;
 }

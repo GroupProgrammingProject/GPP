@@ -7,6 +7,12 @@
 #include <Eigen/Dense>
 
 // Function declarations
+void DistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos);
+void GetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
+void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
+void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc);
+void NearestNeighbours(Eigen::MatrixXi* inear, std::vector<int>* nnear, Eigen::MatrixXd* modr, double rv);
+bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc, double rv);
 
 // Function to calculate one component of the distances between atoms
 void DistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos){
@@ -53,6 +59,49 @@ void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixX
 		}
 	}
 }
+
+// Function to calculate one component of the distances between atoms
+void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double latticeconst, double rc){
+	int numatoms=pos->size();
+	for (int i=0; i<numatoms; i++){
+		for (int j=0; j<numatoms; j++){
+			double xi = pos->at(i), xj=pos->at(j);
+			double result=0;
+			double dist=xi-xj;
+			double dist1= xi-xj-latticeconst;
+			double dist2= xi-xj+latticeconst;
+			if (dist<rc){result=dist;}
+			if (dist1<rc){result=dist1;}
+			if (dist2<rc){result=dist2;}
+			else{;}
+			(*r)(i, j)=result;
+		}
+	}
+}
+
+// Function to calculate distance components between atoms
+void PbcGetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rc){
+	int numatoms=posx->size();
+	PbcDistanceComp(rx, posx, a, rc);
+	PbcDistanceComp(ry, posy, b, rc);
+	PbcDistanceComp(rz, posz, c, rc);
+}
+
+
+// Function to calculate the distances between atoms
+void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rc){
+	int numatoms=posx->size();
+	PbcGetDistanceComponents(rx, ry, rz, posx, posy, posz, a, b, c, rc);
+	for (int i=0; i<numatoms; i++){
+		for (int j=0; j<numatoms; j++){
+		double distx=(*rx)(i, j);
+		double disty=(*ry)(i, j);
+		double distz=(*rz)(i, j);
+		(*modr)(i, j)=sqrt(distx*distx+disty*disty+distz*distz);
+		}
+	}
+}
+
 
 
 // Function that calculates the nearest neighbours of every atom
