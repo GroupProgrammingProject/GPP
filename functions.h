@@ -105,7 +105,7 @@ double X (Eigen::MatrixXd* modr,int n, int i ){
   for (int j=0;j<n;j++){
     if(i!=j){
       r=(*modr)(i,j);
-      x=x+o(r);
+		if (r > 1e-5) {x=x+o(r);}
     };
   };
   return x;
