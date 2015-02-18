@@ -67,8 +67,8 @@ void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixX
 void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double latticeconst, double rv){
 	int numatoms=pos->size();
 	for (int i=0; i<numatoms; i++){
-		double result=0;
 		for (int j=0; j<numatoms; j++){
+			double result=0;
 			double xi = pos->at(i), xj=pos->at(j);
 			double dist=xi-xj;
 			double dist1= xi-xj-latticeconst;
