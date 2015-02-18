@@ -251,21 +251,21 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 
 //Hamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
-//conum contains 0s and 1s; only the coord (x,y,z) we wish to differentiate wrt is a non-zero element
 int k; //for looping
 double h,Es,Ep,V[4];														//h,Es,Ep and V[4] is only used locally in Gethijab_der()
 double Es_C=-2.99,Ep_C=3.71;											//C orbital energies Es and Ep
 double V_CC[4];
 double h1,h2;
 V_CC[0]=-5;V_CC[1]=4.7;V_CC[2]=5.5;V_CC[3]=-1.55;				//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
-//for(int k=0; k<(*d).size(); k++){std::cout << (*conum).at(k) << std::endl;}
 Es=Es_C;Ep=Ep_C;						//set all parameters to the values for Xu's carbon
 for(k=0;k<4;k++){V[k]=V_CC[k];}
-int vconum[3];
+
+int vconum[3]; //array to hold label of x,y,z. Only the coord we are differentiating wrt is non-zero.
 vconum[0]=0;
 vconum[1]=0;
 vconum[2]=0;
 vconum[conum]=1;
+
 //start V&G routine
 	if(i==j){h=0;}
 	else if(a*b==0){
@@ -273,23 +273,8 @@ vconum[conum]=1;
 		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
 		else if(b==0){h=-V[1]*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}										//sp_sigma row
 	}
-//		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
 	else if((a==b) && (a*b!=0)){h=2*(V[2]-V[3])*(*d).at(a-1)*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
-//	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(*d).at(conum)*(vconum[a-1]+vconum[b-1]-2*(*d).at(a-1)*(*d).at(b-1))/distr;}	//pp_sigma and pp_pi diagonal
 	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
-	//		  h=(V[2]-V[3])*
-//		h1=(*conum).at(b-1)*(*d).at(a-1)*(1-pow((*d).at(b-1),2));//*(*dernum).at(b-1);
-//		h2=(*conum).at(a-1)*(*d).at(b-1)*(1-pow((*d).at(a-1),2));
-//		h=(V[2]-V[3])*(h1+h2)/distr;
-//		if((*conum).at(2)==1){
-//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h1 <<std::endl;
-//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h2   " << h2 <<std::endl;
-//		std::cout << h2 <<std::endl;
-//		h=(V[2]-V[3])*(h1+h2)/distr;
-//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h <<std::endl;}
-//			  h=(V[2]-V[3])*((*d).at(a-1)*(1-pow((*d).at(b-1),2))*dernum(b-1))
-//	}
-	//	else{h=(*d).at(b-1)*(V[2]-V[3])*(1-pow((*d).at(b-1),2))/distr;}							//pp_sigma and pp_pi off-diagonal
 //V&G routine ends
 						
 return h;
