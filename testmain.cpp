@@ -22,9 +22,9 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd modr (N, N);
 	std::vector<int>nnear(N);
 	Eigen::MatrixXi inear = Eigen::MatrixXi::Constant(N, 10, -111);					// Random number to indicate that a value has been unassigned
-	double rc=1.6, rv=2.3;
+	double rc=1.6, rv=1.6;
 	
-	double a=2.428, b=4.2, c=2.5;
+	double a=3.57, b=3.57, c=3.57;
 	
 	PbcGetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, a, b, c, rv);
 	NearestNeighbours(&inear, &nnear, &modr, rv);
@@ -34,14 +34,14 @@ std::cout<<"rx: "<<std::endl;
 std::cout<<rx<<std::endl;
 std::cout<<"ry: "<<std::endl;	
 std::cout<<ry<<std::endl;
-std::cout<<"rz: "<<std::endl;	
-std::cout<<rz<<std::endl;
+//std::cout<<"rz: "<<std::endl;	
+//std::cout<<rz<<std::endl;
 std::cout<<"modr: "<<std::endl;	
 std::cout<<modr<<std::endl;
-std::cout<<"nnear: "<<std::endl;
-Print(&nnear);
-std::cout<<"inear: "<<std::endl;	
-std::cout<<inear<<std::endl;
+//std::cout<<"nnear: "<<std::endl;
+//Print(&nnear);
+//std::cout<<"inear: "<<std::endl;	
+//std::cout<<inear<<std::endl;
 
 return 0;
 }
