@@ -1,3 +1,6 @@
+#ifndef GETHIJAB_H
+#define GETHIJAB_H
+
 #include <iostream>
 #include <cmath>
 
@@ -36,5 +39,4 @@ return h;
 } //Gethijab() ends
 
 	
-
-	
+#endif

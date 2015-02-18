@@ -7,6 +7,7 @@
 #include "include/hamiltonian.h"
 #include "include/functions.h"
 #include "include/geometryinfo.h"
+#include "include/MolDyn.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -15,9 +16,8 @@ int main(int argc, char* argv[]){
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool v=1;
 	// Read in types, 
-	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
+	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	// Calculate distances
