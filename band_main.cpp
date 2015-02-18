@@ -4,9 +4,9 @@
 #include "Eigen/Dense"
 #include "readinxyz.h"
 #include "vectorfunctions.h"
-#include "hamiltonian.h"
 #include "functions.h"
 #include "geometryinfo.h"
+#include "band_hamiltonian.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]){
 	double ebs,erep,etot;
 
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
 	etot=ebs+erep;

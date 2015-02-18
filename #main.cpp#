@@ -25,10 +25,10 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-//	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
+
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	// Create empty arrays needed for MD
-//	std::vector<double> eigvects(16*n*n);
+
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot;
