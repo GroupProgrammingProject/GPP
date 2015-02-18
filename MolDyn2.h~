@@ -18,19 +18,16 @@
 
 /*Change vector syntax as: std::vector<double>. Assignments xi=(*v).at(i). Inputs as pointer: std::vector<double>*, to call in functs ad &*/
 
-int verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear);/*Inputs, in order: #atoms; #sim. steps; #orbitals; array containing masses (if all are equal
-just define an array of dim 1); cut-off radius; verlet radius; initial temperature; timestep; xyz arrays; matrix of eigenvectors (N*N) (vectors as columns);
-cell sizes in xyz (put big numbers if you don't want PBCs) */
+double verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>*vy, std::vector<double>* vz, Eigen::MatrixXi* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr);/*Inputs, in order: #orbitals; mass; cut-off radius; timestep; xyz arrays; velocity arrays; matrix of eigenvectors (N*N) (vectors as columns); cell sizes in xyz (put big numbers if you don't want PBCs); nearest neighbour lists; atom vector distances; modulus of vector distances */
 
 void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz);
 
-void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);
-
-void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz);
+//void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);
 
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum);
 
-/*double verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear)
+
+double verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXi* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr);
 {
 	//Implement Velocity Verlet algorithm
 //  double *fx, *fy, *fz, *vx, *vy, *vz, *xold, *yold, *zold, m=mass[1],*fxn,*fyn,*fzn,kin,*vxm,*vym,*vzm,dx,dy,dz,dist,dmax,svxm,svym,svzm,Tf;
@@ -43,14 +40,14 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 	
 		for(int i=0; i<N; i++)
 		{
-			(*x).at(i)=(*x).at(i)+vx.at(i)*dt+0.5*fx.at(i)*dt*dt/m;
-			(*y).at(i)=(*y).at(i)+vy.at(i)*dt+0.5*fy.at(i)*dt*dt/m;
-			(*z).at(i)=(*z).at(i)+vz.at(i)*dt+0.5*fz.at(i)*dt*dt/m;
+			(*x).at(i)=(*x).at(i)+(*vx).at(i)*dt+0.5*fx.at(i)*dt*dt/m;
+			(*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
+			(*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
 
 			forces(N,norbs,x,y,z,c,rc,&nnear,&inear,&fxn,&fyn,&fzn);//recalculate forces
 			for(int i=0; i<N; i++)//calculate new velocities
 			{
-				vx.at(i)=vx.at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
+				(*vx).at(i)=(*vx).at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
 				vy.at(i)=vy.at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
 				vz.at(i)=vz.at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
 				fx.at(i)=fxn.at(i);
@@ -62,16 +59,12 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 				svxm=svxm+vx.at(i)*vx.at(i);
 				svym=svym+vy.at(i)*vy.at(i);
 				svzm=svzm+vz.at(i)*vz.at(i);
-				//svxm=svxm+vx[i]*vx[i];
-				//svym=svym+vy[i]*vy[i];
-				//svzm=svzm+vz[i]*vz[i];
 			}
 			kin=0.5*m*(svxm+svym+svzm); //kinetic energy
 			Tf=2*kin/(3*boltz*N); //final temperature
 		}
 		
-		return Tf;
-	
+		return Tf;	
 }
 
 /*INPUTS:dim=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
@@ -170,33 +163,28 @@ void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vect
 			dx=(*x).at(i)-(*x).at(j);
 			dy=(*y).at(i)-(*y).at(j);
 			dz=(*z).at(i)-(*z).at(j);
-			//dx=x[i]-x[j];
+			
 			dx=dx-sx*round(dx/sx);//if dx>sx, the distance to N.N. is dx-sx
-//			std::cout << "check that new dx isn't zero, dx= " << dx << std::endl;
-			//dy=y[i]-y[j];
 			dy=dy-sy*round(dy/sy);
-			//dz=z[i]-z[j];
 			dz=dz-sz*round(dz/sz);
 			dist=sqrt(dx*dx+dy*dy+dz*dz);
+			
 			if (dist<rc && i!=j) //add the atom j to the nearest neighbour list of i if this holds
 			{
 			(*nnear).at(i)++;
 			(*inear).at(i*10+(*nnear).at(i)-1)=j;;
-			//	nnear[i]=nnear[i]+1;
-			//	inear[i*N+nnear[i]]=j; //a matrix with i rows, nnear[i] (no of nearest neighbours) columns
 			}
 		}
 	}
 }	//ends near_neigh
-
+/*
 void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T)
 {  //calculate velocities
 	double c, ke, m=(*mass).at(1),boltz=1/11603;//1.38*pow(10,-23); //for now, each mass is the same
 	double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg,Tp;
 	double g=sqrt(3*boltz*T/m);
 	for (int i=0; i<N; i++)
-	{
-	  
+	{  
 	  srand (1);
 	  (*vx).at(i)=0; (*vy).at(i)=0; (*vz).at(i)=0;
 	  (*vx).at(i)=c*(2*rand()-1);
@@ -204,17 +192,6 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 	  (*vz).at(i)=c*(2*rand()-1);
 	  vxtot=vxtot+(*vx).at(i);
 	  vytot=vytot+(*vy).at(i);
-//		vx[i]=0; vy[i]=0; vz[i]=0;
-//		c[i]=sqrt(3*boltz*T/m[i])
-//		vx[i]=c[i]*(2*rand(0)-1); //random number generator required
-//		vy[i]=c[i]*(2*rand(0)-1);
-//		vz[i]=c[i]*(2*rand(0)-1);
-//		vx[i]=c*(2*rand()-1);
-//		vy[i]=c*(2*rand()-1);
-//		vz[i]=c*(2*rand()-1);
-//		vxtot=vxtot+vx[i];
-//		vytot=vytot+vy[i];
-//		vztot=vztot+vz[i];
 	}
 	vxavg=vxtot/N;
 	vyavg=vytot/N;
@@ -228,12 +205,6 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 		msvx=msvx+(*vx).at(i)*(*vx).at(i);
 		msvy=msvy+(*vy).at(i)*(*vy).at(i);
 		msvz=msvz+(*vz).at(i)*(*vz).at(i);
-//		vx[i]=vx[i]-vxavg;
-//		vy[i]=vy[i]-vyavg;
-//		vz[i]=vz[i]-vzavg;
-//		msvx=msvx+vx[i]*vx[i];//mean square velocity
-//		msvy=msvy+vy[i]*vy[i];
-//		msvz=msvz+vz[i]*vz[i];
 	}
 	ke=0.5*m*(msvx+msvy+msvz); //must be adapted for different masses
 	Tp=2*ke/(3*boltz);
@@ -242,13 +213,9 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 		(*vx).at(i)=(*vx).at(i)*sqrt(T/Tp);
 		(*vy).at(i)=(*vy).at(i)*sqrt(T/Tp);
 		(*vz).at(i)=(*vz).at(i)*sqrt(T/Tp);
-
-//		vx[i]=vx[i]*sqrt(T/Tp);
-//		vy[i]=vy[i]*sqrt(T/Tp);
-//		vz[i]=vz[i]*sqrt(T/Tp);
 	}
 }
-
+*/
 //Hamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
 int k; //for looping
