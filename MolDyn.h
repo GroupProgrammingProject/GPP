@@ -28,10 +28,8 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz);
 
+double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum);
 
-
-//using namespace std;
-//
 /*double verlet(int norbs, double mass, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* c,double sx,double sy,double sz,std::vector<double>* nnear,Eigen::MatrixXi* inear)
 {
 	//Implement Velocity Verlet algorithm
@@ -81,16 +79,16 @@ nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-t
 maxnn=max number of nn */
 void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
-  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3),fxr(dim),fyr(dim),fzr(dim);
-//   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
-  double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=0.001,sumphinn,sumphi,dualeigen,derivx,derivx2,derivy,derivz,dx,dy,dz,r;
+  std::vector<double> dd(3),ddnorm(3);
+  double ddm,sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r;
+  double fxtot=0.0, fytot=0.0, fztot=0.0;
 
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
     (*fy).at(i)=0;
     (*fz).at(i)=0;
   }
-
+  
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
     sumphi=0;
     for(k=0;k<(*nnear).at(i);k++){
@@ -98,141 +96,61 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
       dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
       dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
+      //		std::cout << "Vector distances between atom 1 and 2: " << dd.at(0) << "  " << dd.at(1) << "  " << dd.at(2) << std::endl;
       
       ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
       
       sumphi=sumphi+o(ddm);
-   
+      
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       nearlabel=(*inear).at(i*10+j);
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
       dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
       dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
-
+      
       dx=dd.at(0);
       dy=dd.at(1);
       dz=dd.at(2);
       
       
       ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
-
       r=ddm;
 
-	for(k=0;k<3;k++){ /*Initialisation of vector distances to perform derivatives */
-	  ddrx.at(k)=dd.at(k); 
-	  ddrrx.at(k)=dd.at(k);
-	  ddlx.at(k)=dd.at(k);
-	  ddllx.at(k)=dd.at(k);
-
-	  ddry.at(k)=dd.at(k);
-	  ddrry.at(k)=dd.at(k);
-	  ddly.at(k)=dd.at(k);
-	  ddlly.at(k)=dd.at(k);
-	
-	  ddrz.at(k)=dd.at(k);
-	  ddrrz.at(k)=dd.at(k);
-	  ddlz.at(k)=dd.at(k);
-	  ddllz.at(k)=dd.at(k);
-	}
-	
-	/*Definition of variables to take derivatives (r->x+h,rr->x+2h,l->x-h,ll->x-h)*/
-	ddrx.at(0)=dd.at(0)+h;  
-	ddrrx.at(0)=dd.at(0)+2*h;
-	ddlx.at(0)=dd.at(0)-h;
-	ddllx.at(0)=dd.at(0)-2*h;
-
-	ddry.at(1)=dd.at(1)+h;  
-	ddrry.at(1)=dd.at(1)+2*h;
-	ddly.at(1)=dd.at(1)-h;
-	ddlly.at(1)=dd.at(1)-2*h;
-
-	ddrz.at(2)=dd.at(2)+h;  
-	ddrrz.at(2)=dd.at(2)+2*h;
-	ddlz.at(2)=dd.at(2)-h;
-	ddllz.at(2)=dd.at(2)-2*h;
-
-	ddmrx=sqrt(ddrx.at(0)*ddrx.at(0)+ddrx.at(1)*ddrx.at(1)+ddrx.at(2)*ddrx.at(2));
-	ddmry=sqrt(ddry.at(0)*ddry.at(0)+ddry.at(1)*ddry.at(1)+ddry.at(2)*ddry.at(2));
-	ddmrz=sqrt(ddrz.at(0)*ddrz.at(0)+ddrz.at(1)*ddrz.at(1)+ddrz.at(2)*ddrz.at(2));
-
-	ddmrrx=sqrt(ddrrx.at(0)*ddrrx.at(0)+ddrrx.at(1)*ddrrx.at(1)+ddrrx.at(2)*ddrrx.at(2));
-	ddmrry=sqrt(ddrry.at(0)*ddrry.at(0)+ddrry.at(1)*ddrry.at(1)+ddrry.at(2)*ddrry.at(2));
-	ddmrrz=sqrt(ddrrz.at(0)*ddrrz.at(0)+ddrrz.at(1)*ddrrz.at(1)+ddrrz.at(2)*ddrrz.at(2));
+      for(k=0;k<3;k++){
+	ddnorm.at(k)=dd.at(k)/ddm;
+      }
       
-	ddmlx=sqrt(ddlx.at(0)*ddlx.at(0)+ddlx.at(1)*ddlx.at(1)+ddlx.at(2)*ddlx.at(2));
-	ddmly=sqrt(ddly.at(0)*ddly.at(0)+ddly.at(1)*ddly.at(1)+ddly.at(2)*ddly.at(2));
-	ddmlz=sqrt(ddlz.at(0)*ddlz.at(0)+ddlz.at(1)*ddlz.at(1)+ddlz.at(2)*ddlz.at(2));
-
-	ddmllx=sqrt(ddllx.at(0)*ddllx.at(0)+ddllx.at(1)*ddllx.at(1)+ddllx.at(2)*ddllx.at(2));
-	ddmlly=sqrt(ddlly.at(0)*ddlly.at(0)+ddlly.at(1)*ddlly.at(1)+ddlly.at(2)*ddlly.at(2));
-	ddmllz=sqrt(ddllz.at(0)*ddllz.at(0)+ddllz.at(1)*ddllz.at(1)+ddllz.at(2)*ddllz.at(2));
-
-	for(k=0;k<3;k++){
-	  ddrx.at(k)=ddrx.at(k)/ddmrx;
-	  ddrrx.at(k)=ddrrx.at(k)/ddmrrx;
-	  ddlx.at(k)=ddlx.at(k)/ddmlx;
-	  ddllx.at(k)=ddllx.at(k)/ddmllx;
-
-	  ddry.at(k)=ddry.at(k)/ddmry;
-	  ddrry.at(k)=ddrry.at(k)/ddmrry;
-	  ddly.at(k)=ddly.at(k)/ddmly;
-	  ddlly.at(k)=ddlly.at(k)/ddmlly;
-
-	  ddrz.at(k)=ddrz.at(k)/ddmrz;
-	  ddrrz.at(k)=ddrrz.at(k)/ddmrrz;
-	  ddlz.at(k)=ddlz.at(k)/ddmlz;
-	  ddllz.at(k)=ddllz.at(k)/ddmllz;
-	}
-
-	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
-	    derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
-	    derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
-
-
-	    double a=ddrx.at(0);
-	    double b=ddrx.at(0);
-	    ddrx.at(0)=-ddlx.at(0);
-	    ddrrx.at(0)=-ddllx.at(0);
-	    ddlx.at(0)=-a;
-	    ddllx.at(0)=-b;
-	    derivx2=(-Gethijab(nearlabel,i,lp,l,&ddrrx)*s(ddmllx)+8*Gethijab(nearlabel,i,lp,l,&ddrx)*s(ddmlx)-8*Gethijab(nearlabel,i,lp,l,&ddlx)*s(ddmrx)+Gethijab(nearlabel,i,lp,l,&ddllx)*s(ddmrrx))/(12*h);
-
-	    std::cout << "dH_" << i << nearlabel << l << lp << "=" << derivx << std::endl;
-	    std::cout << "dH_" << nearlabel << i << lp << l << "=" << derivx2 << std::endl;
-	    
-
-
-	    for(n=0;n<norbs*dim;n++){ /*Cycle spanning the level of the eigenvector*/
-		 dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);
-
-		 (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
-		 (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
-		 (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
-			
-	    }
+      for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
+	for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
+	  derivx=ds(ddm,dd.at(0))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,0);
+	  derivy=ds(ddm,dd.at(1))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,1);
+	  derivz=ds(ddm,dd.at(2))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,2);
+	  
+	  for(n=0;n<norbs*dim;n++){ /*Cycle spanning the level of the eigenvector*/
+	    dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);	
+	    (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
+	    (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
+	    (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
 	  }
 	}
-
-	sumphinn=0;
-
-	for(m=0;m<(*nnear).at(nearlabel);m++){
-	  dd.at(0)=(*x).at(nearlabel)-(*x).at((*inear).at(nearlabel*10+m)); /*Definition of vector distances*/
-	  dd.at(1)=(*y).at(nearlabel)-(*y).at((*inear).at(nearlabel*10+m));
-	  dd.at(2)=(*z).at(nearlabel)-(*z).at((*inear).at(nearlabel*10+m));
-		    
-	    ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
-	    
-	    sumphinn=sumphinn+o(ddm);
-
-	}
-
-	//calculation of repuslve forces
-	//(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
-	//(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
-	//(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
+      }
+      
+      sumphinn=0;
+      
+      for(m=0;m<(*nnear).at(nearlabel);m++){
+	dd.at(0)=(*x).at(nearlabel)-(*x).at((*inear).at(nearlabel*10+m)); /*Definition of vector distances*/
+	dd.at(1)=(*y).at(nearlabel)-(*y).at((*inear).at(nearlabel*10+m));
+	dd.at(2)=(*z).at(nearlabel)-(*z).at((*inear).at(nearlabel*10+m));
+	
+	ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
+       	sumphinn=sumphinn+o(ddm);
+      }
+      
+      //calculation of repulsive forces
+      (*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
+      (*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
+      (*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
     }
     std::cout << (*fx).at(i) << std::endl;
     std::cout << (*fy).at(i) << std::endl;
@@ -330,6 +248,52 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 //		vz[i]=vz[i]*sqrt(T/Tp);
 	}
 }
+
+//Hamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
+double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
+//conum contains 0s and 1s; only the coord (x,y,z) we wish to differentiate wrt is a non-zero element
+int k; //for looping
+double h,Es,Ep,V[4];														//h,Es,Ep and V[4] is only used locally in Gethijab_der()
+double Es_C=-2.99,Ep_C=3.71;											//C orbital energies Es and Ep
+double V_CC[4];
+double h1,h2;
+V_CC[0]=-5;V_CC[1]=4.7;V_CC[2]=5.5;V_CC[3]=-1.55;				//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
+//for(int k=0; k<(*d).size(); k++){std::cout << (*conum).at(k) << std::endl;}
+Es=Es_C;Ep=Ep_C;						//set all parameters to the values for Xu's carbon
+for(k=0;k<4;k++){V[k]=V_CC[k];}
+int vconum[3];
+vconum[0]=0;
+vconum[1]=0;
+vconum[2]=0;
+vconum[conum]=1;
+//start V&G routine
+	if(i==j){h=0;}
+	else if(a*b==0){
+		if(a==b){h=0;}										                                       //ss_sigma
+		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
+		else if(b==0){h=-V[1]*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}										//sp_sigma row
+	}
+//		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
+	else if((a==b) && (a*b!=0)){h=2*(V[2]-V[3])*(*d).at(a-1)*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
+//	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(*d).at(conum)*(vconum[a-1]+vconum[b-1]-2*(*d).at(a-1)*(*d).at(b-1))/distr;}	//pp_sigma and pp_pi diagonal
+	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
+	//		  h=(V[2]-V[3])*
+//		h1=(*conum).at(b-1)*(*d).at(a-1)*(1-pow((*d).at(b-1),2));//*(*dernum).at(b-1);
+//		h2=(*conum).at(a-1)*(*d).at(b-1)*(1-pow((*d).at(a-1),2));
+//		h=(V[2]-V[3])*(h1+h2)/distr;
+//		if((*conum).at(2)==1){
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h1 <<std::endl;
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h2   " << h2 <<std::endl;
+//		std::cout << h2 <<std::endl;
+//		h=(V[2]-V[3])*(h1+h2)/distr;
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h <<std::endl;}
+//			  h=(V[2]-V[3])*((*d).at(a-1)*(1-pow((*d).at(b-1),2))*dernum(b-1))
+//	}
+	//	else{h=(*d).at(b-1)*(V[2]-V[3])*(1-pow((*d).at(b-1),2))/distr;}							//pp_sigma and pp_pi off-diagonal
+//V&G routine ends
+						
+return h;
+} //Hamder() ends
 
 /*
        program dinamica molecolare

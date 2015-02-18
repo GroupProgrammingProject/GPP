@@ -87,7 +87,7 @@ double ds (double r,double dx){
   double dS;
   //constants 
     if (r<r1){
-      dS=(pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)))*n*dx*(1+nc*pow(r/rc,nc)))/(r*r);
+      dS=-n*s(r)*(1+nc*pow(r/rc,nc))*dx/(r*r);
     }
     else if(r>=r1 && r<rcut){
       dS=dts(r,dx);

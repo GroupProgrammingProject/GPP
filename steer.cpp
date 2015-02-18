@@ -66,19 +66,14 @@ int main(int argc, char* argv[]){
 	/*	FILE *end = fopen("end.txt", "w");
 	for(int i=0;i<n;i++){
 	  fprintf(end,"%f\t%f\t%f\n",posx.at(i),posy.at(i),posz.at(i));
-	}	
-       
+	}
 	/*     	for(int i=0;i<n;i++){
+
 	  std::cout << "fx(" << i << ")=" << fx.at(i) << std::endl;
 	  std::cout << "fy(" << i << ")=" << fy.at(i) << std::endl;
 	  std::cout << "fz(" << i << ")=" << fz.at(i) << std::endl;
 	  std::cout << std::endl;
-	}
-	*/
-//	change positions of atoms
-
-	//Plot positions!
-	
+	}*/
 
 return 0;
 }
