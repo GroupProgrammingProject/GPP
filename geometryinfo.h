@@ -51,14 +51,10 @@ void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixX
 // Function to calculate the distances between atoms and set all values above rc to zero
 void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc){
 	int numatoms=posx->size();
-	GetDistanceComponents(rx, ry, rz, posx, posy, posz);
+	GetAllDistances(modr, rx, ry, rz, posx, posy, posz);
 	for (int i=0; i<numatoms; i++){
 		for (int j=0; j<numatoms; j++){
-		double distx=(*rx)(i, j);
-		double disty=(*ry)(i, j);
-		double distz=(*rz)(i, j);
-		double modulus =sqrt(distx*distx+disty*disty+distz*distz);
-		(*modr)(i, j)= modulus;
+			if ((*modr)(i,j)>rc){(*modr)(i, j)=rc+3;}
 		}
 	}
 }
