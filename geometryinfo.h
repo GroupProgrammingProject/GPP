@@ -7,10 +7,14 @@
 #include <Eigen/Dense>
 
 // Function declarations
+double Abs(double c);
 void DistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos);
 void GetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz);
 void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc);
+void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double latticeconst, double rv);
+void PbcGetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rv);
+void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rv);
 void NearestNeighbours(Eigen::MatrixXi* inear, std::vector<int>* nnear, Eigen::MatrixXd* modr, double rv);
 bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc, double rv);
 
@@ -54,25 +58,24 @@ void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixX
 		double disty=(*ry)(i, j);
 		double distz=(*rz)(i, j);
 		double modulus =sqrt(distx*distx+disty*disty+distz*distz);
-		if (modulus>rc){(*modr)(i, j)=0;}
-		else {(*modr)(i, j)= modulus;}
+		(*modr)(i, j)= modulus;
 		}
 	}
 }
 
 // Function to calculate one component of the distances between atoms
-void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double latticeconst, double rc){
+void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double latticeconst, double rv){
 	int numatoms=pos->size();
 	for (int i=0; i<numatoms; i++){
+		double result=0;
 		for (int j=0; j<numatoms; j++){
 			double xi = pos->at(i), xj=pos->at(j);
-			double result=0;
 			double dist=xi-xj;
 			double dist1= xi-xj-latticeconst;
 			double dist2= xi-xj+latticeconst;
-			if (dist<rc){result=dist;}
-			if (dist1<rc){result=dist1;}
-			if (dist2<rc){result=dist2;}
+			if (Abs(dist)<rv){result=dist;}
+			else if (Abs(dist1)<rv){result=dist1;}
+			else if (Abs(dist2)<rv){result=dist2;}
 			else{;}
 			(*r)(i, j)=result;
 		}
@@ -80,24 +83,26 @@ void PbcDistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos, double lattic
 }
 
 // Function to calculate distance components between atoms
-void PbcGetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rc){
+void PbcGetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rv){
 	int numatoms=posx->size();
-	PbcDistanceComp(rx, posx, a, rc);
-	PbcDistanceComp(ry, posy, b, rc);
-	PbcDistanceComp(rz, posz, c, rc);
+	PbcDistanceComp(rx, posx, a, rv);
+	PbcDistanceComp(ry, posy, b, rv);
+	PbcDistanceComp(rz, posz, c, rv);
 }
 
 
 // Function to calculate the distances between atoms
-void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rc){
+void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rv){
 	int numatoms=posx->size();
-	PbcGetDistanceComponents(rx, ry, rz, posx, posy, posz, a, b, c, rc);
+	PbcGetDistanceComponents(rx, ry, rz, posx, posy, posz, a, b, c, rv);
 	for (int i=0; i<numatoms; i++){
 		for (int j=0; j<numatoms; j++){
 		double distx=(*rx)(i, j);
 		double disty=(*ry)(i, j);
 		double distz=(*rz)(i, j);
-		(*modr)(i, j)=sqrt(distx*distx+disty*disty+distz*distz);
+		double modulusr=sqrt(distx*distx+disty*disty+distz*distz);
+		if (modulusr< rv){(*modr)(i, j)=modulusr;}
+		else {(*modr)(i, j)=0;}
 		}
 	}
 }
