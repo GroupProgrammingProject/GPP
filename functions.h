@@ -26,7 +26,7 @@ double dts (double r,double dx){
   double c3=0.3542874332380;
   double r1=2.45;
 
-  double dts=dx*(c1+2*c2*(r-r1)+3*c3((r+r1)*(r+r1)-2*r1*r))/r;
+  double dts=dx*(c1+2*c2*(r-r1)+3*c3*((r+r1)*(r+r1)-2*r1*r))/r;
   return dts;
 }
 
@@ -40,6 +40,18 @@ double to (double r){
 
   double to=pow((r-d1),3)*c3+pow((r-d1),2)*c2+(r-d1)*c1+c0;
   return to;
+}
+
+//derivative of to
+double dto (double r, double dx){
+  double c0=2.2504290109*pow(10,-8);
+  double c1=-1.4408640561*pow(10,-6);
+  double c2=2.1043303374*pow(10,-5);
+  double c3=6.6024390226*pow(10,-5);
+  double d1=2.57;
+
+  double dto=dx*(c1+2*c2*(r-d1)+3*c3*((r+d1)*(r+d1)-2*d1*r))/r;
+  return dto;
 }
  
 //function s(r), including the tail and the atom types
@@ -78,7 +90,7 @@ double ds (double r,double dx){
       dS=(pow(r0/r,n)*exp(n*(-pow(r/rc,nc)+pow(r0/rc,nc)))*n*dx*(1+nc*pow(r/rc,nc)))/(r*r);
     }
     else if(r>=r1 && r<rcut){
-      dS=dts(r);
+      dS=dts(r,dx);
     }
    else{
     return 0;
@@ -133,13 +145,26 @@ double d_f0(double x){
 }
 
 //derivative of phi(r) needed for MD
-double d_o(double r)
-{
-	double m=3.30304;
-	double mc=8.6655;
-	double dc=2.1052;
-	double dphi=-(m/r)*o(r)*(1+mc*(r/dc)^m);
-	return dphi;
+double d_o(double r,double dx){
+  double phi0=8.18555;
+  double m=3.30304;
+  double mc=8.6655;
+  double dc=2.1052;
+  double d0=1.64;
+  double d1=2.57;
+  double dcut=2.6;
+  double dphi;
+
+  if (r<d1){
+    dphi=-(m/r)*o(r)*(1+mc*pow((r/dc),mc))*(dx/r);;
+  }
+  else if(r>=d1 && r<dcut){
+    dphi=dto(r,dx);
+  }
+  else{
+    dphi=0;
+  }
+  return dphi;
 }
 
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
