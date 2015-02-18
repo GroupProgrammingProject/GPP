@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=1;
+	bool v=0;
 	// Read in types, 
 	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
@@ -25,13 +25,26 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-//	std::vector<double> modr(n*n),rx(n*n),ry(n*n),rz(n*n);
+
+	double a=6,b=6,c=6,rc=2.6,rv=3;
+
+std::cout << "All distances" << std::endl;
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
+std::cout << modr << std::endl << std::endl;
+/*
+std::cout << "Zerod distances >rc" << std::endl;
+	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,rc);
+std::cout << modr << std::endl << std::endl;
+
+std::cout << "PBCs:" << std::endl;
+	PbcGetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, a, b, c, rv);
+std::cout << modr << std::endl;
+*/
 	// Create empty arrays needed for MD
-//	std::vector<double> eigvects(16*n*n);
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot;
+
 
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
@@ -42,6 +55,7 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
+
 
 return 0;
 }

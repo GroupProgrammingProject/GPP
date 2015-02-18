@@ -54,7 +54,7 @@ void GetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixX
 	GetAllDistances(modr, rx, ry, rz, posx, posy, posz);
 	for (int i=0; i<numatoms; i++){
 		for (int j=0; j<numatoms; j++){
-			if ((*modr)(i,j)>rc){(*modr)(i, j)=rc+3;}
+			if ((*modr)(i,j)>rc){(*modr)(i, j)=0;}
 		}
 	}
 }
