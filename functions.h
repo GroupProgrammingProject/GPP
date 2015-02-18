@@ -99,12 +99,12 @@ double d_f0(double x){
 }
 
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
-double X (std::vector<double>* modr,int n, int i ){
+double X (Eigen::MatrixXd* modr,int n, int i ){
   double r;
   double x=0;
   for (int j=0;j<n;j++){
     if(i!=j){
-      r=modr->at(i*n+j);
+      r=(*modr)(i,j);
       x=x+o(r);
     };
   };
@@ -112,7 +112,7 @@ double X (std::vector<double>* modr,int n, int i ){
 };
 
 //total repulsive energy - sum over all atoms of f(X_i)
-double Erep (std::vector<double>* modr){
+double Erep (Eigen::MatrixXd* modr){
   int N=sqrt(modr->size());
   double x;
   double total;
