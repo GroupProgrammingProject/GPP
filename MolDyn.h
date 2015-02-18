@@ -28,7 +28,8 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz);
 
-double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr);
+double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum);
+//double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr);
 
 //using namespace std;
 //
@@ -81,17 +82,25 @@ nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-t
 maxnn=max number of nn */
 void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std::vector<double>* z,std::vector<double>* c,double rc,std::vector<int>* nnear,std::vector<int>* inear,std::vector<double>* fx,std::vector<double>* fy,std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
-  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3),fxr(dim),fyr(dim),fzr(dim);
+  std::vector<double> dd(3),ddrx(3),ddrrx(3),ddlx(3),ddllx(3),ddry(3),ddrry(3),ddly(3),ddlly(3),ddrz(3),ddrrz(3),ddlz(3),ddllz(3),fxr(dim),fyr(dim),fzr(dim),ddnorm(3),fxa(dim),fya(dim),fza(dim);//,conumx(3),conumy(3),conumz(3);
 //   double dd[3],ddrx[3],ddrrx[3],ddlx[3],ddllx[3],ddry[3],ddrry[3],ddrry[3],ddly[3],ddlly[3],ddrz[3],ddrrz[3],ddlz[3],ddllz[3]; 
-  double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=0.001,sumphinn,sumphi,dualeigen,derivx,derivy,derivz;
-  double fxtot=0.0, fytot=0.0, fztot=0.0;
+  double ddm,ddmrx,ddmrrx,ddmlx,ddmllx,ddmry,ddmrry,ddmly,ddmlly,ddmrz,ddmrrz,ddmlz,ddmllz,h=0.001,sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dualeigen1,dualeigen2,derivx1,derivy1,derivz1,derivx2,derivy2,derivz2,hijab;
+  double fxtot=0.0, fytot=0.0, fztot=0.0,fxtota,fytota,fztota;
+ // std::vector<int> 
+	int conumx,conumy,conumz;
 
   for(i=0;i<dim;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
     (*fy).at(i)=0;
     (*fz).at(i)=0;
+    fxa.at(i)=0;
+    fya.at(i)=0;
+    fza.at(i)=0;
   }
 
+	typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> MatrixXd;
+	MatrixXd Hijab(4*dim,4*dim);
+	MatrixXd xmat(4*dim,4*dim);
   
 
   for(i=0;i<dim;i++){ /*Cycle to compute band structure forces on atom i*/
@@ -101,6 +110,7 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
       dd.at(0)=(*x).at(i)-(*x).at(nearlabel); /*Definition of vector distances*/
       dd.at(1)=(*y).at(i)-(*y).at(nearlabel);
       dd.at(2)=(*z).at(i)-(*z).at(nearlabel);
+//		std::cout << "Vector distances between atom 1 and 2: " << dd.at(0) << "  " << dd.at(1) << "  " << dd.at(2) << std::endl;
       
       ddm=sqrt(dd.at(0)*dd.at(0)+dd.at(1)*dd.at(1)+dd.at(2)*dd.at(2)); /*Modulus of distance*/
       
@@ -179,7 +189,23 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	  ddrrz.at(k)=ddrrz.at(k)/ddmrrz;
 	  ddlz.at(k)=ddlz.at(k)/ddmlz;
 	  ddllz.at(k)=ddllz.at(k)/ddmllz;
+
+	  ddnorm.at(k)=dd.at(k)/ddm;
+//	  std::cout << "Vector distances between atom 1 and 2: " << ddnorm.at(k) << std::endl;//"  " << ddnorm.at(1) << "  " << ddnorm.at(2) << std::endl;
+	  
 	}
+
+	conumx=0;
+//	conumx.at(1)=0;
+//	conumx.at(2)=0;
+	
+	conumy=1;
+//	conumy.at(1)=1;
+//	conumy.at(2)=0;
+	
+	conumz=2;
+//	conumz.at(1)=0;
+//	conumz.at(2)=1;
 
 //	double h=Gethijab(i,j,l,lp,&ddrx,6,6);
 
@@ -194,31 +220,115 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
+     derivx=(-Gethijab(i,nearlabel,l,lp,&ddrrx)*s(ddmrrx)+8*Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-8*Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx)+Gethijab(i,nearlabel,l,lp,&ddllx)*s(ddmllx))/(12*h);
 	      derivy=(-Gethijab(i,nearlabel,l,lp,&ddrry)*s(ddmrry)+8*Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-8*Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly)+Gethijab(i,nearlabel,l,lp,&ddlly)*s(ddmlly))/(12*h);
 	      derivz=(-Gethijab(i,nearlabel,l,lp,&ddrrz)*s(ddmrrz)+8*Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-8*Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz)+Gethijab(i,nearlabel,l,lp,&ddllz)*s(ddmllz))/(12*h);
 
+			
+//				 typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> MatrixXd;
+				 //hijab=Gethijab(i,nearlabel,l,lp,&ddnorm);
+				 xmat(4*i+l,4*nearlabel+lp)=derivx;//*s(ddm);
+				 
+				 hijab=Hamder(i,nearlabel,l,lp,&ddnorm,ddm,0);
+				 Hijab(4*i+l,4*nearlabel+lp)=hijab;//*s(ddm);
+
+//			  typedef std::pair<double,int> pair;
+//			    std::vector<pair> eigvalarr;
+//				   for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		//reads in eigenvalues and their index into eigvalarr
+//					  std::sort(eigvalarr.begin(),eigvalarr.end());										//sorts eigenvalues
+//					    for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+//
+						   // Filling up eigvects, doubling the vectors of the states that are occupied
+//							   for(i=0;i<2*n;i++){
+//							     		int ind=eigvalarr.at(i).second;
+//							     			  for(j=0;j<4*n;j++){
+//						     			  			(*eigvects).at(2*i*4*n+j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
+//							     			  						(*eigvects).at((2*i+1)*4*n+j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
+//							     			  							  }
+//							     			  							    }
+							
+//		 		 std::cout << Hijab << std::endl;		//print out Hamiltonian
+//			   		  std::cout << "After sorting" << std::endl;
+//			  		    for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+//			  		    	
+//			   		    	    std::cout << "Eigenvector matrix" << std::endl;
+//			   		    	      std::cout << es.eigenvectors() << std::endl;									//untouched eigenvector matrix
+			 
+//			   		    	        std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
+//			   		    	          for(i=0;i<4*n;i++){
+//			   		    	          		for(j=0;j<4*n;j++){
+//			  		    	          					std::cout << (*eigvects).at(i*4*n+j) << "\t\t";
+//			  		    	          							}
+//			 		    	          								std::cout << std::endl;
+//			  		    	          								}
+//
+if(i==nearlabel){std::cout << "i and j are the same atom..." << std::endl;}
+
+		derivx1=ds(ddm,dd.at(0))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,0);
+		derivy1=ds(ddm,dd.at(1))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,1);
+		derivz1=ds(ddm,dd.at(2))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,2);
+	
+//		std::cout << "Scaling fn deriv" << ds(ddm,dd.at(0)) << 
+				 xmat(4*i+l,4*nearlabel+lp)=derivx1;//*s(ddm);
+		std::vector<double> dernorm(3);
+		for(int p=0; p<3; p++)
+		{
+				  dernorm.at(p)=-ddnorm.at(p);
+		}
+		double derivh=Hamder(i,nearlabel,l,lp,&dernorm,ddm,conumx);
+		double derivh2=Hamder(nearlabel,i,lp,l,&dernorm,ddm,conumx);
+
+		std::cout << "hiljl derivative= " << i << l << nearlabel << lp << "  " << derivh << std::endl;
+		std::cout << "hjl'il derivative= " << nearlabel << lp << i << l << "  " << derivh2 << std::endl;
+/*		derivx1=ds(ddm,dd.at(0))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,&conumx);
+		derivy1=ds(ddm,dd.at(1))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,&conumy);
+		derivz1=ds(ddm,dd.at(2))*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(ddm)*Hamder(i,nearlabel,l,lp,&ddnorm,ddm,&conumz);
+		
+		derivx2=ds(ddm,dd.at(0))*Gethijab(nearlabel,i,l,lp,&ddnorm)-s(ddm)*Hamder(nearlabel,i,l,lp,&ddnorm,ddm,&conumx);
+		derivy2=ds(ddm,dd.at(1))*Gethijab(nearlabel,i,l,lp,&ddnorm)-s(ddm)*Hamder(nearlabel,i,l,lp,&ddnorm,ddm,&conumy);
+		derivz2=ds(ddm,dd.at(2))*Gethijab(nearlabel,i,l,lp,&ddnorm)-s(ddm)*Hamder(nearlabel,i,l,lp,&ddnorm,ddm,&conumz);
+	*/	//minus signs account for sign difference in derivatives of direction cosines
+
 			//test Hamder.h
-//			double testh=Hamder(i,nearlabel,l,lp,&ddrx,ddmrx);
+//			double testh=Hamder(i,nearlabel,l,lp,&ddrx,ddmrx,conumx);
 //			std::cout << testh << std::endl;
 	    // derivx=(Gethijab(i,nearlabel,l,lp,&ddrx)*s(ddmrx)-Gethijab(i,nearlabel,l,lp,&ddlx)*s(ddmlx))/(2*h);
 	    //derivy=(Gethijab(i,nearlabel,l,lp,&ddry)*s(ddmry)-Gethijab(i,nearlabel,l,lp,&ddly)*s(ddmly))/(2*h);
 	    //derivz=(Gethijab(i,nearlabel,l,lp,&ddrz)*s(ddmrz)-Gethijab(i,nearlabel,l,lp,&ddlz)*s(ddmlz))/(2*h);
 
 	    for(n=0;n<norbs*dim;n++){ /*Cycle spanning the level of the eigenvector*/
-		 dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);
-
-		 (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
-		 (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
-		 (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
+			dualeigen=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);	
+//			dualeigen1=(*c).at(l+i*norbs+n*norbs*dim)*(*c).at(lp+nearlabel*norbs+n*norbs*dim);
+//		 	dualeigen2=(*c).at(lp+i*norbs+n*norbs*dim)*(*c).at(l+nearlabel*norbs+n*norbs*dim);
+//analytical forces
+		 	fxa.at(i)=fxa.at(i)-2*(derivx1*dualeigen);//+derivx2*dualeigen2);
+		 	fya.at(i)=fya.at(i)-2*(derivy1*dualeigen);//+derivy2*dualeigen2);
+		 	fza.at(i)=fza.at(i)-2*(derivz1*dualeigen);//+derivz2*dualeigen2);
+		 //numerical forces	
+			(*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
+ 		 	(*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
+		 	(*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
 			
-	    }
+//	 for(int k=0;k<dim;k++){
+/*      std::cout << "\nNumerical derivatives" << std::endl;
+		std::cout << "fx(" << i << ")=" << (*fx).at(i) << std::endl;
+		std::cout << "fy(" << i << ")=" << (*fy).at(i) << std::endl;
+		std::cout << "fz(" << i << ")=" << (*fz).at(i) << std::endl;
+		std::cout << std::endl;
+  
+		std::cout << "\nAnalytic derivatives" << std::endl;
+		std::cout << "fx(" << i << ")=" << fxa.at(i) << std::endl;
+		std::cout << "fy(" << i << ")=" << fya.at(i) << std::endl;
+		std::cout << "fz(" << i << ")=" << fza.at(i) << std::endl;
+								 // 	}
+*/	    }
 	  }
 	}
-
-	//std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
-	//std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
-	//std::cout << std::endl;
+//	std::cout << Hijab <<std::endl << std::endl;
+//	std::cout << "fx(" << i << ")=" << std::setprecision(10) << (*fx).at(i) << std::endl;
+//	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
+//	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
+//	std::cout << std::endl;
 
 	sumphinn=0;
 
@@ -232,10 +342,11 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	    sumphinn=sumphinn+o(ddm);
 
 	}
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
+	//Compare the analytic and numerical forces
+/*	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
 	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmry)-o(ddmly))/(2*h);
 	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrz)-o(ddmlz))/(2*h);
-/*
+*//*
 	fxr.at(i)=fxr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrx)-o(ddmlx))/(2*h);
 	fyr.at(i)=fyr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmry)-o(ddmly))/(2*h);	
 	fzr.at(i)=fzr.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(o(ddmrz)-o(ddmlz))/(2*h);
@@ -245,25 +356,80 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
 	std::cout << "fy(" << i << ")=" << std::setprecision(10) << (*fy).at(i) << std::endl;
 	std::cout << "fz(" << i << ")=" << std::setprecision(10) << (*fz).at(i) << std::endl;
 */
-	/*	      //calculation of repuslve forces
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
+		      //calculation of repuslve forces
+/*	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
 	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
 	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
-	*/
+	
       
-    }
+	fxa.at(i)=fxa.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrx)+8*o(ddmrx)-8*o(ddmlx)+o(ddmllx))/(12*h);
+	fya.at(i)=fya.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrry)+8*o(ddmry)-8*o(ddmly)+o(ddmlly))/(12*h);
+	fza.at(i)=fza.at(i)-(d_f0(sumphinn)+d_f0(sumphi))*(-o(ddmrrz)+8*o(ddmrz)-8*o(ddmlz)+o(ddmllz))/(12*h);
+  */  }
 	 fxtot=fxtot+(*fx).at(i);
 	 fytot=fytot+(*fy).at(i);
 	 fztot=fztot+(*fz).at(i);
+
+
+	 fxtota=fxtota+fxa.at(i);
+	 fytota=fytota+fya.at(i);
+	 fztota=fztota+fza.at(i);
+
+/*	 for(int k=0;k<dim;k++){
+  std::cout << "\nNumerical derivatives" << std::endl;
+		std::cout << "fx(" << k << ")=" << (*fx).at(k) << std::endl;
+		std::cout << "fy(" << k << ")=" << (*fy).at(k) << std::endl;
+		std::cout << "fz(" << k << ")=" << (*fz).at(k) << std::endl;
+		std::cout << std::endl;
+  
+		std::cout << "\nAnalytic derivatives" << std::endl;
+		std::cout << "fx(" << k << ")=" << fxa.at(k) << std::endl;
+		std::cout << "fy(" << k << ")=" << fya.at(k) << std::endl;
+		std::cout << "fz(" << k << ")=" << fza.at(k) << std::endl;
+								  	}
+*//*
+  std::cout << "\nNumerical derivatives" << std::endl;
+  std::cout << fx << std::endl; //check that total forces are zero
+  std::cout << fytot << std::endl;
+  std::cout << fztot << std::endl;
+
+  std::cout << "\nAnalytic derivatives" << std::endl;
+  std::cout << fxtota << std::endl; //check that total forces are zero
+  std::cout << fytota << std::endl;
+  std::cout << fztota << std::endl;
+  */
 //	 fxtot=fxtot+fxr.at(i);
 //	 fytot=fytot+fyr.at(i);
 //	 fztot=fztot+fzr.at(i);
   }
-/*
+  std::cout << "\n\nHamiltonian matrix from MolDyn.h" << std::endl;
+  //std::cout << "\n\nDerivative of Hamiltonian matrix" << std::endl;
+  std::cout <<Hijab << std::endl <<std::endl;
+  std::cout << "Derivx" << std::endl;
+  std::cout <<xmat << std::endl <<std::endl;
+
+	 for(int k=0;k<dim;k++){
+  		std::cout << "\nNumerical derivatives" << std::endl;
+		std::cout << "fx(" << k << ")=" << (*fx).at(k) << std::endl;
+		std::cout << "fy(" << k << ")=" << (*fy).at(k) << std::endl;
+		std::cout << "fz(" << k << ")=" << (*fz).at(k) << std::endl;
+		std::cout << std::endl;
+  
+		std::cout << "\nAnalytic derivatives" << std::endl;
+		std::cout << "fx(" << k << ")=" << fxa.at(k) << std::endl;
+		std::cout << "fy(" << k << ")=" << fya.at(k) << std::endl;
+		std::cout << "fz(" << k << ")=" << fza.at(k) << std::endl;
+								  	}
+  std::cout << "\nTotal Numerical derivatives" << std::endl;
   std::cout << fxtot << std::endl; //check that total forces are zero
   std::cout << fytot << std::endl;
   std::cout << fztot << std::endl;
-*/
+
+  std::cout << "\nTotal Analytic derivatives" << std::endl;
+  std::cout << fxtota << std::endl; //check that total forces are zero
+  std::cout << fytota << std::endl;
+  std::cout << fztota << std::endl;
+
 }
 
 void near_neigh(int N, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, double rc, std::vector<int> *nnear, std::vector<int> *inear, double sx, double sy, double sz)
@@ -358,25 +524,46 @@ void velocity(int N, std::vector<double>* mass, std::vector<double>* vx, std::ve
 }
 
 //Hamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
-double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr){
-
+double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
+//conum contains 0s and 1s; only the coord (x,y,z) we wish to differentiate wrt is a non-zero element
 int k; //for looping
 double h,Es,Ep,V[4];														//h,Es,Ep and V[4] is only used locally in Gethijab_der()
 double Es_C=-2.99,Ep_C=3.71;											//C orbital energies Es and Ep
 double V_CC[4];
+double h1,h2;
 V_CC[0]=-5;V_CC[1]=4.7;V_CC[2]=5.5;V_CC[3]=-1.55;				//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
-
+//for(int k=0; k<(*d).size(); k++){std::cout << (*conum).at(k) << std::endl;}
 Es=Es_C;Ep=Ep_C;						//set all parameters to the values for Xu's carbon
 for(k=0;k<4;k++){V[k]=V_CC[k];}
+int vconum[3];
+vconum[0]=0;
+vconum[1]=0;
+vconum[2]=0;
+vconum[conum]=1;
 //start V&G routine
 	if(i==j){h=0;}
 	else if(a*b==0){
 		if(a==b){h=0;}										                                       //ss_sigma
-		else if(a==0){h=V[1]*(1-pow((*d).at(b-1),2))/distr;}										//sp_sigma row
-		else if(b==0){h=-V[1]*(1-pow((*d).at(a-1),2))/distr;}										//sp_sigma column
+		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
+		else if(b==0){h=-V[1]*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}										//sp_sigma row
 	}
-	else if(a==b){h=2*(V[2]-V[3])*(1-pow((*d).at(a-1),2))/distr;}		                  //pp_sigma and pp_pi diagonal
-	else{h=(*d).at(b-1)*(V[2]-V[3])*(1-pow((*d).at(b-1),2))/distr;}							//pp_sigma and pp_pi off-diagonal
+//		else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}										//sp_sigma row
+	else if((a==b) && (a*b!=0)){h=2*(V[2]-V[3])*(*d).at(a-1)*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
+//	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(*d).at(conum)*(vconum[a-1]+vconum[b-1]-2*(*d).at(a-1)*(*d).at(b-1))/distr;}	//pp_sigma and pp_pi diagonal
+	else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}	//pp_sigma and pp_pi diagonal
+	//		  h=(V[2]-V[3])*
+//		h1=(*conum).at(b-1)*(*d).at(a-1)*(1-pow((*d).at(b-1),2));//*(*dernum).at(b-1);
+//		h2=(*conum).at(a-1)*(*d).at(b-1)*(1-pow((*d).at(a-1),2));
+//		h=(V[2]-V[3])*(h1+h2)/distr;
+//		if((*conum).at(2)==1){
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h1 <<std::endl;
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h2   " << h2 <<std::endl;
+//		std::cout << h2 <<std::endl;
+//		h=(V[2]-V[3])*(h1+h2)/distr;
+//		std::cout << "i=" << i << " j=" << j << " l=" << a << " lp=" << b << " h1   " << h <<std::endl;}
+//			  h=(V[2]-V[3])*((*d).at(a-1)*(1-pow((*d).at(b-1),2))*dernum(b-1))
+//	}
+	//	else{h=(*d).at(b-1)*(V[2]-V[3])*(1-pow((*d).at(b-1),2))/distr;}							//pp_sigma and pp_pi off-diagonal
 //V&G routine ends
 						
 return h;
