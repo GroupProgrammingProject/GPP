@@ -7,7 +7,6 @@
 #include "hamiltonian.h"
 #include "functions.h"
 #include "geometryinfo.h"
-#include "ScaleGeom.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -37,8 +36,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd eigvects(4*n,4*n);
 
 	// Calculate distances
-	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,scale*a,scale*b,scale*c,rv);
-
+	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,a,b,c,rv);
 		  
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
