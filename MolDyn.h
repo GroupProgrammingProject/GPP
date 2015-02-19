@@ -152,9 +152,6 @@ void forces(int dim,int norbs,std::vector<double>* x,std::vector<double>* y,std:
       (*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
       (*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
     }
-    std::cout << (*fx).at(i) << std::endl;
-    std::cout << (*fy).at(i) << std::endl;
-    std::cout << (*fz).at(i) << std::endl;
   }  
 }
 
