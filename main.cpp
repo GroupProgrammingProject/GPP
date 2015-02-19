@@ -26,20 +26,20 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 
-	double a=6,b=6,c=6,rc=2.6,rv=3;
-
+	double a=5.2,b=5.2,c=5.2,rc=2.6,rv=3;
+/*
 std::cout << "All distances" << std::endl;
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 std::cout << modr << std::endl << std::endl;
-/*
+
 std::cout << "Zerod distances >rc" << std::endl;
 	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,rc);
 std::cout << modr << std::endl << std::endl;
-
+*/
 std::cout << "PBCs:" << std::endl;
 	PbcGetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, a, b, c, rv);
 std::cout << modr << std::endl;
-*/
+
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
