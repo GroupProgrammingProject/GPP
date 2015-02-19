@@ -89,6 +89,7 @@ void PbcGetDistanceComponents(Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::M
 
 // Function to calculate the distances between atoms
 void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double a, double b, double c, double rv){
+	if (a<2*rv || b<2*rv || c<2*rv){std::cout<<"The unit cell is not large enough to use the PBC routines correctly!"<<std::endl;}
 	int numatoms=posx->size();
 	PbcGetDistanceComponents(rx, ry, rz, posx, posy, posz, a, b, c, rv);
 	for (int i=0; i<numatoms; i++){
@@ -135,7 +136,7 @@ double Abs(double c){
 return result;
 }
 
-// Function to set all elements of 2 equal length vectors equal too each other
+// Function to set all elements of 2 equal length vectors equal
 // equivalent to A=B for std::vector<double> objects
 void SetEqual(std::vector<double>* a, std::vector<double>* b){
 	int n=a->size();
@@ -143,6 +144,7 @@ void SetEqual(std::vector<double>* a, std::vector<double>* b){
 }
 
 // Function that decides whether the Nearest neighbours lists need to be recalculated between MD steps
+// Returns 1 if they have to be recalculated, 0 if not
 bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc, double rv){
 	int numatoms=posx->size();
 	bool recalc=0;

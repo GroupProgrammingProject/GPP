@@ -1,9 +1,12 @@
 CXX = g++
 CXXFLAGS=$(CFLAGS)
 LD = g++
-INC = -I ~/Software/eigen/
+INCLUDE = $(addprefix -I ,~/Software/eigen/)
 HEADERS = ./include/*.h
 
-main: main.cpp
-	$(LD) $(LDFLAGS) $(INC) -o $@ $^
+main.o:main.cpp
+	$(CXX) $(CPPFLAGS) $(INCLUDE) -c $(CXXFLAGS) $< -o $@
 main.o: $(HEADERS)
+
+main: main.o
+	$(LD) -o $@ $(LDFLAGS) -I  main.o
