@@ -18,7 +18,7 @@
 
 /*Change vector syntax as: std::vector<double>. Assignments xi=(*v).at(i). Inputs as pointer: std::vector<double>*, to call in functs ad &*/
 
-double verlet(int norbs, double m, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>*vy, std::vector<double>* vz, Eigen::MatrixXi* c,double sx,double sy,double sz,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr);/*Inputs, in order: #orbitals; mass; cut-off radius; timestep; xyz arrays; velocity arrays; matrix of eigenvectors (N*N) (vectors as columns); cell sizes in xyz (put big numbers if you don't want PBCs); nearest neighbour lists; atom vector distances; modulus of vector distances.*/
+double verlet(int norbs, double m, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>*vy, std::vector<double>* vz, Eigen::MatrixXi* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr);/*Inputs, in order: #orbitals; mass; cut-off radius; timestep; xyz arrays; velocity arrays; matrix of eigenvectors (N*N) (vectors as columns); cell sizes in xyz (put big numbers if you don't want PBCs); nearest neighbour lists; atom vector distances; modulus of vector distances.*/
 
 void forces(int N,int norbs, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr, Eigen::MatrixXi* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz);/*Inputs, in order: #atoms; #orbitals; atom vector distances; modulus of vector distances; matrix of eigenvectors (N*N) (vectors as columns); nearest neighbour lists; forces vectors.*/
 
@@ -26,7 +26,7 @@ void velocity(int N, double m, std::vector<double>* vx, std::vector<double>* vy,
 
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum);/*Inputs, in order: first atom index; second atom index; first orbital index; second orbital index; vector of direction cosines; modulus of distance between i and j; switch for component.*/ 
 
-double verlet(int norbs, double m, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXi* c,double sx,double sy,double sz,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr)
+double verlet(int norbs, double m, double rc,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXi* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXi* rx, Eigen::MatrixXi* ry, Eigen::MatrixXi* rz, Eigen::MatrixXi* modr)
 { double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf;
   int N=(*x).size();
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
