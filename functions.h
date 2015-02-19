@@ -18,6 +18,18 @@ double ts (double r){
   return ts;
 }
 
+//derivative of s(r) with respect to dx
+double dts (double r,double dx){
+  double c0=6.7392620074314*pow(10,-3);
+  double c1=-8.1885359517898*pow(10,-2);
+  double c2=0.1932365259144;
+  double c3=0.3542874332380;
+  double r1=2.45;
+
+  double dts=dx*(c1+2*c2*(r-r1)+3*c3*((r+r1)*(r+r1)-2*r1*r))/r;
+  return dts;
+}
+
 //tail function for phi(r)
 double to (double r){
   double c0=2.2504290109*pow(10,-8);
@@ -28,6 +40,18 @@ double to (double r){
 
   double to=pow((r-d1),3)*c3+pow((r-d1),2)*c2+(r-d1)*c1+c0;
   return to;
+}
+
+//derivative of to
+double dto (double r, double dx){
+  double c0=2.2504290109*pow(10,-8);
+  double c1=-1.4408640561*pow(10,-6);
+  double c2=2.1043303374*pow(10,-5);
+  double c3=6.6024390226*pow(10,-5);
+  double d1=2.57;
+
+  double dto=dx*(c1+2*c2*(r-d1)+3*c3*((r+d1)*(r+d1)-2*d1*r))/r;
+  return dto;
 }
  
 //function s(r), including the tail and the atom types
@@ -52,7 +76,29 @@ double s (double r){
 	return S;
 }
 
-//phi(r) functions including the til function
+//derivative of s(r) with respect to dx
+double ds (double r,double dx){
+  double r0=1.536329; //nearest-neighbour atomic separation
+  double n=2;
+  double nc=6.5;
+  double rc=2.18;
+  double r1=2.45;
+  double rcut=2.6;
+  double dS;
+  //constants 
+    if (r<r1){
+      dS=-n*s(r)*(1+nc*pow(r/rc,nc))*dx/(r*r);
+    }
+    else if(r>=r1 && r<rcut){
+      dS=dts(r,dx);
+    }
+   else{
+    return 0;
+   }
+	return dS;
+}
+
+//phi(r) functions including the tail function
 double o (double r){
   double phi0=8.18555;
   double m=3.30304;
@@ -98,6 +144,29 @@ double d_f0(double x){
   return f0;
 }
 
+//derivative of phi(r) needed for MD
+double d_o(double r,double dx){
+  double phi0=8.18555;
+  double m=3.30304;
+  double mc=8.6655;
+  double dc=2.1052;
+  double d0=1.64;
+  double d1=2.57;
+  double dcut=2.6;
+  double dphi;
+
+  if (r<d1){
+    dphi=-(m/r)*o(r)*(1+mc*pow((r/dc),mc))*(dx/r);;
+  }
+  else if(r>=d1 && r<dcut){
+    dphi=dto(r,dx);
+  }
+  else{
+    dphi=0;
+  }
+  return dphi;
+}
+
 //X function - argument of f polynomial consisting SUM_over_j ( phi(r_ij))
 double X (Eigen::MatrixXd* modr,int n, int i ){
   double r;
@@ -105,7 +174,7 @@ double X (Eigen::MatrixXd* modr,int n, int i ){
   for (int j=0;j<n;j++){
     if(i!=j){
       r=(*modr)(i,j);
-      x=x+o(r);
+      if(r>1e-5){x=x+o(r);}
     };
   };
   return x;
@@ -122,5 +191,6 @@ double Erep (Eigen::MatrixXd* modr){
   }
   return total;
 }
+
 
 #endif
