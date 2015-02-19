@@ -157,9 +157,9 @@ bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<doub
 	}
 	double dmax=*(max_element(disp.begin(), disp.end()));
 	if (dmax>0.4*Abs(rc-rv)){
-		SetEqual(posx, refposx);
-		SetEqual(posy, refposy);
-		SetEqual(posz, refposz);
+		SetEqual(refposx, posx);
+		SetEqual(refposy, posy);
+		SetEqual(refposz, posz);
 		recalc=1;
 	}
 	else{;}

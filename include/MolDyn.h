@@ -40,17 +40,10 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
       (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
     }
-  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);
-  
-  if(renn=1){
+  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  if(renn==1){
     NearestNeighbours(inear,nnear,modr,rv);
-    for(int j=0;j<N;j++){
-      (*refx).at(j)=(*x).at(j);
-      (*refy).at(j)=(*y).at(j);
-      (*refz).at(j)=(*z).at(j);
-    }
-    GetAllDistances(modr,rx,ry,rz,x,y,z);
   }
+  GetAllDistances(modr,rx,ry,rz,x,y,z);
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
     {

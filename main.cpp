@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=10000,nprint=10;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=10;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
