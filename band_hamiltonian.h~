@@ -1,23 +1,25 @@
-#ifndef HAMILTONIAN_H
-#define HAMILTONIAN_H
+#ifndef BAND_HAMILTONIAN_H
+#define BAND_HAMILTONIAN_H
 
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
 #include <cmath>
+#include <complex>
 #include "Gethijab.h"
 #include "functions.h"
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
-double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
+double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
   
   int i, j, a, b;                                          // i,j loop over atoms; a,b loop over orbitals
   double r,rxloc, ryloc, rzloc;                            // temporary parameters to store interatomic distances
   std::vector<double> d(3);                                // d is a 3d array of atom pair's connecting vector (varys within ij loop)
   double sr,hijab;                                         // hijab: unscaled matrix element, sr: scaling function value at r
-  double Ebs=0;										   			  // Band structure energy to be returned
-  Eigen::MatrixXd Hijab(4*n,4*n);			   							  // Hamiltonian matrix for diagonalization
+  double Ebs=0;						   // Band structure energy to be returned
+  Eigen::MatrixXcd Hijab(4*n,4*n);			   // Hamiltonian matrix for diagonalization (complex this time)
 
+  double k=0;                                              //k value for complex explnant 
   for (i=0;i<n;i++) {                                      // Cycle through atoms i
     for (j=0;j<=i;j++) {                                   // Cycle through atoms j (note upper triangular matrix)
 		r = (*modr)(i, j);
@@ -31,21 +33,25 @@ double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::Matri
 				for (b=0;b<4;b++) {                            // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                   // If scaling function gives 0, no need to calc hijab
 	  				else {hijab = Gethijab(i,j,a,b,&d);}        // Hamiltonian elements of ij interaction
-	  				Hijab(4*i+a,4*j+b)     = sr*hijab;          // Scale hijab and populate matrix Hijab
+	  				Hijab(4*i+a,4*j+b)     =exp(std::complex<double>(0,1)*k*r)sr*hijab;          // Scale hijab and populate matrix Hijab
 //	  				Hijab(4*j+b,4*i+a)     = sr*hijab;          // Scale hijab and populate matrix Hijab
 				}                                              // End loop over b
       	}                                                 // End loop over a
     	}                                                    // End loop over j
   	}                                                       // End loop over i
 
-  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(Hijab);       // Compute eigenvectors and eigenvalues
+  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
 
   typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
   std::vector<pair> eigvalarr;                                             
   for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		// reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										// sorts eigenvalues
   for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  std::cout << "After sorting" << std::endl;
+  for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 
+
+  /*
   for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
@@ -71,7 +77,7 @@ double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::Matri
 		std::cout << std::endl;
 	 }
   } // End of verbose mode
-
+  */
 
   return Ebs;
 }

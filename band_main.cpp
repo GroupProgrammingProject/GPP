@@ -33,9 +33,27 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot;
 
+	//k used for the band structure 
+	double k=0;
 	// Starting TB	module: calculating energies
-	ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	std::vector<double> eigenvalaar (4*n);
+
+	std::ofstream band;
+	band.open ("band_structure.dat");
+	double K_MAX=M_PI/1.3;
+	double K_STEP=2*M_PI/(1.3*50);
+	for(k=0;k<=K_MAX;k=k+K_STEP){
+	ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,k,v);
 	//H_MD and eigvects have now also been populated
+	band<<k<<"\t";
+	for(int i=0;i<10;i++){
+	  band<<eigenvalaar[i]<<"\t";
+	}
+	band<<"\n";
+	}
+	band.close();
+
+
 	erep=Erep(&modr);
 	etot=ebs+erep;
 
