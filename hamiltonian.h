@@ -21,22 +21,25 @@ double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::Matri
   for (i=0;i<n;i++) {                                      // Cycle through atoms i
     for (j=0;j<=i;j++) {                                   // Cycle through atoms j (note upper triangular matrix)
 		r = (*modr)(i, j);
- 		rxloc = (*rx)(i, j)/r;
- 		ryloc = (*ry)(i, j)/r;
- 		rzloc = (*rz)(i, j)/r;
-      d.at(0)=rxloc; d.at(1)=ryloc; d.at(2)=rzloc;
-		  	if (i == j) {sr = 1;}                             // Don't apply scaling function if i=j
-      	else {sr    = s(r);}                              // Scaling parameter
-      	for (a=0;a<4;a++) {                               // Cycle through orbitals of atom i
-				for (b=0;b<4;b++) {                            // Cycle through orbitals of atom i
-	  				if (sr == 0) {hijab = 0;}                   // If scaling function gives 0, no need to calc hijab
-	  				else {hijab = Gethijab(i,j,a,b,&d);}        // Hamiltonian elements of ij interaction
-	  				Hijab(4*i+a,4*j+b)     = sr*hijab;          // Scale hijab and populate matrix Hijab
-//	  				Hijab(4*j+b,4*i+a)     = sr*hijab;          // Scale hijab and populate matrix Hijab
-				}                                              // End loop over b
-      	}                                                 // End loop over a
-    	}                                                    // End loop over j
-  	}                                                       // End loop over i
+		if (i == j) {sr = 1;}                                // Don't apply scaling function if i=j
+		else if (r < 1e-5) {sr = 0;}                         // If atoms have no interaction distance
+		else {                                               // If atoms have finite interaction distance
+		  sr    = s(r);                                      // Scaling parameter
+		  rxloc = (*rx)(i, j)/r;
+		  ryloc = (*ry)(i, j)/r;
+		  rzloc = (*rz)(i, j)/r;
+		  d.at(0)=rxloc; d.at(1)=ryloc; d.at(2)=rzloc;
+		}
+		for (a=0;a<4;a++) {                               // Cycle through orbitals of atom i
+		  for (b=0;b<4;b++) {                            // Cycle through orbitals of atom i
+			 if (sr == 0) {hijab = 0;}                   // If scaling function gives 0, no need to calc hijab
+			 else {hijab = Gethijab(i,j,a,b,&d);}        // Hamiltonian elements of ij interaction
+			 Hijab(4*i+a,4*j+b)     = sr*hijab;          // Scale hijab and populate matrix Hijab
+			 //	  				Hijab(4*j+b,4*i+a)     = sr*hijab;          // Scale hijab and populate matrix Hijab
+		  }                                              // End loop over b
+		}                                                 // End loop over a
+	 }                                                    // End loop over j
+  }                                                       // End loop over i
 
   Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(Hijab);       // Compute eigenvectors and eigenvalues
 
@@ -56,20 +59,21 @@ double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::Matri
 
   // Output to terminal, set verbose == 1 to print
   if (verbose == 1) {
-    // std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
+	 std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
 	 std::cout << "After sorting" << std::endl;
 	 for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 	 
-	 //	 std::cout << "Eigenvector matrix" << std::endl;
-	 //	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
+	 std::cout << "Eigenvector matrix" << std::endl;
+	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
 	 
 	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
-	 for(i=0;i<4*n;i++){
-		for(j=0;j<4*n;j++){
-		  std::cout << (*eigvects)(i,j) << "\n";
-		}
-		std::cout << std::endl;
-	 }
+	 std::cout << (*eigvects) << std::endl;
+	 //for(i=0;i<4*n;i++){
+	 //	for(j=0;j<4*n;j++){
+	 //	  std::cout << (*eigvects)(j,i) << "\t\t";
+	 //	}
+	 //std::cout << std::endl;
+		//}
   } // End of verbose mode
 
 
