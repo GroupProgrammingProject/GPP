@@ -4,10 +4,9 @@
 #include "Eigen/Dense"
 #include "readinxyz.h"
 #include "vectorfunctions.h"
-#include "hamiltonian.h"
+#include "band_hamiltonian.h"
 #include "functions.h"
 #include "geometryinfo.h"
-#include "ScaleGeom.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -29,19 +28,35 @@ int main(int argc, char* argv[]){
 	double ebs,erep,etot;
 
 	// Change if using PBCs
-	double a =7.0993;
-	double b =7.0993;
-	double c =7.0993;
+	double a =3.9;
+	double b =10;
+	double c =10;
 	double rv = 2.98;
 
 	Eigen::MatrixXd eigvects(4*n,4*n);
 
 	// Calculate distances
-	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,scale*a,scale*b,scale*c,rv);
-
-		  
+	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,a,b,c,rv);
+	
+	//k used for the band structure 
+	double k=0;
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	std::vector<double> eigenvalaar (4*n);
+
+	std::ofstream band;
+	band.open ("band_structure.dat");
+	double K_MAX=M_PI/1.3;
+	double K_STEP=2*M_PI/(1.3*50);
+	for(k=0;k<=K_MAX;k=k+K_STEP){
+		ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,k,v);
+		//H_MD and eigvects have now also been populated
+		band<<k<<"\t";
+		for(int i=0;i<10;i++){
+		  band<<eigenvalaar[i]<<"\t";
+		}
+		band<<"\n";
+	}
+	band.close();
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
 	// Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
