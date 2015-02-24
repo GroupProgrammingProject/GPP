@@ -113,7 +113,7 @@ void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, 
 	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
 	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
 	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);	
+	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
 	      (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
 	      (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
 	      (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
