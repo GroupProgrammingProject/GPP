@@ -143,7 +143,7 @@ void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::v
       (*vz).at(i)=c*(2*rand()-1);
       vxtot=vxtot+(*vx).at(i);
       vytot=vytot+(*vy).at(i);
-      vztot=vztot+(*vy).at(i);
+      vztot=vztot+(*vz).at(i);
     }
   vxavg=vxtot/N;
   vyavg=vytot/N;
