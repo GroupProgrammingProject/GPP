@@ -85,7 +85,7 @@ int main(int argc, char* argv[]){
 	  fbsz=-(Hamiltonian(n,&drmodr,&drrx,&drry,&drrz,&eigvects,v)-Hamiltonian(n,&dlmodr,&dlrx,&dlry,&dlrz,&eigvects,v))/(2*h);
 	  frepz=-(Erep(&drmodr)-Erep(&dlmodr))/(2*h);
 	  
-	  std::cout << Erep(&drmodr) << " " << Erep(&dlmodr) << std::endl;
+//	  std::cout << Erep(&drmodr) << " " << Erep(&dlmodr) << std::endl;
 
 	  for(j=0;j<n;j++){
 	    dposx.at(j)=posx.at(j);
@@ -94,7 +94,8 @@ int main(int argc, char* argv[]){
 	  }
 
 	  
-	  std::cout << fbsx << " " << fbsy << " " << fbsz << std::endl;
+	  std::cout << frepx << " " << frepy << " " << frepz << std::endl;
+//	  std::cout << fbsx << " " << fbsy << " " << fbsz << std::endl;
 	  
 	}
 

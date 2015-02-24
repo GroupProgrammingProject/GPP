@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,fbsx,fbsy,fbsz,frepx,frepy,frepz,h=0.1;
+	double dt=1,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,fbsx,fbsy,fbsz,frepx,frepy,frepz,h=0.001;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]){
 	  fbsz=-(Hamiltonian(n,&drmodr,&drrx,&drry,&drrz,&eigvects,v)-Hamiltonian(n,&dlmodr,&dlrx,&dlry,&dlrz,&eigvects,v))/(2*h);
 	  frepz=-(Erep(&drmodr)-Erep(&dlmodr))/(2*h);
 	  
-	  std::cout << Erep(&drmodr) << " " << Erep(&dlmodr) << std::endl;
+//	  std::cout << Erep(&drmodr) << " " << Erep(&dlmodr) << std::endl;
 
 	  for(j=0;j<n;j++){
 	    dposx.at(j)=posx.at(j);
@@ -94,7 +94,8 @@ int main(int argc, char* argv[]){
 	  }
 
 	  
-	  std::cout << fbsx << " " << fbsy << " " << fbsz << std::endl;
+	  std::cout << "Repulsive forces:  " << frepx << " " << frepy << " " << frepz << std::endl;
+	  std::cout << "Band structure forces:  " << fbsx << " " << fbsy << " " << fbsz << std::endl;
 	  
 	}
 
