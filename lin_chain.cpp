@@ -2,12 +2,12 @@
 #include <fstream>
 #include <vector>
 #include "Eigen/Dense"
-#include "readinxyz.h"
-#include "vectorfunctions.h"
-#include "hamiltonian.h"
-#include "functions.h"
-#include "geometryinfo.h"
-#include "ScaleGeom.h"
+#include "include/readinxyz.h"
+#include "include/vectorfunctions.h"
+#include "include/hamiltonian.h"
+#include "include/functions.h"
+#include "include/geometryinfo.h"
+#include "include/ScaleGeom.h"
 
 int main(int argc, char* argv[]){
 	if (argc<3){std::cout<<"You should append three files to the main object!"<<std::endl;}
@@ -17,9 +17,10 @@ int main(int argc, char* argv[]){
 	bool v=0;
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
+	ReadInXYZ (argv[1], &posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
+std::cout << "n=" << n << std::endl;
 	std::vector<double> posxnew(n), posynew(n), posznew(n);
 	Eigen::MatrixXd modr(n,n);
 	Eigen::MatrixXd rx(n,n);
@@ -27,18 +28,19 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rz(n,n);
 	double ebs,erep,etot;
 
-	double a =5.24;
-	double b =6;
-	double c =6;
+	double a =131;
+	double b =5;
+	double c =5;
 	double rv = 3;
-	double bond = 1.3;
+	double bond = 1.31;
 
 	std::string cellout = argv[2];
 	std::string dataout = argv[3];
 	std::ofstream cell(cellout.c_str());
 	std::ofstream output(dataout.c_str());
 	Eigen::MatrixXd eigvects(4*n,4*n);
-	for (double scale=0.9;scale<=1.1;scale=scale+0.1){
+
+	for (double scale=0.9;scale<=1.1;scale=scale+0.01){
 	  std::cout << "Starting scale " << scale << std::endl;
 
 	  // Scale cell size
@@ -53,7 +55,8 @@ int main(int argc, char* argv[]){
 	  
 	  // Calculate distances
 	  PbcGetAllDistances(&modr,&rx,&ry,&rz,&posxnew,&posynew,&posznew,scale*a,scale*b,scale*c,rv);
-	  
+//	  GetAllDistances(&modr,&rx,&ry,&rz,&posxnew,&posynew,&posznew,rv);
+
 	  // Starting TB	module: calculating energies
 	  ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	  //H_MD and eigvects have now also been populated

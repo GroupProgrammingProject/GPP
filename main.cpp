@@ -2,11 +2,11 @@
 #include <fstream>
 #include <vector>
 #include "Eigen/Dense"
-#include "readinxyz.h"
-#include "vectorfunctions.h"
-#include "hamiltonian.h"
-#include "functions.h"
-#include "geometryinfo.h"
+#include "include/readinxyz.h"
+#include "include/vectorfunctions.h"
+#include "include/bs_hamiltonian.h"
+#include "include/functions.h"
+#include "include/geometryinfo.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -15,9 +15,8 @@ int main(int argc, char* argv[]){
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool v=0;
 	// Read in types, 
-	std::vector<int> type;
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1], &type, &posx, &posy, &posz);
+	ReadInXYZ (argv[1], &posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	// Calculate distances
@@ -26,19 +25,12 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 
-	double a=5.2,b=5.2,c=5.2,rc=2.6,rv=3;
-/*
-std::cout << "All distances" << std::endl;
-	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
-std::cout << modr << std::endl << std::endl;
+	double a=655,b=5,c=5,rc=2.6,rv=3;
 
-std::cout << "Zerod distances >rc" << std::endl;
-	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,rc);
-std::cout << modr << std::endl << std::endl;
-*/
-std::cout << "PBCs:" << std::endl;
+std::cout << "n=" << n << std::endl;
+
+//	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	PbcGetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, a, b, c, rv);
-std::cout << modr << std::endl;
 
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -52,9 +44,9 @@ std::cout << modr << std::endl;
 	erep=Erep(&modr);
 	etot=ebs+erep;
 
-	std::cout << "Ebs = " << ebs << std::endl;
-	std::cout << "Erep = " << erep << std::endl;
-	std::cout << "Etot = " << etot << std::endl;
+	std::cout << "Ebs = " << ebs/(double)n << std::endl;
+	std::cout << "Erep = " << erep/(double)n << std::endl;
+	std::cout << "Etot = " << etot/(double)n << std::endl;
 
 
 return 0;
