@@ -46,8 +46,8 @@ int main(int argc, char* argv[]){
 
 	std::ofstream band;
 	band.open ("band_structure.dat");
-	double K_MAX=M_PI/1.3;
-	double K_STEP=2*M_PI/(1.3*50);
+	double K_MAX=M_PI/(a/n);
+	double K_STEP=2*M_PI/((a/n)*50);
 	for(k=0;k<=K_MAX;k=k+K_STEP){
 		ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,k,v);
 		//H_MD and eigvects have now also been populated
