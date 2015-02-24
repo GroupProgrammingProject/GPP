@@ -36,8 +36,8 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 				for (b=0;b<4;b++) {                            // Cycle through orbitals of atom i
 	  				if (sr == 0) {hijab = 0;}                   // If scaling function gives 0, no need to calc hijab
 	  				else {hijab = Gethijab(i,j,a,b,&d);}        // Hamiltonian elements of ij interaction
-	  				Hijab(4*i+a,4*j+b)     =exp(std::complex<double>(0,1)*k*r)*sr*hijab;          // Scale hijab and populate matrix Hijab
-	  				Hijab(4*j+b,4*i+a)     = exp(std::complex<double>(0,1)*k*r)*sr*hijab;          // Scale hijab and populate matrix Hijab
+	  				Hijab(4*i+a,4*j+b)     = exp(std::complex<double>(0,1)*k*rxloc*r)*sr*hijab;          // Scale hijab and populate matrix Hijab
+	  				Hijab(4*j+b,4*i+a)     = exp(-std::complex<double>(0,1)*k*rxloc*r)*sr*hijab;          // Scale hijab and populate matrix Hijab
 				}                                              // End loop over b
       	}                                                 // End loop over a
     	}                                                    // End loop over j
@@ -57,33 +57,33 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
     (*eigenvalaar).at(i)=eigvalarr.at(i);
   }
 
-  /*
-  for(i=0;i<2*n;i++){
+  
+  /*for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
 			(*eigvects)(2*i,j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
 			(*eigvects)(2*i+1,j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
-  }
+	  }*/
 
   // Output to terminal, set verbose == 1 to print
   if (verbose == 1) {
     // std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
 	 std::cout << "After sorting" << std::endl;
-	 for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
+	 for(i=0;i<4*n;i++){std::cout << "eigvalarr is " << eigvalarr.at(i) << std::endl;}
 	 
 	 //	 std::cout << "Eigenvector matrix" << std::endl;
 	 //	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
 	 
-	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
+	 /*	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
 	 for(i=0;i<4*n;i++){
 		for(j=0;j<4*n;j++){
 		  std::cout << (*eigvects)(i,j) << "\n";
 		}
 		std::cout << std::endl;
-	 }
+		}*/
   } // End of verbose mode
-  */
+  
 
   return Ebs;
 }

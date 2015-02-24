@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=0;
+	bool v=1;
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1], &posx, &posy, &posz);
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 	double ebs,erep,etot;
 
 	// Change if using PBCs
-	double a =3.9;
+	double a =7.86;
 	double b =10;
 	double c =10;
 	double rv = 2.98;
@@ -40,19 +40,19 @@ int main(int argc, char* argv[]){
 
 	
 	//k used for the band structure 
-	double k=0;
+	//double k=0;
 	// Starting TB	module: calculating energies
 	std::vector<double> eigenvalaar (4*n);
 
 	std::ofstream band;
-	band.open ("band_structure.dat");
+	band.open ("band_structure6.dat");
 	double K_MAX=M_PI/(a/n);
 	double K_STEP=2*M_PI/((a/n)*50);
-	for(k=0;k<=K_MAX;k=k+K_STEP){
+	for(double k=-0.5*K_MAX;k<=0.5*K_MAX;k=k+K_STEP){
 		ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,k,v);
 		//H_MD and eigvects have now also been populated
 		band<<k<<"\t";
-		for(int i=0;i<10;i++){
+		for(int i=0;i<4*n;i++){
 		  band<<eigenvalaar[i]<<"\t";
 		}
 		band<<"\n";
