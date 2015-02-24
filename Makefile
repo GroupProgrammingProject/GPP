@@ -4,7 +4,7 @@ LD = g++
 INCLUDE = $(addprefix -I ,~/Software/eigen/)
 HEADERS = ./include/*.h
 
-main.o:main.cpp
+main.o: main.cpp
 	$(CXX) $(CPPFLAGS) $(INCLUDE) -c $(CXXFLAGS) $< -o $@
 main.o: $(HEADERS)
 
