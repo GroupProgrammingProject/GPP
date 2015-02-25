@@ -50,7 +50,7 @@ double dto (double r, double dx){
   double c3=6.6024390226*pow(10,-5);
   double d1=2.57;
 
-  double dto=dx*(c1+2*c2*(r-d1)+3*c3*(r-d1)*(r-d1))/r;
+  double dto=dx*(c1+2*c2*(r-d1)+3*c3*((r+d1)*(r+d1)-2*d1*r))/r;
   return dto;
 }
  

@@ -65,7 +65,7 @@ int main(int argc, char* argv[]){
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);	
-	ekin=3*(n-1)*kb*T/2;
+	ekin=3*n*kb*T/2;
 	etot=ebs+erep+ekin;
 
 	FILE *en=fopen("energy.txt","w");
