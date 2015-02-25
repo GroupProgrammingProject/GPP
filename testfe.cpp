@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1,nprint=10;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=.1,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:

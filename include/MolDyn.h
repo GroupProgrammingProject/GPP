@@ -14,6 +14,7 @@
 #include "functions.h"
 #include "Gethijab.h"
 #include "geometryinfo.h"
+#include "hamiltonian.h"
 #include <vector>
 
 //Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
@@ -22,7 +23,7 @@
 
 double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>*vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr);/*Inputs, in order: #orbitals; timestep; xyz arrays; velocity arrays; matrix of eigenvectors (N*N) (vectors as columns); nearest neighbour lists; atom vector distances; modulus of vector distances.*/
 
-void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz);/*Inputs, in order: #atoms; #orbitals; atom vector distances; modulus of vector distances; matrix of eigenvectors (N*N) (vectors as columns); nearest neighbour lists; forces vectors.*/
+void forces(int N, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz);
 
 void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);/*Inputs, in order: #atoms; mass; vectors of velocities; temperature.*/
 
@@ -33,7 +34,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   int N=(*x).size();
   bool renn=0;
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
-  forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz); //calculate the forces
+  forces(N,x,y,z,&fx,&fy,&fz); //calculate the forces
   for(int i=0; i<N; i++)
     {
       (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt+0.5*fx.at(i)*dt*dt/m;
@@ -44,7 +45,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     NearestNeighbours(inear,nnear,modr,rv);
   }
   GetAllDistances(modr,rx,ry,rz,x,y,z);
-  forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
+  forces(N,x,y,z,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
     {
       (*vx).at(i)=(*vx).at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
@@ -65,69 +66,60 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
 /*INPUTS:N=numb. atoms; x,y,z=atom positions (arrays); c=eigenvectors (matrix with each column as the n-th eigenvector); rc=cut-off radius;
 nnear=number of nearest neighbours (nn) to i-th atom (array); inear=label of j-th nn to i-th atom (matrix); fx,fy,fz forces on each atom (arrays);
 maxnn=max number of nn */
-void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
-{ int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
+void forces(int n, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
+{ int k,i,j,l,lp,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r;
+  double r,h=0.0001;
+  Eigen::MatrixXd modrl(n,n);
+  Eigen::MatrixXd dlrx(n,n);
+  Eigen::MatrixXd dlry(n,n);
+  Eigen::MatrixXd dlrz(n,n);
+  Eigen::MatrixXd modrr(n,n);
+  Eigen::MatrixXd drrx(n,n);
+  Eigen::MatrixXd drry(n,n);
+  Eigen::MatrixXd drrz(n,n);
+  Eigen::MatrixXd eigvects(4*n,4*n);
+  std::vector<double> drposx(n),drposy(n),drposz(n),dlposx(n),dlposy(n),dlposz(n);
+  bool v=0;
 
-  for(i=0;i<N;i++){ /*initialisation of forces*/
+  for(i=0;i<n;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
     (*fy).at(i)=0;
     (*fz).at(i)=0;
   }
   
-  for(i=0;i<N;i++){ /*Cycle to compute band structure forces on atom i*/
-    sumphi=0;
-    for(k=0;k<(*nnear).at(i);k++){
-      nearlabel=(*inear)(i,k);
-      r=(*modr)(i,nearlabel);
-      if(r<rc){
-	sumphi=sumphi+o(r);
-      }
+  for(i=0;i<n;i++){ /*Cycle to compute band structure forces on atom i*/
+    for(j=0;j<n;j++){
+      drposx.at(j)=(*posx).at(j);
+      dlposx.at(j)=(*posx).at(j);
+      drposy.at(j)=(*posy).at(j);
+      dlposy.at(j)=(*posy).at(j);
+      drposz.at(j)=(*posz).at(j);
+      dlposz.at(j)=(*posz).at(j);
     }
-    for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
-      nearlabel=(*inear)(i,j);
-      sumphinn=0;
-      for(m=0;m<(*nnear).at(nearlabel);m++){     
-	dx=(*rx)(nearlabel,(*inear)(nearlabel,m)); /*Definition of vector distances*/
-	dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
-	dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
-	r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
-	if(r<rc){
-	  sumphinn=sumphinn+o(r);
-	}
-      }
-      dx=(*rx)(i,nearlabel); /*Definition of vector distances*/
-      dy=(*ry)(i,nearlabel);
-      dz=(*rz)(i,nearlabel);
-      
-      r=(*modr)(i,nearlabel); /*Modulus of distance*/
-      if(r<rc){
-	ddnorm.at(0)=dx/r;
-	ddnorm.at(1)=dy/r;
-	ddnorm.at(2)=dz/r;
-      
-	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,0);
-	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
-	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
-	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
-	      (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
-	      (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
-	      (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
-	    }
-	  }
-	}
-/*	//calculation of repulsive forces
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
-	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
-	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
-  */    }
-    }
-  }  
+    drposx.at(i)=(*posx).at(i)+h;
+    dlposx.at(i)=(*posx).at(i)-h;
+    GetAllDistances(&modrr,&drrx,&drry,&drrz,&drposx,posy,posz);
+    GetAllDistances(&modrl,&dlrx,&dlry,&dlrz,&dlposx,posy,posz);
+    (*fx).at(i)=(*fx).at(i)-(Hamiltonian(n,&modrr,&drrx,&drry,&drrz,&eigvects,v)-Hamiltonian(n,&modrl,&dlrx,&dlry,&dlrz,&eigvects,v))/(2*h);
+    (*fx).at(i)=(*fx).at(i)-(Erep(&modrr)-Erep(&modrl))/(2*h);
+    
+    drposy.at(i)=(*posy).at(i)+h;
+    dlposy.at(i)=(*posy).at(i)-h;
+    GetAllDistances(&modrr,&drrx,&drry,&drrz,posx,&drposy,posz);
+    GetAllDistances(&modrl,&dlrx,&dlry,&dlrz,posx,&dlposy,posz);
+    (*fy).at(i)=(*fy).at(i)-(Hamiltonian(n,&modrr,&drrx,&drry,&drrz,&eigvects,v)-Hamiltonian(n,&modrl,&dlrx,&dlry,&dlrz,&eigvects,v))/(2*h);
+    (*fy).at(i)=(*fy).at(i)-(Erep(&modrr)-Erep(&modrl))/(2*h);
+    
+    drposz.at(i)=(*posz).at(i)+h;
+    dlposz.at(i)=(*posz).at(i)-h;
+    GetAllDistances(&modrr,&drrx,&drry,&drrz,posx,posy,&drposz);
+    GetAllDistances(&modrl,&dlrx,&dlry,&dlrz,posx,posy,&dlposz);
+    (*fz).at(i)=(*fz).at(i)-(Hamiltonian(n,&modrr,&drrx,&drry,&drrz,&eigvects,v)-Hamiltonian(n,&modrl,&dlrx,&dlry,&dlrz,&eigvects,v))/(2*h);
+    (*fz).at(i)=(*fz).at(i)-(Erep(&modrr)-Erep(&modrl))/(2*h);
+  }
 }
+
 
 void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T)
 {  //calculate velocities

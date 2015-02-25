@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=10000,nprint=10;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=.01,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=0.1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
@@ -81,11 +81,6 @@ int main(int argc, char* argv[]){
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
-
-		std::cout << "Ebs = " << ebs << std::endl;
-		std::cout << "Erep = " << erep << std::endl;
-		std::cout << "Ekin = " << ekin << std::endl;
-		std::cout << "Etot = " << etot << std::endl << std::endl;
 	    fprintf(en,"%f\t%f\n",tmd,etot);
 	    fprintf(file,"%d\nC3 molecule\n",n);
 	    for(j=0;j<n;j++){
