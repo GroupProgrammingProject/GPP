@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=1;
+	bool v=0;
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1], &posx, &posy, &posz);

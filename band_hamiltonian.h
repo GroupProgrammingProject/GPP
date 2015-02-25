@@ -61,12 +61,13 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 
   Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
 
-  for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = es.eigenvalues()[i];}
-
-  /*typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
+  typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
+  std::vector<pair> eigvalarr;
   for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		// reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										// sorts eigenvalues
-  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states*/
+  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+
+  for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = eigvalarr.at(i).first;;}
 
   for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
