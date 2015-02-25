@@ -115,7 +115,7 @@ double X (Eigen::MatrixXd* modr,int n, int i ){
 double Erep (Eigen::MatrixXd* modr){
   int N=sqrt(modr->size());
   double x;
-  double total;
+  double total=0;
   for(int i=0;i<N;i++){
     x=X(modr,N,i);
     total=total+f0(x);
