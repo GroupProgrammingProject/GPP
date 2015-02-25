@@ -4,7 +4,7 @@
 #include "Eigen/Dense"
 #include "include/readinxyz.h"
 #include "include/vectorfunctions.h"
-#include "include/bs_hamiltonian.h"
+#include "include/hamiltonian.h"
 #include "include/functions.h"
 #include "include/geometryinfo.h"
 
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 
-	double a=655,b=5,c=5,rc=2.6,rv=3;
+	double a=20,b=20,c=4*7.37854,rc=2.6,rv=3;
 
 std::cout << "n=" << n << std::endl;
 
