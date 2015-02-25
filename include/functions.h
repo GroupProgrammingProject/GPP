@@ -26,7 +26,7 @@ double dts (double r,double dx){
   double c3=0.3542874332380;
   double r1=2.45;
 
-  double dts=dx*(c1+2*c2*(r-r1)+3*c3*((r+r1)*(r+r1)-2*r1*r))/r;
+  double dts=dx*(c1+2*c2*(r-r1)+3*c3*(r-r1)*(r-r1))/r;
   return dts;
 }
 
@@ -50,7 +50,7 @@ double dto (double r, double dx){
   double c3=6.6024390226*pow(10,-5);
   double d1=2.57;
 
-  double dto=dx*(c1+2*c2*(r-d1)+3*c3*((r+d1)*(r+d1)-2*d1*r))/r;
+  double dto=dx*(c1+2*c2*(r-d1)+3*c3*(r-d1)*(r-d1))/r;
   return dto;
 }
  
@@ -184,7 +184,7 @@ double X (Eigen::MatrixXd* modr,int n, int i ){
 double Erep (Eigen::MatrixXd* modr){
   int N=sqrt(modr->size());
   double x;
-  double total;
+  double total=0;
   for(int i=0;i<N;i++){
     x=X(modr,N,i);
     total=total+f0(x);

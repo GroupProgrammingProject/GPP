@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=10;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
@@ -65,26 +65,25 @@ int main(int argc, char* argv[]){
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);	
-	ekin=3*n*kb*T/2;
+	ekin=3*(n-1)*kb*T/2;
 	etot=ebs+erep+ekin;
 
 	FILE *en=fopen("energy.txt","w");
-	fprintf(en,"%f\t%f\n",0.0,etot);
+	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
 
 	
 	// MD cycle
 	for(i=0;i<nmd;i++){
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr);
-	  ekin=3*n*kb*Tf/2;
-	  
-	  if(i%nprint==0){
+	  if(i%nprint==0){	    
+	    ekin=3*(n-1)*kb*Tf/2;
 	    // Starting TB module: calculating energies
 	    ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	    //H_MD and eigvects have now also been populated
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
-	    fprintf(en,"%f\t%f\n",tmd,etot);
+	    fprintf(en,"%f\t%f\t%f\t%f\t%f\n",tmd,ekin,ebs,erep,etot);
 	    fprintf(file,"%d\nC3 molecule\n",n);
 	    for(j=0;j<n;j++){
 	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
@@ -92,11 +91,12 @@ int main(int argc, char* argv[]){
 	  } 
 	}
 
+	ekin=3*(n-1)*kb*Tf/2;
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
-	etot=ebs+erep;
+	etot=ebs+erep+ekin;
 
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
