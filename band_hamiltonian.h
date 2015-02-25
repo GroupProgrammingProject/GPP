@@ -25,7 +25,7 @@ double dot(std::vector<double>* a, std::vector<double>* b) {
 }
 
 // Takes 1 int and 4 vector arguments: n, type, posx, posy, posz and returns band structure energy Ebs
-double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects,std::vector<double>* eigenvalaar, std::vector<double>* k, bool verbose){
+double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXcd* eigvects,std::vector<double>* eigenvalaar, std::vector<double>* k, bool verbose){
   
   int i, j, a, b;                                          // i,j loop over atoms; a,b loop over orbitals
   double r,rxloc, ryloc, rzloc;                            // temporary parameters to store interatomic distances
@@ -59,47 +59,35 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
     	}                                                    // End loop over j
   	}                                                       // End loop over i
 
-  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
+  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
 
-  std::vector<double> eigvalarr;                                             
-  for(i=0;i<4*n;i++){eigvalarr.push_back(real(es.eigenvalues()[i]));}		// reads in eigenvalues and their index into eigvalarr
+  for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = es.eigenvalues()[i];}
+
+  /*typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
+  for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		// reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										// sorts eigenvalues
-  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i);}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states*/
 
-
-  // std::cout << "After sorting" << std::endl;
-  for(i=0;i<4*n;i++){
-    //std::cout << "eigvalarr no. " << i << " is " << eigvalarr.at(i) << std::endl;
-    (*eigenvalaar).at(i)=eigvalarr.at(i);
-  }
-
-  
-  /*for(i=0;i<2*n;i++){
+  for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
 			(*eigvects)(2*i,j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
 			(*eigvects)(2*i+1,j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
-	  }*/
+  }
 
   // Output to terminal, set verbose == 1 to print
   if (verbose == 1) {
-    // std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
+	 std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
 	 std::cout << "After sorting" << std::endl;
-	 for(i=0;i<4*n;i++){std::cout << "eigvalarr is " << eigvalarr.at(i) << std::endl;}
+	 for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 	 
-	 //	 std::cout << "Eigenvector matrix" << std::endl;
-	 //	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
+	 std::cout << "Eigenvector matrix" << std::endl;
+	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
 	 
-	 /*	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
-	 for(i=0;i<4*n;i++){
-		for(j=0;j<4*n;j++){
-		  std::cout << (*eigvects)(i,j) << "\n";
-		}
-		std::cout << std::endl;
-		}*/
+	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
+	 std::cout << (*eigvects) << std::endl;
   } // End of verbose mode
-  
 
   return Ebs;
 }

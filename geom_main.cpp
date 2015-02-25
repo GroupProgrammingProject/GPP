@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=0;
+	bool v=1;
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
 	ReadInXYZ (argv[1], &posx, &posy, &posz);
@@ -33,11 +33,11 @@ int main(int argc, char* argv[]){
 	double c =10;
 	double rv = 2.98;
 
-	Eigen::MatrixXd eigvects(4*n,4*n);
+	Eigen::MatrixXcd eigvects(4*n,4*n);
 
 	// Calculate distances
 	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,a,b,c,rv);
-	int kn = 5; // Number of kpts 
+	int kn = 50; // Number of kpts 
 	std::vector<double> kvec(3);
 	kvec.at(0) = 0;
 	kvec.at(1) = 0;
@@ -54,14 +54,14 @@ int main(int argc, char* argv[]){
 	double K_STEP=2*M_PI/(a*kn);        // 2*M_PI/((a/n)*50);
 	double BZ = M_PI/(a/n);
 	double kprim;
-	//ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,0,v);
-	for(double k=0;k<=K_MAX;k=k+K_STEP){
+	for(double k=-K_MAX;k<=K_MAX;k=k+K_STEP){
+	  //double k = K_STEP;
 	  kvec.at(0) = k;
-	  std::cout << "k = " << k << std::endl;
+	  //std::cout << "k = " << k << std::endl;
 	  ebs=ebs+(1.0/(double)kn)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 		//H_MD and eigvects have now also been populated
-		//band<<k<<"\t";
-		for(int i=0;i<4*n;i++){
+	  //band<<k<<"\t";
+	  for(int i=0;i<4*n;i++){
 
 		  // BZ band 0
 		  if (i/2-(double)i/2.0 == 0 && i < n) {             // If even band
@@ -95,17 +95,23 @@ int main(int argc, char* argv[]){
 			 kprim = fmod(i*K_MAX + (K_MAX-k),BZ);
 		  }
 
-		  std::cout << "kprim = " << kprim << std::endl;
+		  //std::cout << "kprim = " << kprim << std::endl;
 		  band<<kprim<<"\t";
 		  band<<eigenvalaar[i]<<"\n";
-		}
-		//band<<"\n";
+		
+		  //band<<"\n";
+	  }
 	}
 	band.close();
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
 	// Determining erep works, however, we need to check if we're passing pointers or arrays to Erep()
 	etot=ebs+erep;
+
+	std::cout << "Eigenvals:"  << std::endl;
+	for(int i=0;i<4*n;i++){
+	  std::cout << eigenvalaar[i] << std::endl;
+	}
 
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
