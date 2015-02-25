@@ -37,7 +37,11 @@ int main(int argc, char* argv[]){
 
 	// Calculate distances
 	PbcGetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,a,b,c,rv);
-	int kn = 50; // Number of kpts 
+	int kn = 5; // Number of kpts 
+	std::vector<double> kvec(3);
+	kvec.at(0) = 0;
+	kvec.at(1) = 0;
+	kvec.at(2) = 0;
 
 	//k used for the band structure 
 	//double k=0;
@@ -52,7 +56,9 @@ int main(int argc, char* argv[]){
 	double kprim;
 	//ebs=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,0,v);
 	for(double k=0;k<=K_MAX;k=k+K_STEP){
-	  ebs=ebs+(1.0/(double)kn)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,k,v);
+	  kvec.at(0) = k;
+	  std::cout << "k = " << k << std::endl;
+	  ebs=ebs+(1.0/(double)kn)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 		//H_MD and eigvects have now also been populated
 		//band<<k<<"\t";
 		for(int i=0;i<4*n;i++){
@@ -89,6 +95,7 @@ int main(int argc, char* argv[]){
 			 kprim = fmod(i*K_MAX + (K_MAX-k),BZ);
 		  }
 
+		  std::cout << "kprim = " << kprim << std::endl;
 		  band<<kprim<<"\t";
 		  band<<eigenvalaar[i]<<"\n";
 		}
