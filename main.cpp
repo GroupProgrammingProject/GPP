@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
 	bool pbc = 0;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=10000,nprint=1;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=0.1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs);
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
