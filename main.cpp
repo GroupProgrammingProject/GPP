@@ -38,13 +38,13 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv);
+	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
+	double dt=0.1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
-	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=0.1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
