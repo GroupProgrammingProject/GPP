@@ -47,7 +47,7 @@ double s (double r){
       S=ts(r);
     }
    else{
-    return 0;
+    S=0;
    }
 	return S;
 }

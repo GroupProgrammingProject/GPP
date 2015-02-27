@@ -25,19 +25,28 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 
-	double a=20,b=20,c=1*7.37854,rc=2.6,rv=3;
+	double a=7.37854,b=8.52,c=2*3.45,rc=2.6,rv=3;
 
 std::cout << "n=" << n << std::endl;
 
 //	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	PbcGetAllDistances(&modr, &rx, &ry, &rz, &posx, &posy, &posz, a, b, c, rv);
 
+std::cout << "rx" << std::endl;
+std::cout << rx << std::endl << std::endl;
+std::cout << "ry" << std::endl;
+std::cout << ry << std::endl << std::endl;
+std::cout << "rz" << std::endl;
+std::cout << rz << std::endl << std::endl;
+std::cout << "modr" << std::endl;
+std::cout << modr << std::endl;
+
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot;
 
-
+/*
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
@@ -47,7 +56,7 @@ std::cout << "n=" << n << std::endl;
 	std::cout << "Ebs = " << ebs/(double)n << std::endl;
 	std::cout << "Erep = " << erep/(double)n << std::endl;
 	std::cout << "Etot = " << etot/(double)n << std::endl;
-
+*/
 
 return 0;
 }
