@@ -31,7 +31,7 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr)
 { double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf;
   int N=(*x).size();
-  bool renn=0;
+  bool renn=0,v=0;
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz); //calculate the forces
   for(int i=0; i<N; i++)
@@ -45,6 +45,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     NearestNeighbours(inear,nnear,modr,rv);
   }
   GetAllDistances(modr,rx,ry,rz,x,y,z);
+  Hamiltonian(N,modr,rx,ry,rz,c,v);
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
     {
@@ -188,8 +189,7 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
     else if(a==0){h=V[1]*(vconum[b-1]-(*d).at(b-1)*(*d).at(conum))/distr;}//sp_sigma row
     else if(b==0){h=-V[1]*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}//sp_sigma column
   }
-  else if((a==b) && (a*b!=0)){h=2*(V[2]-V[3])*(*d).at(a-1)*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}//pp_sigma and pp_pi diagonal
-  else if((a!=b) && (a*b!=0)){h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}//pp_sigma and pp_pi off-diagonal
+  else {h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}//pp_sigma and pp_pi off-diagonal
 
   //V&G routine ends
   return h;

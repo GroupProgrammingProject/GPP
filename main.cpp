@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
@@ -70,13 +70,11 @@ int main(int argc, char* argv[]){
 
 	FILE *en=fopen("energy.txt","w");
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
-
-	
 	// MD cycle
 	for(i=0;i<nmd;i++){
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr);
-	  if(i%nprint==0){	    
-	    ekin=3*(n-1)*kb*Tf/2;
+	  ekin=3*(n-1)*kb*Tf/2;
+	  if(i%nprint==0){
 	    // Starting TB module: calculating energies
 	    ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	    //H_MD and eigvects have now also been populated
@@ -91,7 +89,6 @@ int main(int argc, char* argv[]){
 	  } 
 	}
 
-	ekin=3*(n-1)*kb*Tf/2;
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
