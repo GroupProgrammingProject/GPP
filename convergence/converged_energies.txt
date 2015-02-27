@@ -1,0 +1,5 @@
+Linear	C500	-7.19791
+Graphene C480	-8.40572
+Diamond	C512	-8.39171
+Nanotube	C480	
+
