@@ -16,9 +16,11 @@ int main(int argc, char* argv[]){
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool v=0, renn;
 	int i,j;
+	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	ReadInXYZ (argv[1],&posx, &posy, &posz);
+	pbc = 0;
+	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=10000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
@@ -36,7 +38,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
+	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
