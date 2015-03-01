@@ -2,12 +2,14 @@
 #include <fstream>
 #include <vector>
 #include "Eigen/Dense"
-#include "readinxyz.h"
-#include "vectorfunctions.h"
-#include "band_hamiltonian.h"
-#include "functions.h"
-#include "geometryinfo.h"
-#include "kpointfunctions.h"
+#include "include/readinxyz.h"
+#include "include/vectorfunctions.h"
+#include "include/band_hamiltonian.h"
+#include "include/functions.h"
+#include "include/geometryinfo.h"
+#include "include/kpointfunctions.h"
+
+// Example main for a total energy calculation which uses kpoints
 
 int main(int argc, char* argv[]){
 	if (argc<2){std::cout<<"You should append two files to the main object!"<<std::endl;}

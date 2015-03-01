@@ -5,6 +5,11 @@
 #include <cmath>
 #include <fstream>
 
+void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints);
+void genkgrid(char* filename, std::vector<double>* lats, int kgrid[3], bool gamma);
+void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double kpt1[3], int npts);
+
+// Read in kpoints from a file (e.g. for a calculation)
 void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
   std::ifstream infile(filename);
   double k0, k1, k2;
@@ -17,7 +22,8 @@ void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
   }
 }
 
-void generatekpoints(char* filename, std::vector<double>* lats, int kgrid[3], bool gamma) {
+// Generate a user specified grid of kpoints (only for orthorhombic symmetries)
+void genkgrid(char* filename, std::vector<double>* lats, int kgrid[3], bool gamma) {
   std::ofstream outfile(filename);
   std::cout << "kpoint grid " << kgrid[0] << " " << kgrid[1] << " " << kgrid[2] << std::endl;
   double kstep[3] = {2*M_PI/((*lats).at(0)*kgrid[0]), 2*M_PI/((*lats).at(1)*kgrid[1]), 2*M_PI/((*lats).at(2)*kgrid[2])}; 
@@ -31,6 +37,22 @@ void generatekpoints(char* filename, std::vector<double>* lats, int kgrid[3], bo
 		  outfile << kvec[0] << "\t" << kvec[1] << "\t" << kvec[2] << "\n";
 		}
 	 }
+  }
+}
+
+// Generate a path of npts kpoints between two user specified points in kspace
+void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double kpt1[3], int npts) {
+  std::ofstream outfile(filename);
+  double kstep[3];
+  double kvec[3];
+  for (int i=0;i<3;i++) {                                        // For each direction
+	 kstep[i] = (kpt1[i] - kpt0[i])/(double)npts;                 // kstep is difference divided by npts
+  }
+  for (jnt j=0;j<npts;j++) {
+	 for (int i=0;i<3;i++) {
+		kvec[i] = kpt0[i] + j*kstep[i];                            // Iterate along steps for desired number of kpoints
+	 }
+	 outfile << kvec[0] << "\t" << kvec[1] << "\t" << kvec[2] << "\n";
   }
 }
 
