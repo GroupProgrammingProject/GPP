@@ -91,7 +91,7 @@ int main(int argc, char* argv[]){
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
 	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << std::endl;
-	}
+	  }
 	
 	return 0;
 }
