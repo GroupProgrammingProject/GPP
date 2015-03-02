@@ -38,7 +38,7 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
   for (int i=0;i<3;i++) {                                        // For each direction
 	 kstep[i] = (kpt1[i] - kpt0[i])/(double)npts;                 // kstep is difference divided by npts
   }
-  for (jnt j=0;j<npts;j++) {
+  for (int j=0;j<npts;j++) {
 	 for (int i=0;i<3;i++) {
 		kvec[i] = kpt0[i] + j*kstep[i];                            // Iterate along steps for desired number of kpoints
 	 }
