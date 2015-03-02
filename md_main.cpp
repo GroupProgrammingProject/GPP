@@ -16,11 +16,9 @@ int main(int argc, char* argv[]){
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool v=0, renn;
 	int i,j;
-	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 0;
-	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
+	ReadInXYZ (argv[1],&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
@@ -38,13 +36,13 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
-	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
+	GetAllDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
+	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
+	double dt=1,T=1000,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
@@ -72,15 +70,15 @@ int main(int argc, char* argv[]){
 
 	FILE *en=fopen("energy.txt","w");
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
-	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
+
+	
 	// MD cycle
-	for(i=1;i<nmd+1;i++){
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T);
-//	  Tf=nose(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,xi1,xi2,vxi1,vxi2,q1,q2,T);
-	  //canonical ensemble function
-	  std::cout << Tf << std::endl;
-	  ekin=3*(n-1)*kb*Tf/2;
-	  if(i%nprint==0){
+	for(i=0;i<nmd;i++){
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs);
+	  if(i%nprint==0){	    
+	    ekin=3*(n-1)*kb*Tf/2;
+	    // Starting TB module: calculating energies
+//	    ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	    //H_MD and eigvects have now also been populated
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
@@ -93,6 +91,7 @@ int main(int argc, char* argv[]){
 	  } 
 	}
 
+	ekin=3*(n-1)*kb*Tf/2;
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated

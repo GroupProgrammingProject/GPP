@@ -32,5 +32,5 @@ void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::v
 
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum);/*Inputs, in order: first atom index; second atom index; first orbital index; second orbital index; vector of direction cosines; modulus of distance between i and j; switch for component.*/ 
 
-//void chain(int N,double m,double T,double dt,double q1,double q2,double &xi1,double &xi2,double &vxi1,double &vxi2,std::vector<double>* vx,std::vector<double>* vy,std::vector<double>* vz,double &kin);
+void chain(int N,double m,double T,double dt,double q1,double q2,double &xi1,double &xi2,double &vxi1,double &vxi2,std::vector<double>* vx,std::vector<double>* vy,std::vector<double>* vz,double &kin);
 #endif

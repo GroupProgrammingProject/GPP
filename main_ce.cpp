@@ -72,13 +72,9 @@ int main(int argc, char* argv[]){
 
 	FILE *en=fopen("energy.txt","w");
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
-	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T);
-//	  Tf=nose(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,xi1,xi2,vxi1,vxi2,q1,q2,T);
-	  //canonical ensemble function
-	  std::cout << Tf << std::endl;
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
