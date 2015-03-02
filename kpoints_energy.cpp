@@ -56,12 +56,14 @@ int main(int argc, char* argv[]){
 	std::cout << "ktot = " << ktot << std::endl;
 	std::vector<double> kvec(3);
 	 
+	double ebstemp;
 	int j = 0;
 	for (int i=0;i<ktot;i++) {
 	  kvec = kpoints.at(i);
 	  std::cout << "k = [" << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << "] " << std::endl;
-	  ebs=ebs+band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
-	  std::cout << "Ebs = " << ebs << std::endl;
+	  ebstemp=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
+	  ebs = ebs + ebstemp;
+	  std::cout << "Ebs = " << ebstemp << std::endl;
 	  j++;
 	  //	  std::cout << "\neigenvectors = \n" << eigvects.real() << std::endl;
 	  eigvectstot = eigvectstot + (1.0/(double)ktot)*eigvects;
@@ -80,12 +82,12 @@ int main(int argc, char* argv[]){
 
 	eigvectreal = eigvectstot.real();
 
-	kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
+	/*kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
 	
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
 	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << std::endl;
-	  }
+	  }*/
 	
 	return 0;
 }
