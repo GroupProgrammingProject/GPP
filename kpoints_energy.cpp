@@ -41,9 +41,12 @@ int main(int argc, char* argv[]){
 	// Calculate distances
 	Eigen::MatrixXi inear(n,n);
 	std::vector<int> nnear(n);
-	std::vector<double> fx(n);
-	std::vector<double> fy(n);
-	std::vector<double> fz(n);
+	std::vector<double> fx(n,0.0);
+	std::vector<double> fy(n,0.0);
+	std::vector<double> fz(n,0.0);
+	/*	std::vector<double> fxtemp(n);
+	std::vector<double> fytemp(n);
+	std::vector<double> fztemp(n);*/
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	NearestNeighbours(&inear, &nnear, &modr,rv);
 
@@ -65,6 +68,23 @@ int main(int argc, char* argv[]){
 	  ebs = ebs + ebstemp;
 	  std::cout << "Ebs = " << ebstemp << std::endl;
 	  j++;
+	  /*kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvects, &nnear, &inear, &fxtemp, &fytemp, &fztemp);
+	  // Output forces from each kpoint calculation
+	  std::cout << "\n Forces " << std::endl;
+	  for (int l=0;l<n;l++) {
+		 std::cout << l << " " << fxtemp.at(l) << " " << fytemp.at(l) << " " << fztemp.at(l) << std::endl;
+	  }
+	  // Output real components of forces from kpoints
+	  std::cout << "\n Real forces:" << std::endl;
+	  for (int l=0;l<n;l++) {
+		 std::cout << l << " " << fxtemp.at(l).real() << " " << fytemp.at(l).real() << " " << fztemp.at(l).real() << std::endl;
+	  }
+	  // Add forces from different kpoints
+	  for (int l;l<n;l++) {
+		 /*fx.at(l).real = fx.at(l).real + (1/(double)ktot)*fxtemp.at(l).real();
+		 fy.at(l).real = fy.at(l).real + (1/(double)ktot)*fytemp.at(l).real();
+			fz.at(l).real = fz.at(l).real + (1/(double)ktot)*fztemp.at(l).real();*/
+	  //}
 	  //	  std::cout << "\neigenvectors = \n" << eigvects.real() << std::endl;
 	  eigvectstot = eigvectstot + (1.0/(double)ktot)*eigvects;
 	}
@@ -78,16 +98,16 @@ int main(int argc, char* argv[]){
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
-	//std::cout << "\ntotal eigenvectors = \n" << eigvectstot.real() << std::endl;
+	std::cout << "\ntotal eigenvectors = \n" << eigvectstot.imag() << std::endl;
 
 	eigvectreal = eigvectstot.real();
 
-	/*kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
+	//kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
 	
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
 	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << std::endl;
-	  }*/
+	}
 	
 	return 0;
 }

@@ -49,7 +49,8 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
 void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r;
+  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r;
+  double dualeigen;
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
