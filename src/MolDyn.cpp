@@ -73,10 +73,11 @@ double nose(int norbs,double rc,double rv,double m,double dt, std::vector<double
 }*/
 
 double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T)
-{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(T),nu=1.0;
+{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),nu=0,vxm=0.0,vym=0,vzm=0,rang;
   int N=(*x).size();
   bool renn=0,v=0;
-  std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
+  std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N);
+  Ran ran(time(0)+clock());
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz); //calculate the forces
   for(int i=0; i<N; i++)
     {
@@ -93,18 +94,29 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
   {
-      srand(time(0)); //set seed
 		(*vx).at(i)=(*vx).at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
       (*vy).at(i)=(*vy).at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
       (*vz).at(i)=(*vz).at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
-		if(rand()<nu*dt){ //implement the Andersen thermostat for canonical ensemble
-			(*vx).at(i)=Gauss(0,sigma); //generate random numbers from Gaussian distribution
-			(*vy).at(i)=Gauss(0,sigma);
-			(*vz).at(i)=Gauss(0,sigma);
+		rang=ran.doub();
+	//	std::cout << rang <<std::endl;
+		if(rang<nu*dt){ //implement the Andersen thermostat for canonical ensemble
+			(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
+			(*vy).at(i)=Gauss(0,sigma)/m;
+			(*vz).at(i)=Gauss(0,sigma)/m;
+//			std::cout << "Andersen implemented" << std::endl;
 		}
+		vxm=vxm+(*vx).at(i);
+		vym=vym+(*vy).at(i);
+		vzm=vzm+(*vz).at(i);
   }
+  vxm=vxm/N;
+  vym=vym/N;
+  vzm=vzm/N;
   for(int i=0; i<N; i++)//mean square velocities
     {
+		(*vx).at(i)=(*vx).at(i)-vxm;
+		(*vy).at(i)=(*vy).at(i)-vym;
+		(*vz).at(i)=(*vz).at(i)-vzm;
       svxm=svxm+(*vx).at(i)*(*vx).at(i);
       svym=svym+(*vy).at(i)*(*vy).at(i);
       svzm=svzm+(*vz).at(i)*(*vz).at(i);
@@ -187,12 +199,12 @@ void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::v
   double c,ke,boltz=1./11603;//1.38*pow(10,-23);
   double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg,Tp;
   c=sqrt(3*boltz*T/m);
-  srand(time(0)); //CHANGE RNG!!!!!!!!
+  Ran ran(time(0)+clock()); //CHANGE RNG!!!!!!!!
   for (int i=0; i<N; i++)
     {  
-      (*vx).at(i)=c*(2*rand()-1);
-      (*vy).at(i)=c*(2*rand()-1);
-      (*vz).at(i)=c*(2*rand()-1);
+      (*vx).at(i)=c*(2*ran.doub()-1);
+      (*vy).at(i)=c*(2*ran.doub()-1);
+      (*vz).at(i)=c*(2*ran.doub()-1);
       vxtot=vxtot+(*vx).at(i);
       vytot=vytot+(*vy).at(i);
       vztot=vztot+(*vz).at(i);
