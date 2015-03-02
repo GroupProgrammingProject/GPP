@@ -60,33 +60,27 @@ int main(int argc, char* argv[]){
 	for (int i=0;i<ktot;i++) {
 	  kvec = kpoints.at(i);
 	  std::cout << "k = [" << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << "] " << std::endl;
-	  ebs=ebs+(1.0/(double)ktot)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
+	  ebs=ebs+band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 	  std::cout << "Ebs = " << ebs << std::endl;
 	  j++;
 	  //	  std::cout << "\neigenvectors = \n" << eigvects.real() << std::endl;
 	  eigvectstot = eigvectstot + (1.0/(double)ktot)*eigvects;
 	}
 
-	kvec.at(0) = 0;
-	kvec.at(1) = 0;
-	kvec.at(2) = 0;
-	double ebsgamma = band_Hamiltonian(n,&modr,&rx,&ry,&rz,&gammapt,&eigenvalaar,&kvec,v);
-	
 	erep=Erep(&modr);
-	etot=ebs+erep;
 
 	std::cout << "No points = " << j << std::endl;
 
-	std::cout << "Ebs = " << ebs << std::endl;
+	std::cout << "Ebs = " << ebs/(double)ktot << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
-	std::cout << "Etot = " << etot << std::endl;
+	etot=ebs/(double)ktot+erep;
+	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
 	//std::cout << "\ntotal eigenvectors = \n" << eigvectstot.real() << std::endl;
-	//	std::cout << "\neigenvectors at gamma point = \n" << gammapt.real() << std::endl;
 
 	eigvectreal = eigvectstot.real();
 
-	forces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
+	kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
 	
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
