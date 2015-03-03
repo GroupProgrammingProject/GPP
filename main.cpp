@@ -9,10 +9,10 @@
 #include "include/geometryinfo.h"
 #include "include/MolDyn.h"
 
-void eigenmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigmodes);
+void eigenmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigfreq);
 /*Inputs, in order: #atoms; #orbitals; cut-off radius; mass of atoms;atom vector distances; modulus of vector distances; matrix of eigenvectors (N*N) (vectors as columns); nearest neighbour lists; forces vectors,eigenmodes*/
 
-void eigenmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigmodes){
+void eigenmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigfreq){
 
 	bool v=0;
 	int i,j,l,J;						//J is index of atom to be displaced
@@ -97,6 +97,7 @@ std::cout << "ry" << std:: endl << ry << std::endl;
 std::cout << "rz" << std:: endl << rz << std::endl;	
 std::cout << "modr" << std:: endl << modr << std::endl;
 */
+				// Update eigenvectors and forces for new distances
 		 		ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
 				forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz);//recalculate forces
 /*	
@@ -130,15 +131,23 @@ std::cout << "Final fl " << std::endl;
 std::cout << fl << std::endl;
 */
 
-//Create dynamical matrix
+	//Create dynamical matrix
 	for(i=0;i<3*n;i++){
 		for(j=0;j<3*n;j++){
 			dynamicmat(i,j)=(fl(i,j)-fr(i,j))/(2*abs_diff*m);
 		}
 	}
 
-	std::cout << "Dynamical matrix:" << std::endl;
-	std::cout << dynamicmat << std::endl;
+std::cout << "Dynamical matrix:" << std::endl;
+std::cout << dynamicmat << std::endl << std::endl;
+
+	//Solve for eigenmodes and eigenfrequencies
+	Eigen::EigenSolver<Eigen::MatrixXd> es(dynamicmat);
+/*
+std::cout << "eigenvalues:" << std::endl;
+std::cout << es.eigenvalues() << std::endl;
+*/
+	for(i=0;i<3*n;i++){ (*eigfreq).at(i) = real(es.eigenvalues()[i]); }
 
 }	//end eigenmodes()
 
@@ -186,9 +195,11 @@ int main(int argc, char* argv[]){
 	erep=Erep(&modr);	
 /*	Erep has to be called, otherwise errors appear: several functions from "functions.h" are undefined"	*/
 
-	//Calculate eigenmodes
-	std::vector<double> fx(n),fy(n),fz(n),eigmodes(3*n);
-	eigenmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigmodes);
+	//Calculate eigenmodes and eigenfrequencies
+	std::vector<double> fx(n),fy(n),fz(n),eigfreq(3*n);
+	eigenmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
+std::cout << "Real eigenfrequencies" << std::endl;
+for(i=0;i<3*n;i++){	std::cout << eigfreq[i] << std::endl; }
 
 return 0;
 }
