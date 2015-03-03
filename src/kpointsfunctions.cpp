@@ -8,6 +8,7 @@ void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
 	 kvec.at(0) = k0;
 	 kvec.at(1) = k1;
 	 kvec.at(2) = k2;
+	 std::cout << "k = " << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << std::endl;
 	 (*kpoints).push_back(kvec);
   }
 }
@@ -46,11 +47,12 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
   }
 }
 
-void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
+void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<std::complex<double> >* fx, std::vector<std::complex<double> >* fy, std::vector<std::complex<double> >* fz, std::vector<double>* kvec)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r;
-  double dualeigen;
+  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr;
+  std::complex<double> dualeigen, complexx, complexy, complexz;
+  std::complex<double> im = (0,1);
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -89,16 +91,22 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 	ddnorm.at(1)=dy/r;
 	ddnorm.at(2)=dz/r;
       
+	kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
+
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
 	    derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
 	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
 	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
+		 complexx=im*(*kvec).at(0)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivx;
+		 complexy=im*(*kvec).at(1)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivy;
+		 complexz=im*(*kvec).at(2)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivz;
 	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
 	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
-	      (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
-	      (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
-	      (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
+	      (*fx).at(i)=(*fx).at(i)-(std::complex<double>(2.0,0)*complexx*dualeigen);
+			//	      (*fx).at(i).imag()=(*fx).at(i).imag()-(std::complex<double>(2.0,0)*complexx*dualeigen).imag();
+	      (*fy).at(i)=(*fy).at(i)-std::complex<double>(2.0,0)*complexy*dualeigen;
+	      (*fz).at(i)=(*fz).at(i)-std::complex<double>(2.0,0)*complexz*dualeigen;
 	    }
 	  }
 	}

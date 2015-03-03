@@ -155,5 +155,18 @@ bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<doub
 return recalc;
 }
 
-
+// Adds a small displacement (1e-6 Angstroms) to each atom position to break symmetry
+void scramble(std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz) {
+  int n = (*posx).size();                                 // No atoms
+  srand(time(NULL));                                      // Seed rand()
+  double r;                                               // Random displacement
+  for (int i=0;i<n;i++) {
+	 r = (((double)rand()/(double)(RAND_MAX)) - 0.5)*1e-6; // random no -1 <= r <= 1
+	 (*posx).at(i) = (*posx).at(i) + r;
+	 r = (((double)rand()/(double)(RAND_MAX)) - 0.5)*1e-6; // random no -1 <= r <= 1
+	 (*posy).at(i) = (*posy).at(i) + r;
+	 r = (((double)rand()/(double)(RAND_MAX)) - 0.5)*1e-6; // random no -1 <= r <= 1
+	 (*posz).at(i) = (*posz).at(i) + r;
+  }
+}
 
