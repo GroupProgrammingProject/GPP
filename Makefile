@@ -9,7 +9,8 @@ LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
 
 #include path to eigen
-INCLUDE = $(addprefix -I , ~/Software/eigen/)
+HEADERPATH = ./include/
+INCLUDE = $(addprefix -I , ~/Software/eigen/ $(HEADERPATH))
 HEADERS = ./include/*.h
 
 #compile and runtime shared lib linking path
