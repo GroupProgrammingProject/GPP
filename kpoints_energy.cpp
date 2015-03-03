@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 	scramble(&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
-	std::cout << "n = " <<n <<std::endl;
+	//std::cout << "n = " <<n <<std::endl;
 	Eigen::MatrixXd modr(n,n);
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
@@ -45,6 +45,7 @@ int main(int argc, char* argv[]){
 	std::vector<std::complex<double> > fx(n,0.0);
 	std::vector<std::complex<double> > fy(n,0.0);
 	std::vector<std::complex<double> > fz(n,0.0);
+	std::vector<double> fmag(n);
 	std::vector<std::complex<double> > fxtemp(n);
 	std::vector<std::complex<double> > fytemp(n);
 	std::vector<std::complex<double> > fztemp(n);
@@ -107,9 +108,13 @@ int main(int argc, char* argv[]){
 
 	//kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
 	
+	for (int i=0;i<n;i++) {
+	  fmag.at(i) = sqrt(pow(fx.at(i).real(),2) + pow(fx.at(i).imag(),2) + pow(fy.at(i).real(),2) + pow(fy.at(i).imag(),2) + pow(fz.at(i).real(),2) + pow(fz.at(i).imag(),2));
+	}		
+
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
-	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << std::endl;
+	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << " " << fmag.at(i) << std::endl;
 	}	
 	return 0;
 }
