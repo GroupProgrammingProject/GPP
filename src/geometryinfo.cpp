@@ -1,4 +1,4 @@
-#include "../include/geometryinfo.h"
+#include "geometryinfo.h"
 
 // Function to calculate one component of the distances between atoms
 void DistanceComp(Eigen::MatrixXd* r, std::vector<double>* pos){

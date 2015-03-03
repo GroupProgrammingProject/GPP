@@ -1,4 +1,4 @@
-#include "../include/kpointsfunctions.h"
+#include "kpointsfunctions.h"
 // Read in kpoints from a file (e.g. for a calculation)
 void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
   std::ifstream infile(filename);

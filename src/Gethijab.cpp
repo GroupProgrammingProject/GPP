@@ -1,4 +1,4 @@
-#include "../include/Gethijab.h"
+#include "Gethijab.h"
 
 //Gethijab() returns value of non-scaled Hamiltionian matrix element h
 double Gethijab(int i, int j,int a, int b, std::vector<double>* d){

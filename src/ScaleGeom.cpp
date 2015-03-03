@@ -1,4 +1,4 @@
-#include "../include/ScaleGeom.h"
+#include "ScaleGeom.h"
 // Scale the positions of atoms along each of three axes
 void ScaleGeom(int n, double scale[3], std::vector<double>* lats, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* posxnew, std::vector<double>* posynew, std::vector<double>* posznew, std::vector<double>* latsnew, bool pbc) {
   for (int i=0;i<n;i++) {                                          // For each atom in original cell

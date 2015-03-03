@@ -1,4 +1,4 @@
-#include "../include/readinxyz.h"
+#include "readinxyz.h"
 // Function to initiate a map to translate element symbol to integer values corresponding to its atomic number
 std::map<std::string, int> SetElementMap(){
 	std::map<std::string, int> map;

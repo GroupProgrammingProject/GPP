@@ -1,12 +1,13 @@
 CXX = g++
-CXXFLAGS=
+CXXFLAGS= 
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = functions geometryinfo hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab
+LIBFILES = MolDyn hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions 
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
+LIBPATH = ./lib
 
 #include path to eigen
 HEADERPATH = ./include/
@@ -22,21 +23,19 @@ RPATH = -Wl,-rpath=./lib
 all: main
 
 main: main.cpp
-	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-main: $(HEADERS)
+	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+main: $(HEADERS) $(LIBPATH)/*.so
 
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 
 
 %.so: %.o
-	$(CXX) -shared -fPIC -o lib/lib$@ $<
+	$(CXX) -shared -fPIC -o $(LIBPATH)/lib$@ $<
 
 %.o: src/%.cpp
 	$(CXX) -c $(INCLUDE) -fPIC $<
-%.o: include/%.h
-
-.PRECIOUS: %.o 
+#%.o: include/%.h
 
 clean: 
 	rm *.o

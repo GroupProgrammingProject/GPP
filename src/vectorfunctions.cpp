@@ -1,4 +1,4 @@
-#include "../include/vectorfunctions.h"
+#include "vectorfunctions.h"
 
 // Function to print contents of an std::vector to screen
 template <typename T> void Print(std::vector<T>* vect){
