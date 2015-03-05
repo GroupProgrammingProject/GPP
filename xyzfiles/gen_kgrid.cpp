@@ -17,4 +17,5 @@ int main(int argc, char* argv[]) {
   ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);    // Read in lattice parameters from .xyz file
   int kn[3] = {atoi(argv[3]),atoi(argv[4]),atoi(argv[5])}; // kpoint grid read in from command line
   genkgrid(argv[2],&lats,kn,0);                            // Generate grid in specified kpoint file
+  // final bool term indicates gamma centred or not (gamma = 0 reproduces supercell)
 }
