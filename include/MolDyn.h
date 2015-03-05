@@ -16,6 +16,7 @@
 #include "Gethijab.h"
 #include "geometryinfo.h"
 #include <vector>
+#include <Eigen/Dense>
 
 //Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
 
