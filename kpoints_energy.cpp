@@ -57,20 +57,17 @@ int main(int argc, char* argv[]){
 
 	std::vector<std::vector<double> > kpoints; 
 	readinkpoints(argv[2],&kpoints);
-	std::cout << "argv[2] = " << argv[2] << std::endl;
 	int ktot = kpoints.size();
 	std::cout << "ktot = " << ktot << std::endl;
 	std::vector<double> kvec(3);
 	 
 	double ebstemp;
-	int j = 0;
 	for (int i=0;i<ktot;i++) {
 	  kvec = kpoints.at(i);
 	  std::cout << "\nk = [" << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << "] " << std::endl;
 	  ebstemp=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 	  ebs = ebs + ebstemp;
 	  std::cout << "Ebs = " << ebstemp << std::endl;
-	  j++;
 	  kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvects, &nnear, &inear, &fxtemp, &fytemp, &fztemp, &kvec);
 	  // Output forces from each kpoint calculation
 	  std::cout << "\n Forces " << std::endl;
@@ -94,8 +91,6 @@ int main(int argc, char* argv[]){
 	}
 
 	erep=Erep(&modr);
-
-	std::cout << "No points = " << j << std::endl;
 
 	std::cout << "Ebs = " << ebs/(double)ktot << std::endl;
 	std::cout << "Erep = " << erep << std::endl;

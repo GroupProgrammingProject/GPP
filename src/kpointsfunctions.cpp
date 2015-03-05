@@ -8,7 +8,6 @@ void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
 	 kvec.at(0) = k0;
 	 kvec.at(1) = k1;
 	 kvec.at(2) = k2;
-	 std::cout << "k = " << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << std::endl;
 	 (*kpoints).push_back(kvec);
   }
 }
@@ -52,7 +51,8 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
   std::vector<double> ddnorm(3);
   double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr;
   std::complex<double> dualeigen, complexx, complexy, complexz;
-  std::complex<double> im = (0,1);
+  std::complex<double> dualeigen2, complexx2, complexy2, complexz2;
+  std::complex<double> im = std::complex<double>(0,1);
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -73,13 +73,13 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
       nearlabel=(*inear)(i,j);
       sumphinn=0;
       for(m=0;m<(*nnear).at(nearlabel);m++){     
-	dx=(*rx)(nearlabel,(*inear)(nearlabel,m)); /*Definition of vector distances*/
-	dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
-	dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
-	r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
-	if(r<rc){
-	  sumphinn=sumphinn+o(r);
-	}
+		  dx=(*rx)(nearlabel,(*inear)(nearlabel,m)); /*Definition of vector distances*/
+		  dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
+		  dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
+		  r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
+		  if(r<rc){
+			 sumphinn=sumphinn+o(r);
+		  }
       }
       dx=(*rx)(i,nearlabel); /*Definition of vector distances*/
       dy=(*ry)(i,nearlabel);
@@ -87,33 +87,41 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
       
       r=(*modr)(i,nearlabel); /*Modulus of distance*/
       if(r<rc){
-	ddnorm.at(0)=dx/r;
-	ddnorm.at(1)=dy/r;
-	ddnorm.at(2)=dz/r;
-      
-	kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
+		  ddnorm.at(0)=dx/r;
+		  ddnorm.at(1)=dy/r;
+		  ddnorm.at(2)=dz/r;
+		  
+		  kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
+		  
+		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
+			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
+				derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
+				derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
+				derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
 
-	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
-	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
-	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
-		 complexx=im*(*kvec).at(0)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivx;
-		 complexy=im*(*kvec).at(1)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivy;
-		 complexz=im*(*kvec).at(2)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivz;
-	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
-	      (*fx).at(i)=(*fx).at(i)-(std::complex<double>(2.0,0)*complexx*dualeigen);
-			//	      (*fx).at(i).imag()=(*fx).at(i).imag()-(std::complex<double>(2.0,0)*complexx*dualeigen).imag();
-	      (*fy).at(i)=(*fy).at(i)-std::complex<double>(2.0,0)*complexy*dualeigen;
-	      (*fz).at(i)=(*fz).at(i)-std::complex<double>(2.0,0)*complexz*dualeigen;
-	    }
-	  }
-	}
-	//calculation of repulsive forces
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
-	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
-	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
+				complexx=im*(*kvec).at(0)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivx;
+				complexy=im*(*kvec).at(1)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivy;
+				complexz=im*(*kvec).at(2)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivz;
+
+				complexx2=-im*(*kvec).at(0)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivx;
+				complexy2=-im*(*kvec).at(1)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivy;
+				complexz2=-im*(*kvec).at(2)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivz;
+
+				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
+				  dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  
+				  dualeigen2=std::conj((*c)(n,l+i*norbs))*(*c)(n,lp+nearlabel*norbs);  
+
+				  (*fx).at(i)=(*fx).at(i)-complexx*dualeigen-complexx2*dualeigen2;
+				  (*fy).at(i)=(*fy).at(i)-complexy*dualeigen-complexy2*dualeigen2;
+				  (*fz).at(i)=(*fz).at(i)-complexz*dualeigen-complexz2*dualeigen2;
+
+				}
+			 }
+		  }
+		  //calculation of repulsive forces
+		  (*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
+		  (*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
+		  (*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
       }
     }
   }  
