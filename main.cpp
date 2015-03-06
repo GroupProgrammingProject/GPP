@@ -19,12 +19,13 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 0;
+	bool pbc = 1;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
+//	scramble(&posx, &posy, &posz);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
+	int n=posx.size(),norbs=4,nmd=100,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
-	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
+	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n),fx(n),fy(n),fz(n);
 	std::vector<int> nnear(n);
 	// Determine maximum number of nearest neighbours
 	int maxnn=100;
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=0.0001,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,alpha=0.001;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -71,21 +72,34 @@ int main(int argc, char* argv[]){
 	etot=ebs+erep+ekin;
 
 	FILE *en=fopen("energy.txt","w");
+	FILE *f=fopen("forces.txt","w");
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
-	  ekin=3*(n-1)*kb*Tf/2;
-	  if(i%nprint==0){
+		GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
+		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
+		for(int j=0; j<n; j++)
+		{
+			posx.at(j)=posx.at(j)+fx.at(j)*alpha;
+			posy.at(j)=posy.at(j)+fy.at(j)*alpha;
+			posz.at(j)=posz.at(j)+fz.at(j)*alpha;
+	  
+	    fprintf(f,"%f\t%f\t%f\n",fx.at(j),fy.at(j),fz.at(j));
+		} ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	
+	    fprintf(file,"%d\nC3 molecule\n",n);
+	    for(int k=0;k<n;k++){
+	      fprintf(file,"6  %f %f %f\n",posx.at(k),posy.at(k),posz.at(k));
+	    }
+	}
+//	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
+//	  ekin=3*(n-1)*kb*Tf/2;
+/*	  if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\n",tmd,ekin,ebs,erep,etot);
-	    fprintf(file,"%d\nC3 molecule\n",n);
-	    for(j=0;j<n;j++){
-	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
-	    }
 	  } 
 	}
 
@@ -98,6 +112,6 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-
+*/
 return 0;
 }
