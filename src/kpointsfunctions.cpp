@@ -45,14 +45,19 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
 	 outfile << kvec[0] << "\t" << kvec[1] << "\t" << kvec[2] << "\n";
   }
 }
+//void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<std::complex<double> >* fx, std::vector<std::complex<double> >* fy, std::vector<std::complex<double> >* fz, std::vector<double>* kvec)
 
-void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<std::complex<double> >* fx, std::vector<std::complex<double> >* fy, std::vector<std::complex<double> >* fz, std::vector<double>* kvec)
+void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* kvec)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr;
-  std::complex<double> dualeigen, complexx, complexy, complexz;
-  std::complex<double> dualeigen2, complexx2, complexy2, complexz2;
+  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,compderx,compdery,compderz;
+  double dualeigen, dualeigen2,realderx,realdery,realderz,imagderx,imagdery,imagderz;
+  std::complex<double> complexx2, complexy2, complexz2, complexx, complexy, complexz;
   std::complex<double> im = std::complex<double>(0,1);
+  Eigen::MatrixXd eigvectr(norbs*N,norbs*N);
+  Eigen::MatrixXd eigvecti(norbs*N,norbs*N);
+  eigvectr=(*c).real();
+  eigvecti=(*c).imag();
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -95,10 +100,22 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 		  
 		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-				derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
+				derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);//derivative of real Hamiltonian
 				derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
 				derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
 
+				compderx=(*kvec).at(0)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm); //term which arises due to complex Hamiltonian (=0 if k=0)
+				compdery=(*kvec).at(1)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm);
+				compderz=(*kvec).at(2)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm);
+
+				realderx=cos(kr)*derivx-sin(kr)*compderx; //split Hamiltonain into real and imaginary matrices
+				realdery=cos(kr)*derivy-sin(kr)*compdery;
+				realderz=cos(kr)*derivz-sin(kr)*compderz;
+				imagderx=sin(kr)*derivx+cos(kr)*compderx;
+				imagderx=sin(kr)*derivy+cos(kr)*compdery;
+				imagderx=sin(kr)*derivz+cos(kr)*compderz;
+
+				//less symmetric, more primitive calculation
 				complexx=im*(*kvec).at(0)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivx;
 				complexy=im*(*kvec).at(1)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivy;
 				complexz=im*(*kvec).at(2)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivz;
@@ -108,13 +125,18 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 				complexz2=-im*(*kvec).at(2)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivz;
 
 				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-				  dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  
-				  dualeigen2=std::conj((*c)(n,l+i*norbs))*(*c)(n,lp+nearlabel*norbs);  
+				  dualeigen=eigvectr(n,l+i*norbs)*eigvectr(n,lp+nearlabel*norbs)+eigvecti(n,l+i*norbs)*eigvecti(n,lp+nearlabel*norbs);  //ac+bd; c1=a+ib, c2=c+id
+				  dualeigen2=eigvectr(n,l+i*norbs)*eigvecti(n,lp+nearlabel*norbs)+eigvecti(n,l+i*norbs)*eigvectr(n,lp+nearlabel*norbs); //ad+bc
+			//	  dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  
+			//	  dualeigen2=std::conj((*c)(n,l+i*norbs))*(*c)(n,lp+nearlabel*norbs);  
 
-				  (*fx).at(i)=(*fx).at(i)-complexx*dualeigen-complexx2*dualeigen2;
+				  (*fx).at(i)=(*fx).at(i)-2*(realderx*dualeigen+imagderx*dualeigen2);
+				  (*fy).at(i)=(*fy).at(i)-2*(realdery*dualeigen+imagdery*dualeigen2);
+				  (*fz).at(i)=(*fz).at(i)-2*(realderz*dualeigen+imagderz*dualeigen2);
+/*				  (*fx).at(i)=(*fx).at(i)-complexx*dualeigen-complexx2*dualeigen2;
 				  (*fy).at(i)=(*fy).at(i)-complexy*dualeigen-complexy2*dualeigen2;
 				  (*fz).at(i)=(*fz).at(i)-complexz*dualeigen-complexz2*dualeigen2;
-
+*/
 				}
 			 }
 		  }
