@@ -49,9 +49,9 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
 void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<std::complex<double> >* fx, std::vector<std::complex<double> >* fy, std::vector<std::complex<double> >* fz, std::vector<double>* kvec)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr;
-  std::complex<double> dualeigen, complexx, complexy, complexz;
-  std::complex<double> dualeigen2, complexx2, complexy2, complexz2;
+  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,hijab,sr,dsdx,dsdy,dsdz;
+  std::complex<double> dualeigen, complexx, complexy, complexz, pose;
+  std::complex<double> dualeigen2, complexx2, complexy2, complexz2, nege;
   std::complex<double> im = std::complex<double>(0,1);
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
@@ -91,21 +91,29 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 		  ddnorm.at(1)=dy/r;
 		  ddnorm.at(2)=dz/r;
 		  
+		  // Terms which need not be recalculated every orbital iteration
 		  kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
-		  
+		  sr = s(r);
+		  pose = exp(im*kr);
+		  nege = exp(-im*kr);
+		  dsdx = ds(r,dx);
+		  dsdy = ds(r,dy);
+		  dsdz = ds(r,dz);
+
 		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-				derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
-				derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
-				derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
+				hijab = Gethijab(i,nearlabel,l,lp,&ddnorm);
+				derivx=dsdx*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
+				derivy=dsdy*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
+				derivz=dsdz*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
 
-				complexx=im*(*kvec).at(0)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivx;
-				complexy=im*(*kvec).at(1)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivy;
-				complexz=im*(*kvec).at(2)*(exp(im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(im*kr)*derivz;
+				complexx=pose*(im*(*kvec).at(0)*(sr*hijab)+derivx);
+				complexy=pose*(im*(*kvec).at(1)*(sr*hijab)+derivy);
+				complexz=pose*(im*(*kvec).at(2)*(sr*hijab)+derivz);
 
-				complexx2=-im*(*kvec).at(0)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivx;
-				complexy2=-im*(*kvec).at(1)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivy;
-				complexz2=-im*(*kvec).at(2)*(exp(-im*kr)*s(r)*Gethijab(i,nearlabel,l,lp,&ddnorm))+exp(-im*kr)*derivz;
+				complexx2=nege*(-im*(*kvec).at(0)*(sr*hijab)+derivx);
+				complexy2=nege*(-im*(*kvec).at(1)*(sr*hijab)+derivy);
+				complexz2=nege*(-im*(*kvec).at(2)*(sr*hijab)+derivz);
 
 				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
 				  dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  

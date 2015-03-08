@@ -42,7 +42,7 @@ maxnn=max number of nn */
 void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r;
+  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r,sr,dsdx,dsdy,dsdz,hijab;
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -56,20 +56,20 @@ void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, 
       nearlabel=(*inear)(i,k);
       r=(*modr)(i,nearlabel);
       if(r<rc){
-	sumphi=sumphi+o(r);
+		  sumphi=sumphi+o(r);
       }
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       nearlabel=(*inear)(i,j);
       sumphinn=0;
       for(m=0;m<(*nnear).at(nearlabel);m++){     
-	dx=(*rx)(nearlabel,(*inear)(nearlabel,m)); /*Definition of vector distances*/
-	dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
-	dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
-	r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
-	if(r<rc){
-	  sumphinn=sumphinn+o(r);
-	}
+		  dx=(*rx)(nearlabel,(*inear)(nearlabel,m)); /*Definition of vector distances*/
+		  dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
+		  dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
+		  r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
+		  if(r<rc){
+			 sumphinn=sumphinn+o(r);
+		  }
       }
       dx=(*rx)(i,nearlabel); /*Definition of vector distances*/
       dy=(*ry)(i,nearlabel);
@@ -77,27 +77,34 @@ void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, 
       
       r=(*modr)(i,nearlabel); /*Modulus of distance*/
       if(r<rc){
-	ddnorm.at(0)=dx/r;
-	ddnorm.at(1)=dy/r;
-	ddnorm.at(2)=dz/r;
-      
-	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
-	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,0);
-	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
-	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
-	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
-	      (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
-	      (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
-	      (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
-	    }
-	  }
-	}
-	//calculation of repulsive forces
-	(*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
-	(*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
-	(*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
+		  ddnorm.at(0)=dx/r;
+		  ddnorm.at(1)=dy/r;
+		  ddnorm.at(2)=dz/r;
+		  
+		  // Terms which need not be recalculated every orbital iteration
+		  sr = s(r);
+		  dsdx = ds(r,dx);
+		  dsdy = ds(r,dy);
+		  dsdz = ds(r,dz);
+		  
+		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
+			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
+				hijab = Gethijab(i,nearlabel,l,lp,&ddnorm);
+				derivx=dsdx*hijab+sr*Hamder(i,nearlabel,l,lp,&ddnorm,r,0);
+				derivy=dsdy*hijab+sr*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
+				derivz=dsdz*hijab+sr*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
+				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
+				  dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
+				  (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
+				  (*fy).at(i)=(*fy).at(i)-2*derivy*dualeigen;
+				  (*fz).at(i)=(*fz).at(i)-2*derivz*dualeigen;
+				}
+			 }
+		  }
+		  //calculation of repulsive forces
+		  (*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
+		  (*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
+		  (*fz).at(i)=(*fz).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dz);
       }
     }
   }  
