@@ -48,15 +48,18 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
     	}                                                    // End loop over j
   	}                                                       // End loop over i
 
-  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
+  //Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hijab);       // Compute eigenvectors and eigenvalues
+  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> es(Hijab);           // Compute eigenvectors and eigenvalues
 
   typedef std::pair<double,int> pair;                                      // Create pair class for storing matched indicies
+  //typedef std::pair<std::complex<double>,int> pair;                                      // Create pair class for storing matched indicies
   std::vector<pair> eigvalarr;
-  for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		// reads in eigenvalues and their index into eigvalarr
+  for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i].real(),i));}		// reads in eigenvalues and their index into eigvalarr
+  //for(i=0;i<4*n;i++){eigvalarr.push_back(pair(es.eigenvalues()[i],i));}		// reads in eigenvalues and their index into eigvalarr
   std::sort(eigvalarr.begin(),eigvalarr.end());										// sorts eigenvalues
-  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}           		// Fill lowest eigenstates with 2 electrons and sum energies of filled states
+  for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}       	// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
-  for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = eigvalarr.at(i).first;;}
+  for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = eigvalarr.at(i).first;}
 
   for(i=0;i<2*n;i++){
   		int ind=eigvalarr.at(i).second;
@@ -68,15 +71,22 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 
   // Output to terminal, set verbose == 1 to print
   if (verbose == 1) {
-	 std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
+	 /*	 std::cout << "\nReal Hijab:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << Hijab.real() << std::endl;		                                          //print out Hamiltonian
+	 std::cout << "\nImaginary Hijab:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << Hijab.imag() << std::endl;		                                          //print out Hamiltonian
+	 //	 std::cout << Hijab << std::endl;		                                          //print out Hamiltonian
 	 std::cout << "After sorting" << std::endl;
 	 for(i=0;i<4*n;i++){std::cout << "eigvalarr no. " << eigvalarr.at(i).second << " is " << eigvalarr.at(i).first << std::endl;}
 	 
 	 std::cout << "Eigenvector matrix" << std::endl;
 	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
-	 
+	 */
 	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
-	 std::cout << (*eigvects) << std::endl;
+	 std::cout << "\nReal:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << (*eigvects).real() << std::endl;
+	 std::cout << "\nImaginary Hijab:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << (*eigvects).imag() << std::endl;
   } // End of verbose mode
 
   return Ebs;

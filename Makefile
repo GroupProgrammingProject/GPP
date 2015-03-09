@@ -3,7 +3,7 @@ CXXFLAGS=
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = functions geometryinfo hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab
+LIBFILES = functions geometryinfo band_hamiltonian hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab kpointsfunctions
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
@@ -18,12 +18,15 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: main
+all: main kpoints_energy
 
 main: main.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 main: $(HEADERS)
 
+kpoints_energy: kpoints_energy.cpp
+	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+kpoints_energy: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 
