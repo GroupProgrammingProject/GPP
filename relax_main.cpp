@@ -54,33 +54,33 @@ int main(int argc, char* argv[]){
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	FILE *file=fopen("movie.txt","w");
 	FILE *file2=fopen("forces.txt","w");
-	fprintf(file,"%d\nC12 molecule\n",n);
+	fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
 	for(i=0; i<n; i++){
-		fprintf(file,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
+		fprintf(file,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
 	}
 	//steepest descent relaxation routine
 	do{
 		if(count*100%nmax==0){std::cout << count*100/nmax << "% complete" << std::endl;}
 		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-		fprintf(file,"%d\nC12 molecule\n",n);
+		fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
 		for(i=0; i<n; i++){
 			posx.at(i)=posx.at(i)+gam*h*fx.at(i);
 			posy.at(i)=posy.at(i)+gam*h*fy.at(i);
 			posz.at(i)=posz.at(i)+gam*h*fz.at(i);
 			fmag.at(i)=sqrt(fx.at(i)*fx.at(i)+fy.at(i)*fy.at(i)+fz.at(i)*fz.at(i));
-			fprintf(file,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
-			fprintf(file2,"6 %i %f %f %f %f \n", count, fx.at(i), fy.at(i), fz.at(i), fmag.at(i));
+			fprintf(file,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
+			fprintf(file2,"6 %i %.10f %.10f %.10f %.10f \n", count, fx.at(i), fy.at(i), fz.at(i), fmag.at(i));
 		}
 		fmax=*std::max_element(fmag.begin(),fmag.end()); //find largest elemen of fmag
 		GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 		NearestNeighbours(&inear,&nnear,&modr,rv);
 		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 		count=count+1;
-	}while(fmax>1e-5 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
+	}while(fmax>1e-8 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
 	FILE *file_rel=fopen("relax.txt","w");
-	fprintf(file_rel,"%d\nC12 molecule\n",n);
+	fprintf(file_rel,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
 	for(i=0; i<n; i++){
-		fprintf(file_rel,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
+		fprintf(file_rel,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
 	}
 
 return 0;
