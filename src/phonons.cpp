@@ -26,8 +26,6 @@ for(i=0;i<n;i++){
 	std::cout << "fz = " << fz->at(i) << std::endl << std::endl;
 }
 
-
-
 	//store original distances
 	for(i=0;i<n;i++){
 		for(j=0;j<n;j++){

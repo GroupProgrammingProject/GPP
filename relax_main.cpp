@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> posx, posy, posz;
 	bool pbc = 1;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
-	scramble(&posx,&posy,&posz);
+//	scramble(&posx,&posy,&posz);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]){
 		NearestNeighbours(&inear,&nnear,&modr,rv);
 		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 		count=count+1;
-	}while(fmax>pow(10,-5) && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
+	}while(fmax>1e-5 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
 	FILE *file_rel=fopen("relax.txt","w");
 	fprintf(file_rel,"%d\nC12 molecule\n",n);
 	for(i=0; i<n; i++){
