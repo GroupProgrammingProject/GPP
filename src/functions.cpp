@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "../include/functions.h"
 
 //tail function for s(r)
 double ts (double r){

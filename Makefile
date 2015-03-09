@@ -22,11 +22,11 @@ all: main relax
 
 main: main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-main: $(HEADERS) $(LIBPATH)/*.so
+main: $(HEADERS)
 
 relax: relax_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-relax: $(HEADERS) $(LIBPATH)/*.so
+relax: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 

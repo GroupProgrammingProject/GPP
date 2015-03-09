@@ -3,12 +3,12 @@
 #include <vector>
 #include <algorithm>
 #include <Eigen/Dense>
-#include "readinxyz.h"
-#include "vectorfunctions.h"
-#include "hamiltonian.h"
-#include "functions.h"
-#include "geometryinfo.h"
-#include "MolDyn.h"
+#include "include/readinxyz.h"
+#include "include/vectorfunctions.h"
+#include "include/hamiltonian.h"
+#include "include/functions.h"
+#include "include/geometryinfo.h"
+#include "include/MolDyn.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}

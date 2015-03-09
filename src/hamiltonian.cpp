@@ -1,4 +1,4 @@
-#include "hamiltonian.h"
+#include "../include/hamiltonian.h"
 
 double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
   int i, j, a, b;                                          // i,j loop over atoms; a,b loop over orbitals
