@@ -218,6 +218,12 @@ int main(int argc, char* argv[]){
 		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 		count=count+1;
 	}while(fmax>pow(10,-8) && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
+	FILE *file_rel=fopen("relax.txt","w");
+	fprintf(file_rel,"%d\nC12 molecule\n",n);
+	for(i=0; i<n; i++){
+		fprintf(file_rel,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
+	}
+
 //		for(int j=0; j<n; j++){
 //		}
 
