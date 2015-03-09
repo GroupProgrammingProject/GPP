@@ -45,6 +45,9 @@ int main(int argc, char* argv[]){
 	std::vector<double> fx(n);
 	std::vector<double> fy(n);
 	std::vector<double> fz(n);
+/*	std::vector<std::complex<double> > fx(n,0.0);
+	std::vector<std::complex<double> > fy(n,0.0);
+	std::vector<std::complex<double> > fz(n,0.0);*/
 	std::vector<double> fmag(n);
 	std::vector<double> fxtemp(n);
 	std::vector<double> fytemp(n);
@@ -74,12 +77,24 @@ int main(int argc, char* argv[]){
 	  for (int l=0;l<n;l++) {
 		 std::cout << l << " " << fxtemp.at(l) << " " << fytemp.at(l) << " " << fztemp.at(l) << std::endl;
 	  }
+	  // Output real components of forces from kpoints
+	  /*std::cout << "\n Real forces:" << std::endl;
+	  for (int l=0;l<n;l++) {
+		 std::cout << l << " " << fxtemp.at(l).real() << " " << fytemp.at(l).real() << " " << fztemp.at(l).real() << std::endl;
+		 }*/
 	  // Add forces from different kpoints
 	  for (int l=0;l<n;l++) {
 		 fx.at(l) = fx.at(l) + (1/(double)ktot)*fxtemp.at(l);
+		 //std::cout << "fx.at(l) = " << fx.at(l) << " (1/ktot)fxtemp.at(l) = " << std::complex<double>(1/(double)ktot,0)*fxtemp.at(l) <<std::endl;
 		 fy.at(l) = fy.at(l) + (1/(double)ktot)*fytemp.at(l);
 		 fz.at(l) = fz.at(l) + (1/(double)ktot)*fztemp.at(l);
-	  }
+		 /*
+		 fx.at(l) = fx.at(l) + std::complex<double>(1/(double)ktot,0)*fxtemp.at(l);
+		 //std::cout << "fx.at(l) = " << fx.at(l) << " (1/ktot)fxtemp.at(l) = " << std::complex<double>(1/(double)ktot,0)*fxtemp.at(l) <<std::endl;
+		 fy.at(l) = fy.at(l) + std::complex<double>(1/(double)ktot,0)*fytemp.at(l);
+		 fz.at(l) = fz.at(l) + std::complex<double>(1/(double)ktot,0)*fztemp.at(l);
+*/	  }
+	  //	  std::cout << "\neigenvectors = \n" << eigvects.real() << std::endl;
 	  eigvectstot = eigvectstot + (1.0/(double)ktot)*eigvects;
 	}
 
@@ -90,8 +105,15 @@ int main(int argc, char* argv[]){
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
+	//	std::cout << "\ntotal eigenvectors = \n" << eigvectstot.imag() << std::endl;
+
+	eigvectreal = eigvectstot.real();
+
+	//kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
+	
 	for (int i=0;i<n;i++) {
 	  fmag.at(i) = sqrt(pow(fx.at(i),2) + pow(fy.at(i),2) + pow(fz.at(i),2));
+	  //fmag.at(i) = sqrt(pow(fx.at(i).real(),2) + pow(fx.at(i).imag(),2) + pow(fy.at(i).real(),2) + pow(fy.at(i).imag(),2) + pow(fz.at(i).real(),2) + pow(fz.at(i).imag(),2));
 	}		
 
 	std::cout << "\n Forces " << std::endl;

@@ -51,13 +51,18 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
   }
 }
 
-void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<std::complex<double> >* fx, std::vector<std::complex<double> >* fy, std::vector<std::complex<double> >* fz, std::vector<double>* kvec)
+void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* kvec)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,hijab,sr,dsdx,dsdy,dsdz;
-  std::complex<double> dualeigen, complexx, complexy, complexz, pose;
-  std::complex<double> dualeigen2, complexx2, complexy2, complexz2, nege;
+  double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,compderx,compdery,compderz;
+  double dualeigen1, dualeigen2,realderx,realdery,realderz,imagderx,imagdery,imagderz;
+  double sr,dsrx,dsry,dsrz,gh,ca,cb,cc,cd,skr,ckr;
+  //std::complex<double> complexx2, complexy2, complexz2, complexx, complexy, complexz;
   std::complex<double> im = std::complex<double>(0,1);
+  Eigen::MatrixXd eigvectr(norbs*N,norbs*N);
+  Eigen::MatrixXd eigvecti(norbs*N,norbs*N);
+  eigvectr=(*c).real();
+  eigvecti=(*c).imag();
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -70,9 +75,7 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
     for(k=0;k<(*nnear).at(i);k++){
       nearlabel=(*inear)(i,k);
       r=(*modr)(i,nearlabel);
-      if(r<rc){
-	sumphi=sumphi+o(r);
-      }
+      if(r<rc){sumphi=sumphi+o(r);}
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
       nearlabel=(*inear)(i,j);
@@ -82,9 +85,7 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 		  dy=(*ry)(nearlabel,(*inear)(nearlabel,m));
 		  dz=(*rz)(nearlabel,(*inear)(nearlabel,m));
 		  r=(*modr)(nearlabel,(*inear)(nearlabel,m)); /*Modulus of distance*/
-		  if(r<rc){
-			 sumphinn=sumphinn+o(r);
-		  }
+		  if(r<rc){sumphinn=sumphinn+o(r);}
       }
       dx=(*rx)(i,nearlabel); /*Definition of vector distances*/
       dy=(*ry)(i,nearlabel);
@@ -92,42 +93,49 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
       
       r=(*modr)(i,nearlabel); /*Modulus of distance*/
       if(r<rc){
-		  ddnorm.at(0)=dx/r;
+		  ddnorm.at(0)=dx/r; /*Normalised Cartesian vector distances*/
 		  ddnorm.at(1)=dy/r;
 		  ddnorm.at(2)=dz/r;
 		  
 		  // Terms which need not be recalculated every orbital iteration
 		  kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
-		  sr = s(r);
-		  pose = exp(im*kr);
-		  nege = exp(-im*kr);
-		  dsdx = ds(r,dx);
-		  dsdy = ds(r,dy);
-		  dsdz = ds(r,dz);
-
+		  ckr=cos(kr);
+		  skr=sin(kr);
+		  sr=s(r);
+		  dsrx=ds(r,dx); //derivative of scaling function wrt x
+		  dsry=ds(r,dy);
+		  dsrz=ds(r,dz);
+		  
 		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-				hijab = Gethijab(i,nearlabel,l,lp,&ddnorm);
-				derivx=dsdx*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
-				derivy=dsdy*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
-				derivz=dsdz*hijab+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
+				gh=Gethijab(i,nearlabel,l,lp,&ddnorm); //Hamiltonian matrix element (unscaled)
+				derivx=dsrx*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
+				derivy=dsry*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
+				derivz=dsrz*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
 
-				complexx=pose*(im*(*kvec).at(0)*(sr*hijab)+derivx);
-				complexy=pose*(im*(*kvec).at(1)*(sr*hijab)+derivy);
-				complexz=pose*(im*(*kvec).at(2)*(sr*hijab)+derivz);
-
-				complexx2=nege*(-im*(*kvec).at(0)*(sr*hijab)+derivx);
-				complexy2=nege*(-im*(*kvec).at(1)*(sr*hijab)+derivy);
-				complexz2=nege*(-im*(*kvec).at(2)*(sr*hijab)+derivz);
-
+				compderx=(*kvec).at(0)*sr*gh; //term which arises due to complex Hamiltonian
+				compdery=(*kvec).at(1)*sr*gh;
+				compderz=(*kvec).at(2)*sr*gh;
+				
+				//split Hamiltonian into real and imaginary matrices: H=R+i*I
+				realderx=ckr*derivx-skr*compderx; //dR/dx
+				realdery=ckr*derivy-skr*compdery;
+				realderz=ckr*derivz-skr*compderz;
+				imagderx=skr*derivx+ckr*compderx; //dI/dx
+				imagdery=skr*derivy+ckr*compdery;
+				imagderz=skr*derivz+ckr*compderz;
+				
 				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-				  dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  
-				  dualeigen2=std::conj((*c)(n,l+i*norbs))*(*c)(n,lp+nearlabel*norbs);  
+					ca=eigvectr(n,l+i*norbs);
+					cb=eigvecti(n,l+i*norbs);
+					cc=eigvectr(n,lp+nearlabel*norbs);
+					cd=eigvecti(n,lp+nearlabel*norbs);
+					dualeigen1=ca*cc+cb*cd; //c1=ca+i*cb, c2=cc+i*cd
+					dualeigen2=ca*cd+cb*cc;
 
-				  (*fx).at(i)=(*fx).at(i)-complexx*dualeigen-complexx2*dualeigen2;
-				  (*fy).at(i)=(*fy).at(i)-complexy*dualeigen-complexy2*dualeigen2;
-				  (*fz).at(i)=(*fz).at(i)-complexz*dualeigen-complexz2*dualeigen2;
-
+				  (*fx).at(i)=(*fx).at(i)-2*(realderx*dualeigen1+imagderx*dualeigen2);
+				  (*fy).at(i)=(*fy).at(i)-2*(realdery*dualeigen1+imagdery*dualeigen2);
+				  (*fz).at(i)=(*fz).at(i)-2*(realderz*dualeigen1+imagderz*dualeigen2);
 				}
 			 }
 		  }
@@ -142,8 +150,7 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 
 //kHamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
 double kHamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
-  int k; //for looping
-  double h,V[4];//h,Es,Ep and V[4] is only used locally in Gethijab_der()
+  double h,V[4];//h,Es,Ep and V[4] is only used locally in kHamder()
   V[0]=-5;V[1]=4.7;V[2]=5.5;V[3]=-1.55;//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
   
   int vconum[3]; //array to hold label of x,y,z. Only the coord we are differentiating wrt is non-zero.
