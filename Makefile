@@ -3,7 +3,7 @@ CXXFLAGS=
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = functions geometryinfo band_hamiltonian hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab kpointsfunctions
+LIBFILES = phonons kpointsfunctions MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions 
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
@@ -20,7 +20,7 @@ RPATH = -Wl,-rpath=./lib
 # meant to compile executable with dynamic lib made by make install
 all: main kpoints_energy
 
-main: main.cpp
+main: phonon_main.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 main: $(HEADERS)
 
