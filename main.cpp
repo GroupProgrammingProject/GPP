@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include <Eigen/Dense>
 #include "readinxyz.h"
 #include "vectorfunctions.h"
@@ -161,12 +162,12 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 0;
+	bool pbc = 1;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
-	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
+	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n),fx(n),fy(n),fz(n),fmag(n);
 	std::vector<int> nnear(n);
 	// Determine maximum number of nearest neighbours
 	int maxnn=100;
@@ -181,7 +182,8 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,fmax,h=0.001,gam=1;
+	int nmax=10000,count=0;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -191,15 +193,43 @@ int main(int argc, char* argv[]){
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	FILE *file=fopen("movie.txt","w");
+	FILE *file2=fopen("forces.txt","w");
+	fprintf(file,"%d\nC12 molecule\n",n);
+	for(i=0; i<n; i++){
+		fprintf(file,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
+	}
+	//steepest descent relaxation routine
+	do{
+		if(count*100%nmax==0){std::cout << count*100/nmax << "% complete" << std::endl;}
+		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
+		fprintf(file,"%d\nC12 molecule\n",n);
+		for(i=0; i<n; i++){
+			posx.at(i)=posx.at(i)+gam*h*fx.at(i);
+			posy.at(i)=posy.at(i)+gam*h*fy.at(i);
+			posz.at(i)=posz.at(i)+gam*h*fz.at(i);
+			fmag.at(i)=sqrt(fx.at(i)*fx.at(i)+fy.at(i)*fy.at(i)+fz.at(i)*fz.at(i));
+			fprintf(file,"6 %f %f %f\n", posx.at(i), posy.at(i), posz.at(i));
+			fprintf(file2,"6 %i %f %f %f %f \n", count, fx.at(i), fy.at(i), fz.at(i), fmag.at(i));
+		}
+		fmax=*std::max_element(fmag.begin(),fmag.end()); //find largest elemen of fmag
+		GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
+		NearestNeighbours(&inear,&nnear,&modr,rv);
+		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+		count=count+1;
+	}while(fmax>pow(10,-8) && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
+//		for(int j=0; j<n; j++){
+//		}
+
+//	}
 	//H_MD and eigvects have now also been populated
 //	erep=Erep(&modr);	
 /*	Erep has to be called, otherwise errors appear: several functions from "functions.h" are undefined"	*/
-
 	//Calculate eigenmodes and eigenfrequencies
-	std::vector<double> fx(n),fy(n),fz(n),eigfreq(3*n);
-	eigenmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
-std::cout << "Real eigenfrequencies" << std::endl;
-for(i=0;i<3*n;i++){	std::cout << eigfreq[i] << std::endl; }
+	std::vector<double> eigfreq(3*n);
+//	eigenmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
+	std::cout << "Real eigenfrequencies" << std::endl;
+	for(i=0;i<3*n;i++){	std::cout << eigfreq[i] << std::endl; }
 
 return 0;
 }
