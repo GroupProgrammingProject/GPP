@@ -38,17 +38,17 @@ void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* 
 	for(int i=0; i<n; i++)
 	{
 		std::string line;
-		getline(infile, line);
-		infile>>type>>x>>y>>z;
+		std::getline(infile, line);
+		while(infile>>type>>x>>y>>z){
 		xvect->push_back(x);
 		yvect->push_back(y);
-		zvect->push_back(z);
-		if(line!=" "){
+		zvect->push_back(z);}
+/*		if(line!=" "){
 		vxvect->push_back(vx);
 		vyvect->push_back(vy);
 		vzvect->push_back(vz);
 		}
-	}
+*/	}
 /*	while (infile>>type>>x>>y>>z){
 		xvect->push_back(x);
 		yvect->push_back(y);

@@ -21,7 +21,8 @@ int main(int argc, char* argv[]){
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
 	bool pbc = 0, ander=0;
-	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc);
+	std::vector<bool> velspec;
+	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	std::cout << "n=" << n << std::endl;
