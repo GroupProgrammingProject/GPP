@@ -72,8 +72,8 @@ double nose(int norbs,double rc,double rv,double m,double dt, std::vector<double
   return Tf;	
 }*/
 
-double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T)
-{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),nu=0,vxm=0.0,vym=0,vzm=0,rang,tau=10000000000,lam;
+double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T,bool ander)
+{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),nu=0.1,vxm=0.0,vym=0,vzm=0,rang,tau=10000000000,lam;
   int N=(*x).size();
   bool renn=0,v=0;
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N);
@@ -99,7 +99,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*vz).at(i)=(*vz).at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
 		rang=ran.doub();
 	//	std::cout << rang <<std::endl;
-		if(rang<nu*dt){ //implement the Andersen thermostat for canonical ensemble
+		if((rang<nu*dt) && (ander==1)){ //implement the Andersen thermostat for canonical ensemble
 			(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
 			(*vy).at(i)=Gauss(0,sigma)/m;
 			(*vz).at(i)=Gauss(0,sigma)/m;
@@ -123,7 +123,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     }
   kin=0.5*m*(svxm+svym+svzm); //kinetic energy
   Tf=2*kin/(3*boltz*(N-1)); //final temperature 
-  lam=sqrt(1+dt*(T/Tf-1)/tau);
+  lam=sqrt(1+dt*(T/Tf-1)/tau); //Berendsen thermostat: currently deactivated
 /*  for (int i=0; i<N; i++)
   {
 			(*vx).at(i)=lam*(*vx).at(i); 

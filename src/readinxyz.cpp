@@ -8,7 +8,7 @@ std::map<std::string, int> SetElementMap(){
 }
 
 // Reads in 4 vectors from cell file: elements, x , y and z coords
-void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* yvect, std::vector<double>* zvect, std::vector<double>* lats, bool pbc){
+void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* yvect, std::vector<double>* zvect, std::vector<double>* vxvect, std::vector<double>* vyvect, std::vector<double>* vzvect,std::vector<double>* lats, bool pbc){
 	std::ifstream infile(filename);
 	// Initiate the map of elements (symbol-> atomic number)
 	std::map<std::string, int> elmap=SetElementMap();
@@ -30,10 +30,18 @@ void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* 
 	  std::string skipline2;
 	  std::getline(infile, skipline2);
 	}
-	// Store the molecule type and x, y, z positions
-	double x, y, z;
+	// Store the molecule type and x, y, z positions and velocities
+	double x, y, z, vx, vy, vz;
 	std::string type;
-	while (infile>>type>>x>>y>>z){
+/*	while (infile>>type>>x>>y>>z>>vx>>vy>>vz){
+		xvect->push_back(x);
+		yvect->push_back(y);
+		zvect->push_back(z);
+		vxvect->push_back(vx);
+		vyvect->push_back(vy);
+		vzvect->push_back(vz);
+	}
+*/	while (infile>>type>>x>>y>>z){
 		xvect->push_back(x);
 		yvect->push_back(y);
 		zvect->push_back(z);
