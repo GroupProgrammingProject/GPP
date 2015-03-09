@@ -18,15 +18,15 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: main kpoints_energy
+all: main relax
 
 main: main.cpp
-	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-main: $(HEADERS)
+	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+main: $(HEADERS) $(LIBPATH)/*.so
 
-kpoints_energy: kpoints_energy.cpp
-	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-kpoints_energy: $(HEADERS)
+relax: relax_main.cpp
+	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+relax: $(HEADERS) $(LIBPATH)/*.so
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 
