@@ -90,12 +90,6 @@ int main(int argc, char* argv[]){
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
-	//	std::cout << "\ntotal eigenvectors = \n" << eigvectstot.imag() << std::endl;
-
-	eigvectreal = eigvectstot.real();
-
-	//kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
-	
 	for (int i=0;i<n;i++) {
 	  fmag.at(i) = sqrt(pow(fx.at(i),2) + pow(fy.at(i),2) + pow(fz.at(i),2));
 	}		
