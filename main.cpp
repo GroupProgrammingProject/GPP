@@ -152,15 +152,15 @@ std::cout << fl << std::endl;
 		}
 	}
 
-//std::cout << "Dynamical matrix:" << std::endl;
-//std::cout << dynamicmat << std::endl << std::endl;
+std::cout << "Dynamical matrix:" << std::endl;
+std::cout << dynamicmat << std::endl << std::endl;
 
 	//Solve for eigenmodes and eigenfrequencies
 	Eigen::EigenSolver<Eigen::MatrixXd> es(dynamicmat);
 	//returns eigenfrequencies in fs-1
 
-std::cout << "eigenvalues:" << std::endl;
-std::cout << es.eigenvalues() << std::endl;
+//std::cout << "eigenvalues:" << std::endl;
+//std::cout << es.eigenvalues() << std::endl;
 
 //std::cout << std::endl << "eigenvectors:" << std::endl;
 //std::cout << es.eigenvectors() << std::endl;
