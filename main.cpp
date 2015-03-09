@@ -28,6 +28,18 @@ void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::
 	Eigen::MatrixXd fr(3*n,3*n), fl(3*n,3*n);
 	Eigen::MatrixXd dynamicmat(3*n,3*n);
 
+ 	ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
+	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz);//recalculate forces
+	
+std::cout << "forces of (hopefully) equilibrium structure:" << std::endl;
+for(i=0;i<n;i++){
+	std::cout << "fx = " << fx->at(i) << std::endl;
+	std::cout << "fy = " << fy->at(i) << std::endl;
+	std::cout << "fz = " << fz->at(i) << std::endl << std::endl;
+}
+
+
+
 	//store original distances
 	for(i=0;i<n;i++){
 		for(j=0;j<n;j++){
@@ -149,6 +161,9 @@ std::cout << fl << std::endl;
 
 std::cout << "eigenvalues:" << std::endl;
 std::cout << es.eigenvalues() << std::endl;
+
+//std::cout << std::endl << "eigenvectors:" << std::endl;
+//std::cout << es.eigenvectors() << std::endl;
 
 	for(i=0;i<3*n;i++){ (*eigfreq).at(i) = 1e15*sqrt(real(es.eigenvalues()[i]))/c; }
 	//convert to wavevectors in cm-1
