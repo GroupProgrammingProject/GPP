@@ -76,7 +76,7 @@ int main(int argc, char* argv[]){
 		NearestNeighbours(&inear,&nnear,&modr,rv);
 		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 		count=count+1;
-	}while(fmax>pow(10,-8) && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
+	}while(fmax>pow(10,-5) && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
 	FILE *file_rel=fopen("relax.txt","w");
 	fprintf(file_rel,"%d\nC12 molecule\n",n);
 	for(i=0; i<n; i++){

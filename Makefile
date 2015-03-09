@@ -22,7 +22,7 @@ RPATH = -Wl,-rpath=./lib
 # meant to compile executable with dynamic lib made by make install
 all: main
 
-main: main.cpp
+main: relax_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 main: $(HEADERS) $(LIBPATH)/*.so
 
