@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <vector>
 #include <ctime>
-#include "functions.h"
 #include "hamiltonian.h"
+#include "functions.h"
 #include "Gethijab.h"
 #include "geometryinfo.h"
 #include <vector>

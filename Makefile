@@ -3,7 +3,7 @@ CXXFLAGS=
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = functions geometryinfo hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab
+LIBFILES = kpointsfunctions MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions 
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
@@ -18,12 +18,15 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: main
+all: main relax
 
 main: main.cpp
-	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 main: $(HEADERS)
 
+relax: relax_main.cpp
+	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+relax: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 
