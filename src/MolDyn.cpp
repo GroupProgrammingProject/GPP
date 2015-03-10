@@ -1,79 +1,7 @@
 #include "../include/MolDyn.h"
-//MolDyn.cpp edied to use Nose-Hoover thermostat
-/*
-double nose(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double xi1, double xi2, double vxi1, double vxi2, double q1, double q2,double T)
-{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(T),nu=1;
-  int N=(*x).size();
-  bool renn=0,v=0;
-  std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N),vxm(N),vym(N),vzm(N);
-  chain(N,m,T,dt,q1,q2,&xi1,&xi2,&vxi1,&vxi2,vx,vy,vz,kin);
-//  forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz); //calculate the forces
-  for(int i=0; i<N; i++)
-  {
-      (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt;//+0.5*fx.at(i)*dt*dt/m;
-      (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt;//+0.5*fy.at(i)*dt*dt/m;
-      (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt;//+0.5*fz.at(i)*dt*dt/m;
-  }
-  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
-  if(renn==1){
-    NearestNeighbours(inear,nnear,modr,rv);
-  }
-  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
-  ebs=Hamiltonian(N,modr,rx,ry,rz,c,v);
-  forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz); //calculate the forces
-  for(int i=0; i<N; i++)
-  {
-		(*vx).at(i)=(*vx).at(i)+fx.at(i)*dt/(2*m);
-		(*vy).at(i)=(*vy).at(i)+fy.at(i)*dt/(2*m);
-		(*vz).at(i)=(*vz).at(i)+fz.at(i)*dt/(2*m);
-      (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt;//+0.5*fx.at(i)*dt*dt/m;
-      (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt;//+0.5*fy.at(i)*dt*dt/m;
-      (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt;//+0.5*fz.at(i)*dt*dt/m;
-  }
-  for(int i=0; i<N; i++)//mean square velocities
-    {
-      svxm=svxm+(*vx).at(i)*(*vx).at(i);
-      svym=svym+(*vy).at(i)*(*vy).at(i);
-      svzm=svzm+(*vz).at(i)*(*vz).at(i);
-    }
-  kin=0.5*m*(svxm+svym+svzm); //kinetic energy
-  chain(N,m,T,dt,q1,q2,&xi1,&xi2,&vxi1,&vxi2,vx,vy,vz,kin); //return rescaled kinetic energy--output temperature should be constant
-  Tf=2*kin/(3*boltz*(N-1)); //final temperature  
-  return Tf;
-}
 
-  renn=RycalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
-  if(renn==1){
-    NearestNeighbours(inear,nnear,modr,rv);
-  }
-  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
-  ebs=Hamiltonian(N,modr,rx,ry,rz,c,v);
-  forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
-  for(int i=0; i<N; i++)//calculate new velocities
-  {
-      srand(time(0)); //set seed
-		(*vx).at(i)=(*vx).at(i)+dt*(fx.at(i)+fxn.at(i))/(2*m);
-      (*vy).at(i)=(*vy).at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
-      (*vz).at(i)=(*vz).at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
-		if(rand()<nu*dt){ //implement the Andersen thermostat for canonical ensemble
-			(*vx).at(i)=Gauss(0,sigma); //generate random numbers from Gaussian distribution
-			(*vy).at(i)=Gauss(0,sigma);
-			(*vz).at(i)=Gauss(0,sigma);
-		}
-  }
-  for(int i=0; i<N; i++)//mean square velocities
-    {
-      svxm=svxm+(*vx).at(i)*(*vx).at(i);
-      svym=svym+(*vy).at(i)*(*vy).at(i);
-      svzm=svzm+(*vz).at(i)*(*vz).at(i);
-    }
-  kin=0.5*m*(svxm+svym+svzm); //kinetic energy
-  Tf=2*kin/(3*boltz*(N-1)); //final temperature  
-  return Tf;	
-}*/
-
-double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T,bool ander)
-{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),nu=0.1,vxm=0.0,vym=0,vzm=0,rang,tau=10000000000,lam;
+double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T, double nu,bool ander)
+{ double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),nu=0.1,vxm=0.0,vym=0,vzm=0,rang;
   int N=(*x).size();
   bool renn=0,v=0;
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N);
@@ -98,21 +26,19 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*vy).at(i)=(*vy).at(i)+dt*(fy.at(i)+fyn.at(i))/(2*m);
       (*vz).at(i)=(*vz).at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
 		rang=ran.doub();
-	//	std::cout << rang <<std::endl;
 		if((rang<nu*dt) && (ander==1)){ //implement the Andersen thermostat for canonical ensemble
 			(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
 			(*vy).at(i)=Gauss(0,sigma)/m;
 			(*vz).at(i)=Gauss(0,sigma)/m;
-//			std::cout << "Andersen implemented" << std::endl;
 		}
-/*		vxm=vxm+(*vx).at(i);
+		vxm=vxm+(*vx).at(i);
 		vym=vym+(*vy).at(i);
 		vzm=vzm+(*vz).at(i);
-*/  }
-/*  vxm=vxm/N;
+  }
+  vxm=vxm/N;
   vym=vym/N;
   vzm=vzm/N;
-*/  for(int i=0; i<N; i++)//mean square velocities
+  for(int i=0; i<N; i++)//mean square velocities
     {
 		(*vx).at(i)=(*vx).at(i)-vxm;
 		(*vy).at(i)=(*vy).at(i)-vym;
@@ -123,13 +49,6 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     }
   kin=0.5*m*(svxm+svym+svzm); //kinetic energy
   Tf=2*kin/(3*boltz*(N-1)); //final temperature 
-  lam=sqrt(1+dt*(T/Tf-1)/tau); //Berendsen thermostat: currently deactivated
-/*  for (int i=0; i<N; i++)
-  {
-			(*vx).at(i)=lam*(*vx).at(i); 
-			(*vy).at(i)=lam*(*vy).at(i); 
-			(*vz).at(i)=lam*(*vz).at(i);}
-*/  	
   return Tf;	
 }
 
@@ -263,30 +182,3 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
   //V&G routine ends
   return h;
 } //Hamder() ends
-
-/*void chain(int N,double m,double T,double dt,double q1,double q2,double &xi1,double &xi2,double &vxi1,double &vxi2,std::vector<double>* vx,std::vector<double>* vy,std::vector<double>* vz,double &kin)
-{ //vxi1,vxi2,xi1,xi2 are coordinates introduced for the Nose-Hoover thermostat
-	double boltz=1./11603,g1,g2;
-	g2=(q1*vxi1*vxi1-boltz*T)/q2;
-	vxi2=vxi2+g2*dt/4; //perform operations that change each term in succession (see Frenkel+Smit, Appendix E.2)
-	vxi1=vxi1*exp(-vxi2*dt/8);
-	g1=(2*kin-3*N*T)/q1;
-	vxi1=vxi1+g1*dt/4;
-	vxi1=vxi1*exp(-vxi2*dt/8);
-	xi1=xi1-vxi1*dt/2;
-	xi2=xi2-vxi2*dt/2;
-	s=exp(-vxi1*dt/2);//scaling factor for velocities
-	for(int i=0; i<N; i++)
-	{
-		(*vx).at(i)=s*(*vx).at(i);
-		(*vy).at(i)=s*(*vy).at(i);
-		(*vz).at(i)=s*(*vz).at(i);
-	}
-	kin=kin*s*s; //rescale kinetic energy
-	vxi1=vxi1*exp(-vxi2*dt/8);
-	g1=(2*kin-3*N*T)/q1;
-	vxi1=vxi1+g1*dt/4;
-	vxi1=vxi1*exp(-vxi2*dt/8);
-	g2=(q1*vxi1*vxi1-boltz*T)/q2;
-	vxi2=vxi2+g2*dt/4;
-}*/

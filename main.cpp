@@ -25,7 +25,6 @@ int main(int argc, char* argv[]){
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
-	std::cout << "n=" << n << std::endl;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -43,6 +42,7 @@ int main(int argc, char* argv[]){
 	double dt=1,T=100,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
+	std::cout << norbs << "  n=" << n << std::endl;
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
@@ -51,12 +51,12 @@ int main(int argc, char* argv[]){
 	// Calculation of initial velocities:
 	velocity(m,&vx,&vy,&vz,T);
 	//If input velocities are given, initialise them for relevant atoms
-	for(i=0; i<vx.size(); i++){
+/*	for(i=0; i<vx.size(); i++){
 		vx.at(i)=vxin.at(i);
 		vy.at(i)=vyin.at(i);
 		vz.at(i)=vzin.at(i);
 	}
-	// Initialisation of reference positions:
+*/	// Initialisation of reference positions:
 	for(i=0;i<n;i++){
 	  refposx.at(i)=posx.at(i);
 	  refposy.at(i)=posy.at(i);
@@ -68,7 +68,6 @@ int main(int argc, char* argv[]){
 	for(i=0;i<n;i++){
 	  fprintf(file,"6  %f %f %f\n",posx.at(i),posy.at(i),posz.at(i));
 	}
-
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
@@ -85,8 +84,7 @@ int main(int argc, char* argv[]){
 		if(i%100==0){
 			std::cout << i/10 << "% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,ander);
-//	  Tf=nose(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,xi1,xi2,vxi1,vxi2,q1,q2,T);
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
