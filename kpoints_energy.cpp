@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	bool pbc = 1;
 	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
-	scramble(&posx, &posy, &posz);
+	//scramble(&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	//std::cout << "n = " <<n <<std::endl;
@@ -35,20 +35,19 @@ int main(int argc, char* argv[]){
 	double rv = 2.98, rc = 2.18;
 
 	Eigen::MatrixXcd eigvects(4*n,4*n);
-	Eigen::MatrixXd eigvectreal(4*n,4*n);
-	Eigen::MatrixXcd gammapt(4*n,4*n);
-	Eigen::MatrixXcd eigvectstot = Eigen::MatrixXcd::Zero(4*n,4*n);
+
+	Eigen::MatrixXd eigvectsr(4*n,4*n);
 
 	// Calculate distances
 	Eigen::MatrixXi inear(n,n);
 	std::vector<int> nnear(n);
-	std::vector<std::complex<double> > fx(n,0.0);
-	std::vector<std::complex<double> > fy(n,0.0);
-	std::vector<std::complex<double> > fz(n,0.0);
+	std::vector<double> fx(n);
+	std::vector<double> fy(n);
+	std::vector<double> fz(n);
 	std::vector<double> fmag(n);
-	std::vector<std::complex<double> > fxtemp(n);
-	std::vector<std::complex<double> > fytemp(n);
-	std::vector<std::complex<double> > fztemp(n);
+	std::vector<double> fxtemp(n);
+	std::vector<double> fytemp(n);
+	std::vector<double> fztemp(n);
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	NearestNeighbours(&inear, &nnear, &modr,rv);
 
@@ -74,20 +73,12 @@ int main(int argc, char* argv[]){
 	  for (int l=0;l<n;l++) {
 		 std::cout << l << " " << fxtemp.at(l) << " " << fytemp.at(l) << " " << fztemp.at(l) << std::endl;
 	  }
-	  // Output real components of forces from kpoints
-	  /*std::cout << "\n Real forces:" << std::endl;
-	  for (int l=0;l<n;l++) {
-		 std::cout << l << " " << fxtemp.at(l).real() << " " << fytemp.at(l).real() << " " << fztemp.at(l).real() << std::endl;
-		 }*/
 	  // Add forces from different kpoints
 	  for (int l=0;l<n;l++) {
-		 fx.at(l) = fx.at(l) + std::complex<double>(1/(double)ktot,0)*fxtemp.at(l);
-		 //std::cout << "fx.at(l) = " << fx.at(l) << " (1/ktot)fxtemp.at(l) = " << std::complex<double>(1/(double)ktot,0)*fxtemp.at(l) <<std::endl;
-		 fy.at(l) = fy.at(l) + std::complex<double>(1/(double)ktot,0)*fytemp.at(l);
-		 fz.at(l) = fz.at(l) + std::complex<double>(1/(double)ktot,0)*fztemp.at(l);
+		 fx.at(l) = fx.at(l) + (1/(double)ktot)*fxtemp.at(l);
+		 fy.at(l) = fy.at(l) + (1/(double)ktot)*fytemp.at(l);
+		 fz.at(l) = fz.at(l) + (1/(double)ktot)*fztemp.at(l);
 	  }
-	  //	  std::cout << "\neigenvectors = \n" << eigvects.real() << std::endl;
-	  eigvectstot = eigvectstot + (1.0/(double)ktot)*eigvects;
 	}
 
 	erep=Erep(&modr);
@@ -97,20 +88,23 @@ int main(int argc, char* argv[]){
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
-	//	std::cout << "\ntotal eigenvectors = \n" << eigvectstot.imag() << std::endl;
-
-	eigvectreal = eigvectstot.real();
-
-	//kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectreal, &nnear, &inear, &fx, &fy, &fz);
-	
 	for (int i=0;i<n;i++) {
-	  fmag.at(i) = sqrt(pow(fx.at(i).real(),2) + pow(fx.at(i).imag(),2) + pow(fy.at(i).real(),2) + pow(fy.at(i).imag(),2) + pow(fz.at(i).real(),2) + pow(fz.at(i).imag(),2));
+	  fmag.at(i) = sqrt(pow(fx.at(i),2) + pow(fy.at(i),2) + pow(fz.at(i),2));
 	}		
 
 	std::cout << "\n Forces " << std::endl;
 	for (int i=0;i<n;i++) {
 	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << " " << fmag.at(i) << std::endl;
 	}	
+
+	eigvectsr = eigvects.real();
+	forces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectsr, &nnear, &inear, &fxtemp, &fytemp, &fztemp);
+
+	std::cout << "\n Regular Forces " << std::endl;
+	for (int i=0;i<n;i++) {
+	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << " " << fmag.at(i) << std::endl;
+	}	
+
 	return 0;
 }
 
