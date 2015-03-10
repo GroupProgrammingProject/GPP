@@ -10,6 +10,7 @@
 #include "include/MolDyn.h"
 #include <ctime>
 
+
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
 	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
@@ -20,11 +21,11 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
-	bool pbc = 0, ander=1;
+	bool pbc = 0, ander=0;
 	std::vector<bool> velspec;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
+	int n=posx.size(),norbs=4,nmd=1,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -39,9 +40,10 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,nu=0.1;
+	double dt=1,T=100,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
+	std::cout << norbs << "  n=" << n << std::endl;
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
@@ -79,21 +81,17 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-	  //		std::cout << i << std::endl;
-	  if(i%(nmd/10)==0){std::cout << i*100/nmd << "% completed" << std::endl;}
-	  T=T-0.6;
-	  if(T<=0){
-	    T=1e-5;
-	  }
+//		std::cout << i << std::endl;
+		if(i%100==0){
+			std::cout << i/10 << "% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-	  for(int iff=0;iff<n;iff++){
-	    fprintf(f,"%f\t%f\t%f\t%f\n",tmd,fx.at(iff),fy.at(iff),fz.at(iff));
-	  }
-	  fprintf(f,"\n");
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
 	  ekin=3*(n-1)*kb*Tf/2;
-	  
+	  for(int k=0; k<n; k++){
+				 fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
+//	  std::cout << "i=" << k << "  f(x)=" << fx.at(k) << "  f(y)=" << fy.at(k) << "  f(z)" << fz.at(k) << std::endl;
+	  }
 	  if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
 	    erep=Erep(&modr);

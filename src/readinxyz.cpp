@@ -15,8 +15,7 @@ void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* 
 	// First line handled seperately and not to be stored
 	std::string skipline1;
 	int num, n;
-	while (infile>>num){n=num;} //read in the number of atoms in the file
-//	std::getline(infile, skipline1);
+	std::getline(infile, skipline1);
 	// If using periodic boundary conditions
 	if (pbc == 1) {
 	  // Read in a, b and c lattice parameters
@@ -35,11 +34,7 @@ void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* 
 	// Store the molecule type and x, y, z positions and velocities
 	double x, y, z, vx, vy, vz;
 	std::string type;
-	for(int i=0; i<n; i++)
-	{
-		std::string line;
-		std::getline(infile, line);
-		while(infile>>type>>x>>y>>z){
+	while(infile>>type>>x>>y>>z){
 		xvect->push_back(x);
 		yvect->push_back(y);
 		zvect->push_back(z);}
@@ -48,7 +43,6 @@ void ReadInXYZ(char* filename, std::vector<double>* xvect, std::vector<double>* 
 		vyvect->push_back(vy);
 		vzvect->push_back(vz);
 		}
-*/	}
 /*	while (infile>>type>>x>>y>>z){
 		xvect->push_back(x);
 		yvect->push_back(y);
