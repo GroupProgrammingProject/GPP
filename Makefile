@@ -8,37 +8,40 @@ LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
 
+# Directories that will be created
+LIB_DIR = ./lib
+OBJ_DIR = ./.obj
+
 #include path to eigen
 INCLUDE = $(addprefix -I , ~/Software/eigen/)
 HEADERS = ./include/*.h
 
 #compile and runtime shared lib linking path
-LDFLAGS = $(addprefix -L ,./lib/)
-RPATH = -Wl,-rpath=./lib 
+LDFLAGS = $(addprefix -L ,$(LIB_DIR))
+RPATH = -Wl,-rpath=$(LIB_DIR) 
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: main relax
+all: md_main
 
-main: main.cpp
+md_main: md_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-main: $(HEADERS)
-
-relax: relax_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-relax: $(HEADERS)
+md_main: $(HEADERS)
 
 # install, needs to run to compile shared library objects
-install: $(LIBNAMES) 
+install: $(LIB_DIR) $(OBJ_DIR) $(LIBNAMES) 
+
+$(LIB_DIR) $(OBJ_DIR): 
+	mkdir -p $@
 
 %.so: %.o
 	$(CXX) -shared -fPIC -o lib/lib$@ $<
 
 %.o: src/%.cpp
-	$(CXX) -c $(INCLUDE) -fPIC $<
+	$(CXX) -c $(INCLUDE) -fPIC $< 
 %.o: include/%.h
 
-.PRECIOUS: %.o 
+#.PRECIOUS: %.o 
 
 clean: 
-	rm *.o
+	rm -rf $(OBJ_DIR)
