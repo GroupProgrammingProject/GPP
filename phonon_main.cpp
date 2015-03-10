@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 1;
+	bool pbc = 0;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size(),norbs=4,nmd=1,nprint=1;
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]){
 	normalmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
 
 std::cout << "Real eigenvalues expressed as wavectors in cm-1" << std::endl;
-for(i=0;i<3*n;i++){	std::cout << eigfreq[i] << std::endl; }
+for(i=0;i<3*n;i++){	std::cout << eigfreq[i]/n << std::endl; }
 
 return 0;
 }

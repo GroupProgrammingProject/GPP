@@ -18,11 +18,15 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: phonons kpoints_energy
+all: phonons relax kpoints_energy
 
 phonons: phonon_main.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 phonons: $(HEADERS)
+
+relax: relax_main.cpp
+	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+relax: $(HEADERS)
 
 kpoints_energy: kpoints_energy.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
