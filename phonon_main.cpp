@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=0.1,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -50,8 +50,6 @@ int main(int argc, char* argv[]){
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 
 	erep=Erep(&modr);	
-/*	Erep has to be called, otherwise errors appear: several functions from "functions.h" are undefined"	*/
-
 	//Calculate eigenmodes and eigenfrequencies
 	std::vector<double> fx(n),fy(n),fz(n),eigfreq(3*n);
 	normalmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);

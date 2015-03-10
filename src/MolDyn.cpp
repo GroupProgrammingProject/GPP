@@ -1,4 +1,4 @@
-#include "MolDyn.h"
+#include "../include/MolDyn.h"
 
 double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc)
 { double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf;
@@ -42,7 +42,7 @@ maxnn=max number of nn */
 void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
-  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r;
+  double sumphinn,sumphi,dualeigen,derivx,derivy,derivz,dx,dy,dz,r,dsrx,dsry,dsrz,sr,gh;
 
   for(i=0;i<N;i++){ /*initialisation of forces*/
     (*fx).at(i)=0;
@@ -80,12 +80,18 @@ void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, 
 	ddnorm.at(0)=dx/r;
 	ddnorm.at(1)=dy/r;
 	ddnorm.at(2)=dz/r;
-      
+
+	dsrx=ds(r,dx);
+	dsry=ds(r,dy);
+	dsrz=ds(r,dz);
+	sr=s(r);
+
 	for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 	  for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-	    derivx=ds(r,dx)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,0);
-	    derivy=ds(r,dy)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
-	    derivz=ds(r,dz)*Gethijab(i,nearlabel,l,lp,&ddnorm)+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
+	    gh=Gethijab(i,nearlabel,l,lp,&ddnorm);
+	    derivx=ds(r,dx)*gh+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,0);
+	    derivy=ds(r,dy)*gh+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,1);
+	    derivz=ds(r,dz)*gh+s(r)*Hamder(i,nearlabel,l,lp,&ddnorm,r,2);
 	    for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
 	      dualeigen=(*c)(n,l+i*norbs)*(*c)(n,lp+nearlabel*norbs);  
 	      (*fx).at(i)=(*fx).at(i)-2*derivx*dualeigen;
@@ -109,12 +115,12 @@ void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::v
   double c,ke,boltz=1./11603;//1.38*pow(10,-23);
   double vxtot=0,vytot=0,vztot=0,msvx=0,msvy=0,msvz=0,vxavg,vyavg,vzavg,Tp;
   c=sqrt(3*boltz*T/m);
-  srand(time(0)); //CHANGE RNG!!!!!!!!
+  Ran ran(time(0));
   for (int i=0; i<N; i++)
     {  
-      (*vx).at(i)=c*(2*rand()-1);
-      (*vy).at(i)=c*(2*rand()-1);
-      (*vz).at(i)=c*(2*rand()-1);
+      (*vx).at(i)=c*(2*ran.doub()-1);
+      (*vy).at(i)=c*(2*ran.doub()-1);
+      (*vz).at(i)=c*(2*ran.doub()-1);
       vxtot=vxtot+(*vx).at(i);
       vytot=vytot+(*vy).at(i);
       vztot=vztot+(*vz).at(i);
