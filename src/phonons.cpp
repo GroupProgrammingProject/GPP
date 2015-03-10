@@ -18,14 +18,14 @@ void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::
 
  	ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
 	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz);//recalculate forces
-	
+/*	
 std::cout << "forces of (hopefully) equilibrium structure:" << std::endl;
 for(i=0;i<n;i++){
 	std::cout << "fx = " << fx->at(i) << std::endl;
 	std::cout << "fy = " << fy->at(i) << std::endl;
 	std::cout << "fz = " << fz->at(i) << std::endl << std::endl;
 }
-
+*/
 
 
 	//store original distances

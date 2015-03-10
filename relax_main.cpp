@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 1;
+	bool pbc = 0;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 //	scramble(&posx,&posy,&posz);
 	// Number of atoms, number of orbitals, and number of MD steps
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]){
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
 	FILE *file=fopen("movie.txt","w");
 	FILE *file2=fopen("forces.txt","w");
-	fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
+	fprintf(file,"%d\nC%d\t%.3f \t %.3f \t %.3f \n",n,n,lats[0],lats[1],lats[2]);
 	for(i=0; i<n; i++){
 		fprintf(file,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
 	}
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]){
 	do{
 		if(count*100%nmax==0){std::cout << count*100/nmax << "% complete" << std::endl;}
 		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-		fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
+		fprintf(file,"%d\nC%d\t%.3f \t %.3f \t %.3f \n",n,n,lats[0],lats[1],lats[2]);
 		for(i=0; i<n; i++){
 			posx.at(i)=posx.at(i)+gam*h*fx.at(i);
 			posy.at(i)=posy.at(i)+gam*h*fy.at(i);
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
 		count=count+1;
 	}while(fmax>1e-8 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
 	FILE *file_rel=fopen("relax.txt","w");
-	fprintf(file_rel,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
+	fprintf(file_rel,"%d\nC%d\t%.3f \t %.3f \t %.3f \n",n,n,lats[0],lats[1],lats[2]);
 	for(i=0; i<n; i++){
 		fprintf(file_rel,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
 	}
