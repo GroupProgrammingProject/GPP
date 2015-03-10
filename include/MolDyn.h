@@ -16,6 +16,8 @@
 #include "Gethijab.h"
 #include "geometryinfo.h"
 #include <vector>
+#include "nr3.h"
+#include "ran.h"
 
 //Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
 

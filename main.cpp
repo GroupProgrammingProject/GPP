@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=0.1,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
 	etot=ebs+erep+ekin;
 
 	FILE *en=fopen("energy.txt","w");
-	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
+	fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",0.0,T,ekin,ebs,erep,etot);
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]){
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
-	    fprintf(en,"%f\t%f\t%f\t%f\t%f\n",tmd,ekin,ebs,erep,etot);
+	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
 	    fprintf(file,"%d\nC3 molecule\n",n);
 	    for(j=0;j<n;j++){
 	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
