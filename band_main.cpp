@@ -68,14 +68,14 @@ int main(int argc, char* argv[]){
 	    	kprim=std::complex<double>(0,0);
 	   	for(int j=0;j<=(4*n-1);j++){
 	      		dottemp=eigvects(i,(j+4*(n-1))%(4*n));
-			//band<<std::conj(dottemp)<<"\t \t"<<eigvects(i,(j+4*(n-1))%(4*n))<<"\n";
+			band<<std::conj(dottemp)<<"\t \t"<<eigvects(i,(j+4*(n-1))%(4*n))<<"\n";
 	     		kprim=kprim+std::conj(dottemp)*eigvects(i,j);
 	    	}
-		//band<<"\n \n";
+		band<<"\n \n";
 	    	//band<<kprim<<"\t"<<eigenvalaar[i]<<"\n";
-	   	kprim=log(kprim)/(a/n);
-	    	//band<<kprim<<"\t"<<eigenvalaar[i]<<"\n";
-	    	band<<(std::imag(kprim))<<"\t"<<eigenvalaar[i]<<"\n";
+	   	//kprim=log(kprim)/(a/n);
+	    	//band<<kvec.at(0)<<"\t"<<eigenvalaar[i]<<"\n";
+	    	//band<<(std::imag(kprim))<<"\t"<<eigenvalaar[i]<<"\n";
 	  }
 	}
 
