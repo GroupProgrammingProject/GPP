@@ -22,15 +22,19 @@ RPATH = -Wl,-rpath=$(LIB_DIR)
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: md_main phonons_main
+all: singleE_main
 
-md_main: md_main.cpp
+singleE_main: singleE_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-md_main: $(HEADERS)
+singleE_main: $(HEADERS)
 
-phonons_main: phonons_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-phonons_main: $(HEADERS)
+#md_main: md_main.cpp
+#	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+#md_main: $(HEADERS)
+
+#phonons_main: phonons_main.cpp
+#	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+#phonons_main: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIB_DIR) $(OBJ_DIR) $(LIBNAMES) 

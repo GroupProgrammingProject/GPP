@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include "../include/readinxyz.h"
-#include "../include/kpointfunctions.h"
+#include "../include/kpointsfunctions.h"
 
 // Main for generating an orthorhombic grid of kpoints
 // Takes "input.xyz output.kpts A B C" where input.xyz is a structure file, output.kpts is a file to hold a set of points in kspace to be read by the calculation main and A, B and C are the number of kpoints to be generated along the reciprocal a, b and c directions

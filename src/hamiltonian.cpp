@@ -1,6 +1,6 @@
 #include "../include/hamiltonian.h"
 
-double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
+double Hamiltonian(int n,std::vector<double>* TBparam, Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXd* eigvects, bool verbose){
   int i, j, a, b;                                          // i,j loop over atoms; a,b loop over orbitals
   double r,rxloc, ryloc, rzloc;                            // temporary parameters to store interatomic distances
   std::vector<double> d(3);                                // d is a 3d array of atom pair's connecting vector (varys within ij loop)
@@ -23,7 +23,7 @@ double Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::Matri
 		for (a=0;a<4;a++) {                               // Cycle through orbitals of atom i
 		  for (b=0;b<4;b++) {                            // Cycle through orbitals of atom i
 			 if (sr == 0) {hijab = 0;}                   // If scaling function gives 0, no need to calc hijab
-			 else {hijab = Gethijab(i,j,a,b,&d);}        // Hamiltonian elements of ij interaction
+			 else {hijab = Gethijab(i,j,a,b,&d,TBparam);}        // Hamiltonian elements of ij interaction
 			 Hijab(4*i+a,4*j+b)     = sr*hijab;          // Scale hijab and populate matrix Hijab
 			 //	  				Hijab(4*j+b,4*i+a)     = sr*hijab;          // Scale hijab and populate matrix Hijab
 		  }                                              // End loop over b
