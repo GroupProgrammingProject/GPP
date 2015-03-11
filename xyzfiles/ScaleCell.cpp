@@ -21,9 +21,9 @@ int main(int argc, char* argv[]){
 
   // Replicate cell in n dimensions
   double scale[3] = {atof(argv[3]),atof(argv[4]),atof(argv[5])};
-  std::cout << "scale: " << scale[0] << " " << scale[1] << " " << scale[2] << std::endl;
+//  std::cout << "scale: " << scale[0] << " " << scale[1] << " " << scale[2] << std::endl;
   int n_new = n;
-  std::cout << "n_new = " << n_new << std::endl;
+//  std::cout << "n_new = " << n_new << std::endl;
   std::vector<double> posxnew(n_new), posynew(n_new), posznew(n_new), latsnew(3); 
   ScaleGeom(n, scale, &lats, &posx, &posy, &posz, &posxnew, &posynew, &posznew, &latsnew, pbc);
 
