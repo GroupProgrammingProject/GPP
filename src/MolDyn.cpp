@@ -2,7 +2,7 @@
 
 double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, Eigen::MatrixXd* c,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,double &ebs, std::vector<double>* lats, bool pbc,double T, double nu,bool ander)
 { double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),vxm=0.0,vym=0,vzm=0,rang;
-  int N=(*x).size();
+  int N=(*x).size(),nearlabel;
   bool renn=0,v=0;
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N);
   Ran ran(time(0)+clock());
@@ -13,11 +13,40 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
       (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
     }
-  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
+  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv); 
   if(renn==1){
+    GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
     NearestNeighbours(inear,nnear,modr,rv);
   }
-  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
+  else{
+    for(int i=0;i<N;i++){
+      for(int j=0;j<(*nnear).at(i);j++){
+	nearlabel=(*inear)(i,j);
+	(*rx)(i,nearlabel)=(*x).at(i)-(*x).at(nearlabel);
+	if((*rx)(i,nearlabel)>(*lats).at(0)/2){
+	  (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
+	}
+	if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
+	  (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
+	}
+	(*ry)(i,nearlabel)=(*y).at(i)-(*y).at(nearlabel);
+	if((*ry)(i,nearlabel)>(*lats).at(1)/2){
+	  (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
+	}
+	if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
+	  (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
+	}
+	(*rz)(i,nearlabel)=(*z).at(i)-(*z).at(nearlabel);
+	if((*rz)(i,nearlabel)>(*lats).at(2)/2){
+	  (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
+	}
+	if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
+	  (*rz)(i,nearlabel)=(*rz)(i,nearlabel)+(*lats).at(2);
+	}
+	(*modr)(i,nearlabel)=sqrt((*rx)(i,nearlabel)*(*rx)(i,nearlabel)+(*ry)(i,nearlabel)*(*ry)(i,nearlabel)+(*rz)(i,nearlabel)*(*rz)(i,nearlabel));
+      }
+    }
+  }
   ebs=Hamiltonian(N,modr,rx,ry,rz,c,v);
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
@@ -40,9 +69,9 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   vzm=vzm/N;
   for(int i=0; i<N; i++)//mean square velocities
     {
-		(*vx).at(i)=(*vx).at(i)-vxm;
-		(*vy).at(i)=(*vy).at(i)-vym;
-		(*vz).at(i)=(*vz).at(i)-vzm;
+      (*vx).at(i)=(*vx).at(i)-vxm;
+      (*vy).at(i)=(*vy).at(i)-vym;
+      (*vz).at(i)=(*vz).at(i)-vzm;
       svxm=svxm+(*vx).at(i)*(*vx).at(i);
       svym=svym+(*vy).at(i)*(*vy).at(i);
       svzm=svzm+(*vz).at(i)*(*vz).at(i);
@@ -188,3 +217,125 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
   //V&G routine ends
   return h;
 } //Hamder() ends
+
+//GeomOpt performs geometrical optimization of a struvture via simulated annealing followed by steepest descent. 
+int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint){
+  int n=(*posx).size();
+  // Turn verbose mode (hamiltonian routine) on/off
+  bool v=0, renn=0, ander=1;
+  int i,j,nearlabel;
+  double Tin=T,Tf,tmd,kb=1./11603;
+  std::vector<double> vx(n), vy(n), vz(n), fx(n), fy(n), fz(n);
+  // Energies from TB model and fmax
+  double ebs,erep,etot,ekin,fmax;;
+  // Calculation of initial velocities:
+  velocity(m,&vx,&vy,&vz,T);
+  FILE *file=fopen("movie_relax.txt","w");
+  FILE *en=fopen("energy_relax.txt","w");
+  if(verb==1){
+    fprintf(file,"%d\nC3 molecule\n",n);
+    for(i=0;i<n;i++){
+      fprintf(file,"6  %f %f %f\n",(*posx).at(i),(*posy).at(i),(*posz).at(i));
+    }
+    // Starting TB	module: calculating energies
+    ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
+    //H_MD and eigvects have now also been populated
+    erep=Erep(modr);	
+    ekin=3*(n-1)*kb*T/2;
+    etot=ebs+erep+ekin;
+    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
+  }
+  std::cout << "Starting simulated annealing..." << std::endl;
+  // Simulated annealing cycle
+  for(i=1;i<nmd+1;i++){
+    if(i%(nmd/10)==0 && verb==1){std::cout << i*100/nmd << "% completed" << std::endl;}
+    T=T-Tin/(nmd*0.99);
+    if(T<=0){
+      T=1e-6;
+    }
+    Tf=verlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,eigvects,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander);
+    if(i%nprint==0 && verb==1){
+      //H_MD and eigvects have now also been populated
+      erep=Erep(modr);
+      etot=ebs+erep+ekin;
+      tmd=i*dt;
+      fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
+      fprintf(file,"%d\nC3 molecule\n",n);
+      for(j=0;j<n;j++){
+	fprintf(file,"6  %f %f %f\n",(*posx).at(j),(*posy).at(j),(*posz).at(j));
+      }
+    } 
+  }
+  //Initialisation of maximum value of forces//
+  fmax=0;
+  for(j=0;j<n;j++){
+    if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}
+    if(fabs(fy.at(j))>fmax){fmax=fabs(fy.at(j));}
+    if(fabs(fz.at(j))>fmax){fmax=fabs(fz.at(j));}
+  }
+  i=0;
+  std::cout << "Starting steepest descent..." << endl;
+  //Steepest descent cycle
+  while(fmax>1e-6 && i<10000){
+    renn=RecalculateNearestNeighbours(refposx,refposy,refposz,posx,posy,posz,rc,rv); 
+    if(renn==1){
+      GetDistances(modr,rx,ry,rz,posx,posy,posz,lats,rv,pbc);
+      NearestNeighbours(inear,nnear,modr,rv);
+    }
+    else{
+      for(i=0;i<n;i++){
+	for(j=0;j<(*nnear).at(i);j++){
+	  nearlabel=(*inear)(i,j);
+	  (*rx)(i,nearlabel)=(*posx).at(i)-(*posx).at(nearlabel);
+	  if((*rx)(i,nearlabel)>(*lats).at(0)/2){
+	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
+	  }
+	  if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
+	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
+	  }
+	  (*ry)(i,nearlabel)=(*posy).at(i)-(*posy).at(nearlabel);
+	  if((*ry)(i,nearlabel)>(*lats).at(1)/2){
+	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
+	  }
+	  if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
+	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
+	  }
+	  (*rz)(i,nearlabel)=(*posz).at(i)-(*posz).at(nearlabel);
+	  if((*rz)(i,nearlabel)>(*lats).at(2)/2){
+	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
+	  }
+	  if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
+	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)+(*lats).at(2);
+	  }
+	  (*modr)(i,nearlabel)=sqrt((*rx)(i,nearlabel)*(*rx)(i,nearlabel)+(*ry)(i,nearlabel)*(*ry)(i,nearlabel)+(*rz)(i,nearlabel)*(*rz)(i,nearlabel));
+	}
+      }
+    }
+    ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
+    forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz);
+    for(j=0;j<n;j++){
+      if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}
+      if(fabs(fy.at(j))>fmax){fmax=fabs(fy.at(j));}
+      if(fabs(fz.at(j))>fmax){fmax=fabs(fz.at(j));}
+      (*posx).at(j)=(*posx).at(j)+h*fx.at(j);
+      (*posy).at(j)=(*posy).at(j)+h*fy.at(j);
+      (*posz).at(j)=(*posz).at(j)+h*fz.at(j);
+    }
+    i++;
+  }
+  if(verb==1){	
+    fprintf(file,"%d\nC3 molecule\n",n);
+    for(j=0;j<n;j++){
+      fprintf(file,"6  %f %f %f\n",(*posx).at(j),(*posy).at(j),(*posz).at(j));
+    }
+    erep=Erep(modr);
+    etot=ebs+erep;
+    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd+1,Tf,ekin,ebs,erep,etot);
+  }
+  std::cout << "Relaxation done." << std::endl;
+  std::cout << "Ebs = " << ebs << std::endl;
+  std::cout << "Erep = " << erep << std::endl;
+  std::cout << "Etot = " << etot << std::endl;
+  
+  return 0;
+}
