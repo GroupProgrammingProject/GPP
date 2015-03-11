@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 	  kvec = kpoints.at(k_index);
 	  std::cout << "\nk = [" << kvec.at(0) << " " << kvec.at(1) << " " << kvec.at(2) << "] " << std::endl;
 	  ebstemp=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
-
+  	  ebs = ebs + ebstemp;
 	  for(int i=0;i<4*n;i++){
 	    	kprim=std::complex<double>(0,0);
 	   	for(int j=0;j<=(4*n-1);j++){
@@ -80,15 +80,11 @@ int main(int argc, char* argv[]){
 	}
 
 	band.close();
-	ebs = ebs + ebstemp;
-	std::cout << "Ebs = " << ebstemp << std::endl;
-
-	
 	erep=Erep(&modr);
 	
-	std::cout << "Ebs = " << ebs/(double)ktot << std::endl;
+	std::cout << "\nEbs = " << ebs/(double)ktot << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
-	etot=ebs+erep;
+	etot=ebs/(double)ktot +erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 	
 	return 0;
