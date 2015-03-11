@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#MODE="md_main"
+MODE="md_main"
 XYZ_FILE_PATH="xyzfiles/C3.xyz"
 NUM_STEPS="1000"
 DT="1"
