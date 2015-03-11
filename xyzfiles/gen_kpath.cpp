@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include "../include/readinxyz.h"
-#include "../include/kpointfunctions.h"
+#include "../include/kpointsfunctions.h"
 
 // Main for generating a path between two points in kspace
 // Takes "input.xyz output.kpts P0 Q0 R0 P1 Q1 R1 npts" where input.xyz is a structure file, output.kpts is a file to hold a set of points in kspace to be read by the calculation main and P, Q and R are doubles representing coordinates in kspace (along reciprocal a, b and c directions) for the inital and final points on the staight path. npts is then the number of points to be generated along this path.
