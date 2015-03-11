@@ -22,11 +22,15 @@ RPATH = -Wl,-rpath=$(LIB_DIR)
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: singleE_main
+all: kpoints_energy singleE_main
 
-singleE_main: singleE_main.cpp
+kpoints_energy: kpoints_energy.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-singleE_main: $(HEADERS)
+kpoints_energy: $(HEADERS)
+
+#singleE_main: singleE_main.cpp
+#	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+#singleE_main: $(HEADERS)
 
 #md_main: md_main.cpp
 #	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
