@@ -147,8 +147,8 @@ std::cout << fl << std::endl;
 	Eigen::EigenSolver<Eigen::MatrixXd> es(dynamicmat);
 	//returns eigenfrequencies in fs-1
 
-std::cout << "eigenvalues:" << std::endl;
-std::cout << es.eigenvalues() << std::endl;
+//std::cout << "eigenvalues:" << std::endl;
+//std::cout << es.eigenvalues() << std::endl;
 
 //std::cout << std::endl << "eigenvectors:" << std::endl;
 //std::cout << es.eigenvectors() << std::endl;

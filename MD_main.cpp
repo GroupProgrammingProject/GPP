@@ -8,7 +8,6 @@
 #include "include/functions.h"
 #include "include/geometryinfo.h"
 #include "include/MolDyn.h"
-#include "include/phonons.h"
 
 int main(int argc, char* argv[]){
 	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
@@ -23,7 +22,7 @@ int main(int argc, char* argv[]){
 	bool pbc = 0;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1,nprint=1;
+	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
 	std::vector<int> nnear(n);
@@ -48,16 +47,57 @@ int main(int argc, char* argv[]){
 	double ebs,erep,etot,ekin;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
+	// Calculation of initial velocities:
+	velocity(m,&vx,&vy,&vz,T);
+	// Initialisation of reference positions:
+	for(i=0;i<n;i++){
+	  refposx.at(i)=posx.at(i);
+	  refposy.at(i)=posy.at(i);
+	  refposz.at(i)=posz.at(i);
+	}
 
+
+	FILE *file=fopen("movie.txt","w");
+	fprintf(file,"%d\nC3 molecule\n",n);
+	for(i=0;i<n;i++){
+	  fprintf(file,"6  %f %f %f\n",posx.at(i),posy.at(i),posz.at(i));
+	}
+
+	// Starting TB	module: calculating energies
+	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);	
-/*	Erep has to be called, otherwise errors appear: several functions from "functions.h" are undefined"	*/
+	ekin=3*(n-1)*kb*T/2;
+	etot=ebs+erep+ekin;
 
-	//Calculate eigenmodes and eigenfrequencies
-	std::vector<double> fx(n),fy(n),fz(n),eigfreq(3*n);
-	normalmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
+	FILE *en=fopen("energy.txt","w");
+	fprintf(en,"%f\t%f\t%f\t%f\t%f\n",0.0,ekin,ebs,erep,etot);
+	// MD cycle
+	for(i=1;i<nmd+1;i++){
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
+	  ekin=3*(n-1)*kb*Tf/2;
+	  if(i%nprint==0){
+	    //H_MD and eigvects have now also been populated
+	    erep=Erep(&modr);
+	    etot=ebs+erep+ekin;
+	    tmd=i*dt;
+	    fprintf(en,"%f\t%f\t%f\t%f\t%f\n",tmd,ekin,ebs,erep,etot);
+	    fprintf(file,"%d\nC3 molecule\n",n);
+	    for(j=0;j<n;j++){
+	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
+	    }
+	  } 
+	}
 
-std::cout << "Real eigenvalues expressed as wavectors in cm-1" << std::endl;
-for(i=0;i<3*n;i++){	std::cout << eigfreq[i]/n << std::endl; }
+	// Starting TB	module: calculating energies
+	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	//H_MD and eigvects have now also been populated
+	erep=Erep(&modr);
+	etot=ebs+erep+ekin;
+
+	std::cout << "Ebs = " << ebs << std::endl;
+	std::cout << "Erep = " << erep << std::endl;
+	std::cout << "Etot = " << etot << std::endl;
 
 return 0;
 }
