@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	bool pbc = 1;
 	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
-	//scramble(&posx, &posy, &posz);
+	scramble(&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	//std::cout << "n = " <<n <<std::endl;
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]){
 	erep=Erep(&modr);
 
 	std::cout << "Ebs = " << ebs/(double)ktot << std::endl;
-	std::cout << "Erep = " << erep << std::endl;
+	//std::cout << "Erep = " << erep << std::endl;
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
 
@@ -102,8 +102,8 @@ int main(int argc, char* argv[]){
 
 	std::cout << "\n Regular Forces " << std::endl;
 	for (int i=0;i<n;i++) {
-	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << " " << fmag.at(i) << std::endl;
-	}	
+	  std::cout << i << " " << fxtemp.at(i) << " " << fytemp.at(i) << " " << fztemp.at(i) << " " << fmag.at(i) << std::endl;
+	  }
 
 	return 0;
 }

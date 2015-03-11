@@ -56,8 +56,8 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
   std::vector<double> ddnorm(3);
   double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,compderx,compdery,compderz;
   double dualeigen1, dualeigen2,realderx,realdery,realderz,imagderx,imagdery,imagderz;
-  double sr,dsrx,dsry,dsrz,gh,ca,cb,cc,cd,skr,ckr;
-  //std::complex<double> complexx2, complexy2, complexz2, complexx, complexy, complexz;
+  double sr,dsrx,dsry,dsrz,gh,ca,cb,cc,cd,skr,ckr,imagforce;
+  std::complex<double> dualeigen, /*dualeigen2,*/ complexx2, complexy2, complexz2, complexx, complexy, complexz, exponent;
   std::complex<double> im = std::complex<double>(0,1);
   Eigen::MatrixXd eigvectr(norbs*N,norbs*N);
   Eigen::MatrixXd eigvecti(norbs*N,norbs*N);
@@ -78,6 +78,7 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
       if(r<rc){sumphi=sumphi+o(r);}
     }
     for(j=0;j<(*nnear).at(i);j++){ /*Cycle spanning the nearest neighbours of i*/
+		imagforce = 0;
       nearlabel=(*inear)(i,j);
       sumphinn=0;
       for(m=0;m<(*nnear).at(nearlabel);m++){     
@@ -99,6 +100,7 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 		  
 		  // Terms which need not be recalculated every orbital iteration
 		  kr = dx*(*kvec).at(0) + dy*(*kvec).at(1) + dz*(*kvec).at(2);
+		  exponent = exp(im*kr);
 		  ckr=cos(kr);
 		  skr=sin(kr);
 		  sr=s(r);
@@ -124,21 +126,46 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 				imagderx=skr*derivx+ckr*compderx; //dI/dx
 				imagdery=skr*derivy+ckr*compdery;
 				imagderz=skr*derivz+ckr*compderz;
+
+				/*complexx=im*(*kvec).at(0)*(exp(im*kr)*sr*gh)+exp(im*kr)*derivx;
+				complexy=im*(*kvec).at(1)*(exp(im*kr)*sr*gh)+exp(im*kr)*derivy;
+				complexz=im*(*kvec).at(2)*(exp(im*kr)*sr*gh)+exp(im*kr)*derivz;
+
+				complexx2=-im*(*kvec).at(0)*(exp(-im*kr)*sr*gh)+exp(-im*kr)*derivx;
+				complexy2=-im*(*kvec).at(1)*(exp(-im*kr)*sr*gh)+exp(-im*kr)*derivy;
+				complexz2=-im*(*kvec).at(2)*(exp(-im*kr)*sr*gh)+exp(-im*kr)*derivz;*/
 				
 				for(n=0;n<norbs*N;n++){ /*Cycle spanning the level of the eigenvector*/
-					ca=eigvectr(n,l+i*norbs);
-					cb=eigvecti(n,l+i*norbs);
-					cc=eigvectr(n,lp+nearlabel*norbs);
-					cd=eigvecti(n,lp+nearlabel*norbs);
-					dualeigen1=ca*cc+cb*cd; //c1=ca+i*cb, c2=cc+i*cd
-					dualeigen2=ca*cd+cb*cc;
+				  ca=eigvectr(n,l+i*norbs);
+				  cb=eigvecti(n,l+i*norbs);
+				  cc=eigvectr(n,lp+nearlabel*norbs);
+				  cd=eigvecti(n,lp+nearlabel*norbs);
+				  dualeigen1=ca*cc+cb*cd; //c1=ca+i*cb, c2=cc+i*cd
+				  dualeigen2=ca*cd-cb*cc;
 
 				  (*fx).at(i)=(*fx).at(i)-2*(realderx*dualeigen1+imagderx*dualeigen2);
 				  (*fy).at(i)=(*fy).at(i)-2*(realdery*dualeigen1+imagdery*dualeigen2);
 				  (*fz).at(i)=(*fz).at(i)-2*(realderz*dualeigen1+imagderz*dualeigen2);
+
+					 /*dualeigen=(*c)(n,l+i*norbs)*std::conj((*c)(n,lp+nearlabel*norbs));  
+
+				  /*(*fx).at(i)=(*fx).at(i)-(dualeigen*exponent).real()*derivx-(*kvec).at(0)*(dualeigen*exponent).imag()*gh*sr;
+				  (*fy).at(i)=(*fy).at(i)-(dualeigen*exponent).real()*derivy-(*kvec).at(1)*(dualeigen*exponent).imag()*gh*sr;
+				  (*fz).at(i)=(*fz).at(i)-(dualeigen*exponent).real()*derivz-(*kvec).at(2)*(dualeigen*exponent).imag()*gh*sr;
+				  
+				  dualeigen2=std::conj((*c)(n,l+i*norbs))*(*c)(n,lp+nearlabel*norbs);  
+
+				  imagforce = (complexx*dualeigen-complexx2*dualeigen2).imag();
+				  (*fx).at(i)=(*fx).at(i)-(complexx*dualeigen-complexx2*dualeigen2).real();
+				  (*fy).at(i)=(*fy).at(i)-(complexy*dualeigen-complexy2*dualeigen2).real();
+				  (*fz).at(i)=(*fz).at(i)-(complexz*dualeigen-complexz2*dualeigen2).real();*/
+
 				}
 			 }
 		  }
+		  
+		  //std::cout << "imagforce = " << imagforce << std::endl;
+
 		  //calculation of repulsive forces
 		  (*fx).at(i)=(*fx).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dx);
 		  (*fy).at(i)=(*fy).at(i)-(d_f0(sumphinn)+d_f0(sumphi))*d_o(r,dy);
@@ -171,3 +198,36 @@ double kHamder(int i, int j,int a, int b, std::vector<double>* d,double distr,in
   //V&G routine ends
   return h;
 } //Hamder() ends
+
+// Finds average force from multiple kpoints
+void avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<std::vector<double> >* kpoints) {
+  int ktot = (*kpoints).size();
+  std::vector<double> kvec(3);
+  double ebstemp;
+  Eigen::MatrixXcd eigvects(4*N,4*N);
+  std::vector<double> eigenvalaar (4*N);
+  std::vector<double> fxtemp(N);
+  std::vector<double> fytemp(N);
+  std::vector<double> fztemp(N);
+  bool v = 0;
+  // zero all forces
+  for (int l=0;l<N;l++) {
+	 (*fx).at(l) = 0;
+	 (*fy).at(l) = 0;
+	 (*fz).at(l) = 0;
+  }
+
+  // Get forces over kpoints and average
+  for (int i=0;i<ktot;i++) {
+	 kvec = (*kpoints).at(i);
+	 ebstemp=band_Hamiltonian(N,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v);
+	 kforces(N,4,rc, rx, ry, rz, modr, &eigvects, nnear, inear, &fxtemp, &fytemp, &fztemp, &kvec);
+	 // Add forces from different kpoints
+	 for (int l=0;l<N;l++) {
+		(*fx).at(l) = (*fx).at(l) + (1/(double)ktot)*fxtemp.at(l);
+		(*fy).at(l) = (*fy).at(l) + (1/(double)ktot)*fytemp.at(l);
+		(*fz).at(l) = (*fz).at(l) + (1/(double)ktot)*fztemp.at(l);
+	 }
+  }
+  
+}

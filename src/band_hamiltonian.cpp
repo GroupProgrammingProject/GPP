@@ -71,7 +71,7 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 
   // Output to terminal, set verbose == 1 to print
   if (verbose == 1) {
-	 /*	 std::cout << "\nReal Hijab:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << "\nReal Hijab:"  << std::endl;                                      //print out Hamiltonian
 	 std::cout << Hijab.real() << std::endl;		                                          //print out Hamiltonian
 	 std::cout << "\nImaginary Hijab:"  << std::endl;                                      //print out Hamiltonian
 	 std::cout << Hijab.imag() << std::endl;		                                          //print out Hamiltonian
@@ -81,7 +81,7 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 	 
 	 std::cout << "Eigenvector matrix" << std::endl;
 	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
-	 */
+	 
 	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
 	 std::cout << "\nReal:"  << std::endl;                                      //print out Hamiltonian
 	 std::cout << (*eigvects).real() << std::endl;
