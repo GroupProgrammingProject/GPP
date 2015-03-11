@@ -13,8 +13,8 @@
 int main(int argc, char* argv[]){
 	// Read in the parameter values to run MD simulation
 	// The order in which they are passed is important, determined in run script
-	int nmd=atoi(argv[2]), nprint=atoi(argv[7]), maxnn=atoi(argv[10]);
-	double dt=atof(argv[3]), T=atof(argv[6]), rv=atof(argv[9]);
+	int nmd=atoi(argv[2]), nprint=atoi(argv[7]), norbs=atoi(argv[11]), maxnn=atoi(argv[12]);
+	double dt=atof(argv[3]), T=atof(argv[6]), rv=atof(argv[9]),rc=atof(argv[10]);
 	bool v=atoi(argv[8]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
 	
 	// Turn verbose mode (hamiltonian routine) on/off
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 	std::vector<bool> velspec;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4;
+	int n=posx.size();
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double Tf,m=12*1.0365e2,rc=2.6,tmd,kb=1./11603;
+	double Tf,m=12*1.0365e2,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	std::cout << norbs << "  n=" << n << std::endl;
