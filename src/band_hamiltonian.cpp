@@ -60,12 +60,11 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
   for (i=0;i<2*n;i++) {Ebs = Ebs + 2*eigvalarr.at(i).first;}       	// Fill lowest eigenstates with 2 electrons and sum energies of filled states
 
   for(i=0;i<4*n;i++){(*eigenvalaar).at(i) = eigvalarr.at(i).first;}
-
-  for(i=0;i<2*n;i++){
+  for(i=0;i<4*n;i++){
   		int ind=eigvalarr.at(i).second;
 	  for(j=0;j<4*n;j++){
-			(*eigvects)(2*i,j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
-			(*eigvects)(2*i+1,j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
+			(*eigvects)(i,j)=es.eigenvectors().row(j).col(ind).value();			//reads in eigenvectors for occupied states only
+			//	(*eigvects)(2*i+1,j)=es.eigenvectors().row(j).col(ind).value();	//twice, as each state is "doubly-occupied"
 	  }
   }
 

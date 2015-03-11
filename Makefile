@@ -18,15 +18,16 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: main relax
+all: band
 
-main: main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-main: $(HEADERS)
 
-relax: relax_main.cpp
+#main: main.cpp
+#	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+#main: $(HEADERS)
+
+band: band_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-relax: $(HEADERS)
+band: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 
