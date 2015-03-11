@@ -11,25 +11,26 @@
 #include <ctime>
 
 int main(int argc, char* argv[]){
-	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
-	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
+	// Read in the parameter values to run MD simulation
+	// The order in which they are passed is important, determined in run script
+	int nmd=atoi(argv[2]), nprint=atoi(argv[7]), maxnn=atoi(argv[10]);
+	double dt=atof(argv[3]), T=atof(argv[6]), rv=atof(argv[9]);
+	bool v=atoi(argv[8]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=0, renn;
+	bool renn;
 	int i,j;
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz;
-	bool pbc = 0, ander=0;
 	std::vector<bool> velspec;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
+	int n=posx.size(),norbs=4;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
 	// Determine maximum number of nearest neighbours
-	int maxnn=100;
 	if(n<maxnn){maxnn=n;}
 	// Matrix neighbour list
 	Eigen::MatrixXi inear(n,maxnn);
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=100,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double Tf,m=12*1.0365e2,rc=2.6,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
 	std::cout << norbs << "  n=" << n << std::endl;

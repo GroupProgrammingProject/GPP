@@ -10,7 +10,6 @@ LIBNAMES =  $(addsuffix .so, $(LIBFILES))
 
 # Directories that will be created
 LIB_DIR = ./lib
-OBJ_DIR = ./.obj
 
 #include path to eigen
 INCLUDE = $(addprefix -I , ~/Software/eigen/)
@@ -29,9 +28,9 @@ md_main: md_main.cpp
 md_main: $(HEADERS)
 
 # install, needs to run to compile shared library objects
-install: $(LIB_DIR) $(OBJ_DIR) $(LIBNAMES) 
+install: $(LIB_DIR) $(LIBNAMES) 
 
-$(LIB_DIR) $(OBJ_DIR): 
+$(LIB_DIR): 
 	mkdir -p $@
 
 %.so: %.o
@@ -41,7 +40,7 @@ $(LIB_DIR) $(OBJ_DIR):
 	$(CXX) -c $(INCLUDE) -fPIC $< 
 %.o: include/%.h
 
-#.PRECIOUS: %.o 
+.PRECIOUS: %.o 
 
 clean: 
-	rm -rf $(OBJ_DIR)
+	rm *.o *.txt

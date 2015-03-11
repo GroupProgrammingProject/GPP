@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#MODE="md_main"
+XYZ_FILE_PATH="xyzfiles/C3.xyz"
+NUM_STEPS="1000"
+DT="1"
+PBC="0"
+ENSEMBLE="0"
+T="30"
+FRAME_RATE="1"
+VERBOSE="0"
+
+#Set Default values
+# MODE and XYZ_FILE_PATH have to be set, otherwise the code will not run
+if [ -z ${MODE+x} ] || [ -z ${XYZ_FILE_PATH+x} ] || [ -z ${NUM_STEPS+x} ] || [ -z ${DT+x} ]
+then
+	RUN="0"
+	echo The variables MODE and XYZ_FILE_PATH have to be specified in the run script for the code to run
+	echo Run aborted
+else
+	RUN="1"
+fi
+
+#Set other default values
+if [ -z ${PBC+x} ]; then PBC="0"; fi
+if [ -z ${ENSEMBLE+x} ]; then ENSEMBLE="0"; fi
+if [ -z ${T+x} ]; then T="0"; fi
+if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
+if [ -z ${VERBOSE+x} ]; then VERBOSE="0"; fi
+if [ -z ${RV+x} ]; then RV="3"; fi
+if [ -z ${MAX_NEIGHBOURS+x} ]; then MAX_NEIGHBOURS="100"; fi
+
+# Execute the code if the necessary parameters have been set
+if [ $RUN -eq 1 ]
+then
+	./$MODE $XYZ_FILE_PATH $NUM_STEPS $DT $PBC $ENSEMBLE $T $FRAME_RATE $VERBOSE $RV $MAX_NEIGHBOURS
+fi
