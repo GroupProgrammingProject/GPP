@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	std::vector<bool> velspec;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
+	int n=posx.size(),norbs=4,nmd=100,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -39,10 +39,9 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=100,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603;
+	double dt=1,T=100,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,nu=0.5;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
-	std::cout << norbs << "  n=" << n << std::endl;
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
@@ -51,12 +50,14 @@ int main(int argc, char* argv[]){
 	// Calculation of initial velocities:
 	velocity(m,&vx,&vy,&vz,T);
 	//If input velocities are given, initialise them for relevant atoms
-/*	for(i=0; i<vx.size(); i++){
-		vx.at(i)=vxin.at(i);
-		vy.at(i)=vyin.at(i);
-		vz.at(i)=vzin.at(i);
+	for(i=0; i<vx.size(); i++){
+		if(velspec.at(i)==1){
+			vx.at(i)=vxin.at(i);
+			vy.at(i)=vyin.at(i);
+			vz.at(i)=vzin.at(i);
+		}
 	}
-*/	// Initialisation of reference positions:
+	// Initialisation of reference positions:
 	for(i=0;i<n;i++){
 	  refposx.at(i)=posx.at(i);
 	  refposy.at(i)=posy.at(i);
@@ -66,7 +67,7 @@ int main(int argc, char* argv[]){
 	FILE *file=fopen("movie.txt","w");
 	fprintf(file,"%d\nC3 molecule\n",n);
 	for(i=0;i<n;i++){
-	  fprintf(file,"6  %f %f %f\n",posx.at(i),posy.at(i),posz.at(i));
+	  fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(i),posy.at(i),posz.at(i),vx.at(i),vy.at(i),vz.at(i));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
@@ -80,7 +81,6 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-//		std::cout << i << std::endl;
 		if(i%100==0){
 			std::cout << i/10 << "% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
@@ -89,7 +89,6 @@ int main(int argc, char* argv[]){
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
 				 fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
-//	  std::cout << "i=" << k << "  f(x)=" << fx.at(k) << "  f(y)=" << fy.at(k) << "  f(z)" << fz.at(k) << std::endl;
 	  }
 	  if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
@@ -97,11 +96,18 @@ int main(int argc, char* argv[]){
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-	    fprintf(file,"%d\nC3 molecule\n",n);
+	    fprintf(f,"%d\nC4 molecule\n",n);
 	    for(j=0;j<n;j++){
 	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
+//	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	    }
 	  } 
+	}
+	FILE *rel=fopen("relax.xyz","w");
+	fprintf(rel,"%d\nC4 molecule\n",n);
+	//Output final positions and velocities to a .xyz file for future simulations
+	for(j=0;j<n;j++){
+		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
