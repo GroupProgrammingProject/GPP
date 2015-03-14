@@ -51,7 +51,7 @@ void genkpath(char* filename, std::vector<double>* lats, double kpt0[3], double 
   }
 }
 
-void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* kvec)
+void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXcd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* kvec, std::vector<double>* TBparam)
 { int k,i,j,l,lp,n,m,nearlabel; /* dummy indeces for cycles*/
   std::vector<double> ddnorm(3);
   double sumphinn,sumphi,derivx,derivy,derivz,dx,dy,dz,r,kr,compderx,compdery,compderz;
@@ -108,10 +108,10 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 		  
 		  for(l=0;l<norbs;l++){ /*Cycle spanning the first orbital type*/
 			 for(lp=0;lp<norbs;lp++){ /*Cycle spanning the second orbital type*/
-				gh=Gethijab(i,nearlabel,l,lp,&ddnorm); //Hamiltonian matrix element (unscaled)
-				derivx=dsrx*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,0);
-				derivy=dsry*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,1);
-				derivz=dsrz*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,2);
+				gh=Gethijab(i,nearlabel,l,lp,&ddnorm,TBparam); //Hamiltonian matrix element (unscaled)
+				derivx=dsrx*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,0,TBparam);
+				derivy=dsry*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,1,TBparam);
+				derivz=dsrz*gh+sr*kHamder(i,nearlabel,l,lp,&ddnorm,r,2,TBparam);
 
 				compderx=(*kvec).at(0)*sr*gh; //term which arises due to complex Hamiltonian
 				compdery=(*kvec).at(1)*sr*gh;
@@ -149,9 +149,15 @@ void kforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry,
 }
 
 //kHamder() returns value of Hamilatonian matrix element differentiated wrt x,y or z.
-double kHamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum){
+double kHamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum,std::vector<double>* TBparam){
   double h,V[4];//h,Es,Ep and V[4] is only used locally in kHamder()
-  V[0]=-5;V[1]=4.7;V[2]=5.5;V[3]=-1.55;//CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
+
+	V[0]=TBparam->at(0);
+	V[1]=TBparam->at(1);
+	V[2]=TBparam->at(2);
+	V[3]=TBparam->at(3);
+//	CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
+// V[0]=-5;V[1]=4.7;V[2]=5.5;V[3]=-1.55;
   
   int vconum[3]; //array to hold label of x,y,z. Only the coord we are differentiating wrt is non-zero.
   vconum[0]=0;

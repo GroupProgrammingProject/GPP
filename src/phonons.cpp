@@ -1,6 +1,6 @@
 #include "../include/phonons.h"
 
-void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigfreq){
+void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigfreq, std::vector<double>* TBparam){
 
 	bool v=0;
 	int i,j,l,J;						//J is index of atom to be displaced
@@ -16,8 +16,9 @@ void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::
 	Eigen::MatrixXd fr(3*n,3*n), fl(3*n,3*n);
 	Eigen::MatrixXd dynamicmat(3*n,3*n);
 
- 	ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
-	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz);//recalculate forces
+ 	ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+	//recalculate forces
+	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz,TBparam);
 /*	
 std::cout << "forces of (hopefully) equilibrium structure:" << std::endl;
 for(i=0;i<n;i++){
@@ -98,8 +99,9 @@ std::cout << "rz" << std:: endl << rz << std::endl;
 std::cout << "modr" << std:: endl << modr << std::endl;
 */
 				// Update eigenvectors and forces for new distances
-		 		ebs=Hamiltonian(n,modr,rx,ry,rz,eigvects,v);
-				forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz);//recalculate forces
+		 		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+				//recalculate forces
+				forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz,TBparam);
 /*	
 std::cout << "new forces:" << std::endl;
 for(i=0;i<n;i++){

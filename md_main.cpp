@@ -43,7 +43,18 @@ int main(int argc, char* argv[]){
 	double Tf,m=12*1.0365e2,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
-	std::cout << norbs << "  n=" << n << std::endl;
+//	std::cout << norbs << "  n=" << n << std::endl;
+
+	std::vector<double> TBparam(6);
+	// In final version, TB params will be read in from input file
+	TBparam[0]=-2.99;		// E_s
+	TBparam[1]=3.71;		// E_p
+	TBparam[2]=-5;			// V_ss_sigma
+	TBparam[3]=4.7;		//	V_sp_sigma
+	TBparam[4]=5.5;		// V_pp_sigma
+	TBparam[5]=-1.55;		// V_pp_pi
+
+	//Matrix for eigenvectors
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
@@ -63,7 +74,7 @@ int main(int argc, char* argv[]){
 	  fprintf(file,"6  %f %f %f\n",posx.at(i),posy.at(i),posz.at(i));
 	}
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);	
 	ekin=3*(n-1)*kb*T/2;
@@ -74,8 +85,8 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=0; i<nmd; i++){
-	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc);
+	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,&TBparam);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
 			fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
@@ -93,7 +104,7 @@ int main(int argc, char* argv[]){
 	  } 
 	}
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
 	//H_MD and eigvects have now also been populated
 	erep=Erep(&modr);
 	etot=ebs+erep+ekin;

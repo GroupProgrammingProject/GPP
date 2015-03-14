@@ -43,11 +43,11 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd modr(n,n), rx(n,n), ry(n,n), rz(n,n);
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create data structures for energy calculations 
-	Eigen::MatrixXd eigvects(4*n,4*n);
+	Eigen::MatrixXd eigvects(n*norbs,n*norbs);
 	double ebs=0,erep=0,etot=0;
 	if(kpts==0){
-		Eigen::MatrixXd eigvects(4*n,4*n);						//real matrix
-		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+		Eigen::MatrixXd eigvects(n*norbs,n*norbs);						//real matrix
+		ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
 		erep=Erep(&modr);
 		etot=ebs+erep;
 		std::cout << "Ebs = " << ebs/(double)n << std::endl;
@@ -55,8 +55,8 @@ int main(int argc, char* argv[]){
 		std::cout << "Etot = " << etot/(double)n << std::endl;
 	}
 	else if(kpts==1){
-		Eigen::MatrixXcd eigvects(4*n,4*n);					//complex matrix
-		std::vector<double> eigenvalaar (4*n);
+		Eigen::MatrixXcd eigvects(n*norbs,n*norbs);					//complex matrix
+		std::vector<double> eigenvalaar (n*norbs);
 		std::vector<std::vector<double> > kpoints; 
 		readinkpoints(argv[2],&kpoints);
 		int ktot = kpoints.size();
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]){
 		int j = 0;
 		for (int i=0;i<ktot;i++) {
 			kvec = kpoints.at(i);
-			ebs=ebs+(1.0/(double)ktot)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
+			ebs=ebs+(1.0/(double)ktot)*band_Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 			j++;
 		}
 		erep=Erep(&modr);

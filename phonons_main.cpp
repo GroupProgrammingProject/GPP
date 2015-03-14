@@ -40,19 +40,29 @@ int main(int argc, char* argv[]){
 	// Calculate distances
 	Eigen::MatrixXd modr(n,n), rx(n,n), ry(n,n), rz(n,n);
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
-	// Create empty arrays needed for MD
+	//TB parameters
+	std::vector<double> TBparam(6);
+	// In final version, TB params will be read in from input file
+	TBparam[0]=-2.99;		// E_s
+	TBparam[1]=3.71;		// E_p
+	TBparam[2]=-5;			// V_ss_sigma
+	TBparam[3]=4.7;		//	V_sp_sigma
+	TBparam[4]=5.5;		// V_pp_sigma
+	TBparam[5]=-1.55;		// V_pp_pi
+
+// Create empty arrays needed for MD
 	Eigen::MatrixXd eigvects(4*n,4*n);
 	// Energies from TB model
 	double ebs,erep,etot,ekin;
 	// Calculation of nearest neighbours:
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
 
 	//Steepest descent relaxation routine
 	std::cout << "Relaxing input structure..." << std::endl;
 	do{
-		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
+		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
 		for(i=0; i<n; i++){
 			posx.at(i)=posx.at(i)+gam*h*fx.at(i);
 			posy.at(i)=posy.at(i)+gam*h*fy.at(i);
@@ -62,7 +72,7 @@ int main(int argc, char* argv[]){
 		fmax=*std::max_element(fmag.begin(),fmag.end()); //find largest elemen of fmag
 		GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 		NearestNeighbours(&inear,&nnear,&modr,rv);
-		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+		ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
 		count=count+1;
 	}while(fmax>1e-8 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
 
@@ -76,7 +86,7 @@ int main(int argc, char* argv[]){
 	//Calculate normal modes
 	std::cout << "Calculating normal modes..." << std::endl;
 	std::vector<double> eigfreq(3*n);
-	normalmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq);
+	normalmodes(n,norbs,rc,m,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&eigfreq,&TBparam);
 	std::sort (eigfreq.begin(), eigfreq.end());
 	std::reverse (eigfreq.begin(), eigfreq.end());
 	FILE *file_freq=fopen("vibrational_frequencies.dat","w");

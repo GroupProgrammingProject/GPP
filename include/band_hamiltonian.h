@@ -10,7 +10,7 @@
 #include "Gethijab.h"
 #include "functions.h"
 
-double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXcd* eigvects,std::vector<double>* eigenvalaar, std::vector<double>* k, bool verbose);
+double band_Hamiltonian(int n,int norbs,std::vector<double>* TBparam,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::MatrixXd* ry,Eigen::MatrixXd* rz,Eigen::MatrixXcd* eigvects,std::vector<double>* eigenvalaar, std::vector<double>* k, bool verbose);
 double dot(std::vector<double>* a, std::vector<double>* b);
 
 #endif
