@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	std::vector<bool> velspec;
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=100,nprint=1;
+	int n=posx.size(),norbs=4,nmd=10,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -81,8 +81,8 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-		if(i%100==0){
-			std::cout << i/10 << "% completed" << std::endl;}
+		if(i*100%nmd==0){
+			std::cout << i*100/nmd << "% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
@@ -96,10 +96,9 @@ int main(int argc, char* argv[]){
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-	    fprintf(f,"%d\nC4 molecule\n",n);
+	    fprintf(file,"%d\nC4 molecule\n",n);
 	    for(j=0;j<n;j++){
-	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
-//	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
+	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	    }
 	  } 
 	}
