@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "Eigen/Dense"
-#include "include/readinxyz.h"
+#include "include/readinxyzv.h"
 #include "include/vectorfunctions.h"
 #include "include/hamiltonian.h"
 #include "include/functions.h"
@@ -22,9 +22,9 @@ int main(int argc, char* argv[]){
 	int i,j;
 	std::vector<double> lats(3);
 	// Read in types, 
-	std::vector<double> posx, posy, posz;
-	std::vector<bool> velspec;
-	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
+	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
+	std::vector<bool> velbool;
+	ReadInXYZV (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc, &velbool);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size();
 	// Velocities, reference postions, and vector neighbour list
@@ -43,7 +43,6 @@ int main(int argc, char* argv[]){
 	double Tf,m=12*1.0365e2,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
-//	std::cout << norbs << "  n=" << n << std::endl;
 
 	std::vector<double> TBparam(6);
 	// In final version, TB params will be read in from input file
@@ -62,6 +61,14 @@ int main(int argc, char* argv[]){
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
 	velocity(m,&vx,&vy,&vz,T);
+	//If input velocities are specified, initialise them for relevant atoms
+	for(i=0; i<n; i++){
+		if(velbool.at(i)==1){
+			vx.at(i)=vxin.at(i);
+			vy.at(i)=vyin.at(i);
+			vz.at(i)=vzin.at(i);
+		}
+	}
 	// Initialisation of reference positions:
 	for(i=0;i<n;i++){
 	  refposx.at(i)=posx.at(i);
@@ -71,7 +78,7 @@ int main(int argc, char* argv[]){
 	FILE *file=fopen("movie.txt","w");
 	fprintf(file,"%d\nC3 molecule\n",n);
 	for(i=0;i<n;i++){
-	  fprintf(file,"6  %f %f %f\n",posx.at(i),posy.at(i),posz.at(i));
+	  fprintf(file,"6  %f %f %f %f %f %f \n",posx.at(i),posy.at(i),posz.at(i),vx.at(i),vy.at(i),vz.at(i));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
@@ -99,9 +106,15 @@ int main(int argc, char* argv[]){
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
 	    fprintf(file,"%d\nC3 molecule\n",n);
 	    for(j=0;j<n;j++){
-	      fprintf(file,"6  %f %f %f\n",posx.at(j),posy.at(j),posz.at(j));
+	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	    }
 	  } 
+	}
+	//Output final positions and velocities to a .xyz file for future simulations
+	FILE *rel=fopen("final.xyz","w");
+	fprintf(rel,"%d\nC3 molecule\n",n);
+	for(j=0;j<n;j++){
+		fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
