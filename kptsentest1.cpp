@@ -18,12 +18,12 @@ int main(int argc, char* argv[]){
 	if (argc!=3){std::cout<<"You should append one xyz and one .kpts file to the main!!"<<std::endl;}
 	
 	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=0;
+	bool v=1;
 	std::vector<double> posx, posy, posz;
 	std::vector<double> lats(3);
 	bool pbc = 1;
 	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
-	//scramble(&posx, &posy, &posz);
+	scramble(&posx, &posy, &posz);
 	// Number of atoms
 	int n=posx.size();
 	//std::cout << "n = " <<n <<std::endl;
@@ -67,25 +67,6 @@ int main(int argc, char* argv[]){
 	  ebstemp=band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 	  ebs = ebs + ebstemp;
 	  std::cout << "Ebs = " << ebstemp << std::endl;
-
-	  // Print c vector
-	  //std::cout << "cvectors = \n" << eigvects << std::endl;
-	  kforces(n,4,rc, &rx, &ry, &rz, &modr, &eigvects, &nnear, &inear, &fxtemp, &fytemp, &fztemp, &kvec);
-
-	  // Print real c vector
-	  //std::cout << "\nreal cvector = \n" << eigvects.real() << std::endl;
-
-	  // Output forces from each kpoint calculation
-	  std::cout << "\n Forces " << std::endl;
-	  for (int l=0;l<n;l++) {
-		 std::cout << l << " " << fxtemp.at(l) << " " << fytemp.at(l) << " " << fztemp.at(l) << std::endl;
-	  }
-	  // Add forces from different kpoints
-	  for (int l=0;l<n;l++) {
-		 fx.at(l) = fx.at(l) + (1/(double)ktot)*fxtemp.at(l);
-		 fy.at(l) = fy.at(l) + (1/(double)ktot)*fytemp.at(l);
-		 fz.at(l) = fz.at(l) + (1/(double)ktot)*fztemp.at(l);
-	  }
 	}
 
 	erep=Erep(&modr);
@@ -94,23 +75,6 @@ int main(int argc, char* argv[]){
 	//std::cout << "Erep = " << erep << std::endl;
 	etot=ebs/(double)ktot+erep;
 	std::cout << "Etot per atom = " << etot/((double)n) << std::endl;
-
-	for (int i=0;i<n;i++) {
-	  fmag.at(i) = sqrt(pow(fx.at(i),2) + pow(fy.at(i),2) + pow(fz.at(i),2));
-	}		
-
-	std::cout << "\n Forces " << std::endl;
-	for (int i=0;i<n;i++) {
-	  std::cout << i << " " << fx.at(i) << " " << fy.at(i) << " " << fz.at(i) << " " << fmag.at(i) << std::endl;
-	}	
-
-	eigvectsr = eigvects.real();
-	forces(n,4,rc, &rx, &ry, &rz, &modr, &eigvectsr, &nnear, &inear, &fxtemp, &fytemp, &fztemp);
-
-	std::cout << "\n Regular Forces " << std::endl;
-	for (int i=0;i<n;i++) {
-	  std::cout << i << " " << fxtemp.at(i) << " " << fytemp.at(i) << " " << fztemp.at(i) << " " << fmag.at(i) << std::endl;
-	  }
 
 	return 0;
 }

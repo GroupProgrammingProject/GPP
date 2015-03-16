@@ -3,7 +3,7 @@ CXXFLAGS=
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = phonons kpointsfunctions MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions 
+LIBFILES = phonons kpointsfunctions MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions readeigenmatrix
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
@@ -18,7 +18,7 @@ RPATH = -Wl,-rpath=./lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: phonons relax kpoints_energy
+all: phonons relax kpoints_energy kptsentest1 kptsentest2
 
 phonons: phonon_main.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
@@ -31,6 +31,14 @@ relax: $(HEADERS)
 kpoints_energy: kpoints_energy.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 kpoints_energy: $(HEADERS)
+
+kptsentest1: kptsentest1.cpp
+	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+kptsentest1: $(HEADERS)
+
+kptsentest2: kptsentest2.cpp
+	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+kptsentest2: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIBNAMES) 

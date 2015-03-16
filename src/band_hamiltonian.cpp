@@ -83,9 +83,9 @@ double band_Hamiltonian(int n,Eigen::MatrixXd* modr, Eigen::MatrixXd* rx,Eigen::
 	 std::cout << es.eigenvectors() << std::endl;									         //untouched eigenvector matrix
 	 
 	 std::cout << "Eigenvectors after sorting and filling only occupied states:" << std::endl;
-	 std::cout << "\nReal:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << "\nReal eigenvectors:"  << std::endl;                                      //print out Hamiltonian
 	 std::cout << (*eigvects).real() << std::endl;
-	 std::cout << "\nImaginary Hijab:"  << std::endl;                                      //print out Hamiltonian
+	 std::cout << "\nImaginary eigenvectors:"  << std::endl;                                      //print out Hamiltonian
 	 std::cout << (*eigvects).imag() << std::endl;
   } // End of verbose mode
 
