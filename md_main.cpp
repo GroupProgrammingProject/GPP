@@ -84,7 +84,6 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=0; i<nmd; i++){
-	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander,&TBparam);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
@@ -101,12 +100,15 @@ int main(int argc, char* argv[]){
 	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	    }
 	  } 
+	  if(i*10%nmd==0){
+	    std::cout << i*10/nmd << "0 % completed" << std::endl;
+	  }
 	}
 	//Output final positions and velocities to a .xyz file for future simulations
 	FILE *rel=fopen("final.xyz","w");
 	fprintf(rel,"%d\nC3 molecule\n",n);
 	for(j=0;j<n;j++){
-		fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
+		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);

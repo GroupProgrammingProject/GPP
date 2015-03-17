@@ -7,13 +7,13 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   std::vector<double> fx(N),fy(N),fz(N),fxn(N),fyn(N),fzn(N);
   Ran ran(time(0)+clock());
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fx,&fy,&fz,TBparam); //calculate the forces
-  for(int i=0; i<N; i++)
-    {
-      (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt+0.5*fx.at(i)*dt*dt/m;
-      (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
-      (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
-    }
+  for(int i=0; i<N; i++){
+    (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt+0.5*fx.at(i)*dt*dt/m;
+    (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
+    (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
+  }
   renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
+  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
   if(renn==1){
     GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
     NearestNeighbours(inear,nnear,modr,rv);
@@ -22,26 +22,28 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     for(int i=0;i<N;i++){
       for(int j=0;j<(*nnear).at(i);j++){
 	nearlabel=(*inear)(i,j);
-	(*rx)(i,nearlabel)=(*x).at(i)-(*x).at(nearlabel);
-	if((*rx)(i,nearlabel)>(*lats).at(0)/2){
-	  (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
-	}
-	if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
-	  (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
-	}
+	(*rx)(i,nearlabel)=(*x).at(i)-(*x).at(nearlabel);	
 	(*ry)(i,nearlabel)=(*y).at(i)-(*y).at(nearlabel);
-	if((*ry)(i,nearlabel)>(*lats).at(1)/2){
-	  (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
-	}
-	if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
-	  (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
-	}
 	(*rz)(i,nearlabel)=(*z).at(i)-(*z).at(nearlabel);
-	if((*rz)(i,nearlabel)>(*lats).at(2)/2){
-	  (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
-	}
-	if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
-	  (*rz)(i,nearlabel)=(*rz)(i,nearlabel)+(*lats).at(2);
+	if(pbc==1){
+	  if((*rx)(i,nearlabel)>(*lats).at(0)/2){
+	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
+	  }
+	  else if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
+	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
+	  }
+	  if((*ry)(i,nearlabel)>(*lats).at(1)/2){
+	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
+	  }
+	  else if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
+	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
+	  }
+	  if((*rz)(i,nearlabel)>(*lats).at(2)/2){
+	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
+	  }
+	  else if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
+	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)+(*lats).at(2);
+	  }
 	}
 	(*modr)(i,nearlabel)=sqrt((*rx)(i,nearlabel)*(*rx)(i,nearlabel)+(*ry)(i,nearlabel)*(*ry)(i,nearlabel)+(*rz)(i,nearlabel)*(*rz)(i,nearlabel));
       }
@@ -59,19 +61,16 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
 	(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
 	(*vy).at(i)=Gauss(0,sigma)/m;
 	(*vz).at(i)=Gauss(0,sigma)/m;
+	vxm=vxm+(*vx).at(i);
+	vym=vym+(*vy).at(i);
+	vzm=vzm+(*vz).at(i);
       }
-      vxm=vxm+(*vx).at(i);
-      vym=vym+(*vy).at(i);
-      vzm=vzm+(*vz).at(i);
     }
-  vxm=vxm/N;
-  vym=vym/N;
-  vzm=vzm/N;
   for(int i=0; i<N; i++)//mean square velocities
     {
-      (*vx).at(i)=(*vx).at(i)-vxm;
-      (*vy).at(i)=(*vy).at(i)-vym;
-      (*vz).at(i)=(*vz).at(i)-vzm;
+      (*vx).at(i)=(*vx).at(i)-vxm/N;
+      (*vy).at(i)=(*vy).at(i)-vym/N;
+      (*vz).at(i)=(*vz).at(i)-vzm/N;
       svxm=svxm+(*vx).at(i)*(*vx).at(i);
       svym=svym+(*vy).at(i)*(*vy).at(i);
       svzm=svzm+(*vz).at(i)*(*vz).at(i);
@@ -197,10 +196,10 @@ void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::v
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum,std::vector<double>* TBparam){
   int k; //for looping
   double h,V[4];//h,Es,Ep and V[4] is only used locally in Gethijab_der()
-	V[0]=TBparam->at(0);
-	V[1]=TBparam->at(1);
-	V[2]=TBparam->at(2);
-	V[3]=TBparam->at(3);
+	V[0]=TBparam->at(2);
+	V[1]=TBparam->at(3);
+	V[2]=TBparam->at(4);
+	V[3]=TBparam->at(5);
 //	CC interaction 0=ss_sigma, 1=sp_sigma, 2=pp_sigma, 3=pp_pi
 // V[0]=-5;V[1]=4.7;V[2]=5.5;V[3]=-1.55;
   
@@ -224,21 +223,22 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 } //Hamder() ends
 
 //GeomOpt performs geometrical optimization of a struvture via simulated annealing followed by steepest descent. 
-int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam){
+int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam, double tol,int maxsteep){
   int n=(*posx).size();
   // Turn verbose mode (hamiltonian routine) on/off
   bool v=0, renn=0, ander=1;
-  int i,j,nearlabel;
+  int i,j,nearlabel,nsteep;
   double Tin=T,Tf,tmd,kb=1./11603;
   std::vector<double> vx(n), vy(n), vz(n), fx(n), fy(n), fz(n);
   // Energies from TB model and fmax
-  double ebs,erep,etot,ekin,fmax;;
+  double ebs,erep,etot,ekin,fmax;
   // Calculation of initial velocities:
   velocity(m,&vx,&vy,&vz,T);
   FILE *file=fopen("movie_relax.txt","w");
   FILE *en=fopen("energy_relax.txt","w");
+  FILE *file2=fopen("forces_relax.txt","w");
   if(verb==1){
-    fprintf(file,"%d\nC3 molecule\n",n);
+    fprintf(file,"%d\nIteration %d\n",n,i);
     for(i=0;i<n;i++){
       fprintf(file,"6  %f %f %f\n",(*posx).at(i),(*posy).at(i),(*posz).at(i));
     }
@@ -265,12 +265,13 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       etot=ebs+erep+ekin;
       tmd=i*dt;
       fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-      fprintf(file,"%d\nC3 molecule\n",n);
+      fprintf(file,"%d\nIteration %d\n",n,i);
       for(j=0;j<n;j++){
 	fprintf(file,"6  %f %f %f\n",(*posx).at(j),(*posy).at(j),(*posz).at(j));
       }
     } 
   }
+  forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
   //Initialisation of maximum value of forces//
   fmax=0;
   for(j=0;j<n;j++){
@@ -278,10 +279,10 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
     if(fabs(fy.at(j))>fmax){fmax=fabs(fy.at(j));}
     if(fabs(fz.at(j))>fmax){fmax=fabs(fz.at(j));}
   }
-  i=0;
+  nsteep=0;
   std::cout << "Starting steepest descent..." << endl;
   //Steepest descent cycle
-  while(fmax>1e-6 && i<10000){
+  while(fmax>tol && nsteep<maxsteep){
     renn=RecalculateNearestNeighbours(refposx,refposy,refposz,posx,posy,posz,rc,rv); 
     if(renn==1){
       GetDistances(modr,rx,ry,rz,posx,posy,posz,lats,rv,pbc);
@@ -292,25 +293,27 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
 	for(j=0;j<(*nnear).at(i);j++){
 	  nearlabel=(*inear)(i,j);
 	  (*rx)(i,nearlabel)=(*posx).at(i)-(*posx).at(nearlabel);
-	  if((*rx)(i,nearlabel)>(*lats).at(0)/2){
-	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
-	  }
-	  if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
-	    (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
-	  }
 	  (*ry)(i,nearlabel)=(*posy).at(i)-(*posy).at(nearlabel);
-	  if((*ry)(i,nearlabel)>(*lats).at(1)/2){
-	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
-	  }
-	  if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
-	    (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
-	  }
 	  (*rz)(i,nearlabel)=(*posz).at(i)-(*posz).at(nearlabel);
-	  if((*rz)(i,nearlabel)>(*lats).at(2)/2){
-	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
-	  }
-	  if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
+	  if(pbc==1){
+	    if((*rx)(i,nearlabel)>(*lats).at(0)/2){
+	      (*rx)(i,nearlabel)=(*rx)(i,nearlabel)-(*lats).at(0);
+	    }
+	    if((*rx)(i,nearlabel)<-(*lats).at(0)/2){
+	      (*rx)(i,nearlabel)=(*rx)(i,nearlabel)+(*lats).at(0);
+	    }
+	    if((*ry)(i,nearlabel)>(*lats).at(1)/2){
+	      (*ry)(i,nearlabel)=(*ry)(i,nearlabel)-(*lats).at(1);
+	    }
+	    if((*ry)(i,nearlabel)<-(*lats).at(1)/2){
+	      (*ry)(i,nearlabel)=(*ry)(i,nearlabel)+(*lats).at(1);
+	    }
+	    if((*rz)(i,nearlabel)>(*lats).at(2)/2){
+	      (*rz)(i,nearlabel)=(*rz)(i,nearlabel)-(*lats).at(2);
+	    }
+	    if((*rz)(i,nearlabel)<-(*lats).at(2)/2){
 	    (*rz)(i,nearlabel)=(*rz)(i,nearlabel)+(*lats).at(2);
+	    }
 	  }
 	  (*modr)(i,nearlabel)=sqrt((*rx)(i,nearlabel)*(*rx)(i,nearlabel)+(*ry)(i,nearlabel)*(*ry)(i,nearlabel)+(*rz)(i,nearlabel)*(*rz)(i,nearlabel));
 	}
@@ -326,12 +329,13 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       (*posy).at(j)=(*posy).at(j)+h*fy.at(j);
       (*posz).at(j)=(*posz).at(j)+h*fz.at(j);
     }
-    i++;
+    nsteep++;
   }
   if(verb==1){	
-    fprintf(file,"%d\nC3 molecule\n",n);
+    fprintf(file,"%d\nIteration %d\n",n,i);
     for(j=0;j<n;j++){
       fprintf(file,"6  %f %f %f\n",(*posx).at(j),(*posy).at(j),(*posz).at(j));
+      fprintf(file2,"6 %.10f %.10f %.10f \n",fx.at(j),fy.at(j),fz.at(j));
     }
     erep=Erep(modr);
     etot=ebs+erep;
