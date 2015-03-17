@@ -120,7 +120,5 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-	std::cout << lats.at(0) << " " << lats.at(1) << " " << lats.at(2) << std::endl;
-
-return 0;
+	return 0;
 }

@@ -15,10 +15,10 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
 	 }
   if(pbc==1){pbcshift(x,y,z,lats);} //If PBCs are active, put all atoms in unit cell 
   renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);
-	if(renn==1){
+  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
+  if(renn==1){
     NearestNeighbours(inear,nnear,modr,rv);
   }
-  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
   ebs=Hamiltonian(N,modr,rx,ry,rz,c,v);
   forces(N,norbs,rc,rx,ry,rz,modr,c,nnear,inear,&fxn,&fyn,&fzn);//recalculate forces
   for(int i=0; i<N; i++)//calculate new velocities
@@ -179,7 +179,5 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
     else if(b==0){h=-V[1]*(vconum[a-1]-(*d).at(a-1)*(*d).at(conum))/distr;}//sp_sigma column
   }
   else {h=(V[2]-V[3])*(vconum[a-1]*(*d).at(b-1)+vconum[b-1]*(*d).at(a-1)-2*(*d).at(a-1)*(*d).at(b-1)*(*d).at(conum))/distr;}//pp_sigma and pp_pi off-diagonal
-
-  //V&G routine ends
   return h;
 } //Hamder() ends
