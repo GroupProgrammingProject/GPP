@@ -51,7 +51,8 @@ int main(int argc, char* argv[]){
 	// Calculation of initial velocities:
 	velocity(m,&vx,&vy,&vz,T);
 	//If input velocities are given, initialise them for relevant atoms
-	for(i=0; i<vx.size(); i++){
+	for(i=0; i<n; i++){
+		std::cout << posx.at(i) << " " << posy.at(i) << " " << posz.at(i) << std::endl;
 		if(velspec.at(i)==1){
 			vx.at(i)=vxin.at(i);
 			vy.at(i)=vyin.at(i);
@@ -83,8 +84,21 @@ int main(int argc, char* argv[]){
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
 		if(i*10%nmd==0){
-			std::cout << i*10/nmd << "% completed" << std::endl;}
-	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
+			std::cout << i*10/nmd << "0% completed" << std::endl;}
+		for(j=0;j<n;j++){
+			posx.at(j)=posx.at(j)+vx.at(j)*dt;
+			if(posx.at(j)>=lats.at(0)){posx.at(j)=posx.at(j)-lats.at(0);}
+			else if(posx.at(j)<=-lats.at(0)){posx.at(j)=posx.at(j)+lats.at(0);}
+			
+			posy.at(j)=posy.at(j)+vy.at(j)*dt;
+			if(posy.at(j)>lats.at(1)){posy.at(j)=posy.at(j)-lats.at(1);}
+			else if(posy.at(j)<-lats.at(1)){posy.at(j)=posy.at(j)+lats.at(1);}
+			
+			posz.at(j)=posz.at(j)+vz.at(j)*dt;
+			if(posz.at(j)>lats.at(2)){posz.at(j)=posz.at(j)-lats.at(2);}
+			else if(posz.at(j)<-lats.at(2)){posy.at(j)=posz.at(j)+lats.at(2);}
+		}
+/*	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
 	  ekin=3*(n-1)*kb*Tf/2;
@@ -97,14 +111,12 @@ int main(int argc, char* argv[]){
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-		if(pbc==1){fprintf(file,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
-		else{fprintf(file,"%d\nC%d.xyz\n",n,n);}
-//	    fprintf(file,"%d\nC4 molecule\n",n);
+*/	    fprintf(file,"%d\nC4 molecule\n",n);
 	    for(j=0;j<n;j++){
 	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	    }
 	  } 
-	}
+//	}
 	FILE *rel=fopen("relax.xyz","w");
 	if(pbc==1){fprintf(rel,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
 	else{fprintf(rel,"%d\nC%d.xyz\n",n,n);}
@@ -121,7 +133,6 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-	std::cout << lats.at(0) << " " << lats.at(1) << " " << lats.at(2) << std::endl;
 
 return 0;
 }

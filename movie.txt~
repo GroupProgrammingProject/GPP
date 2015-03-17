@@ -1,0 +1,6006 @@
+4
+C3 molecule
+6  0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+6  2.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+6  1.000000 1.000000 0.000000 0.000000 0.000000 0.000000
+6  0.000000 -4.000000 0.000000 0.000000 0.200000 0.000000
+4
+C4 molecule
+6  -0.000977 0.000982 0.000000 -0.001940 -0.048043 -0.000000
+6  2.000977 0.000982 0.000000 0.001940 -0.048043 0.000000
+6  1.000000 0.998036 -0.000000 0.000000 -0.053914 0.000000
+6  0.000000 -3.800000 0.000000 0.000000 0.150000 0.000000
+4
+C4 molecule
+6  -0.003879 -0.046086 -0.000000 -0.003821 -0.046115 -0.000000
+6  2.003879 -0.046086 0.000000 0.003821 -0.046115 -0.000000
+6  1.000000 0.942172 0.000000 0.000000 -0.057770 0.000000
+6  0.000000 -3.650000 0.000000 0.000000 0.150000 0.000000
+4
+C4 molecule
+6  -0.008620 -0.091248 -0.000000 -0.005594 -0.044246 -0.000000
+6  2.008620 -0.091248 -0.000000 0.005594 -0.044246 -0.000000
+6  1.000000 0.882495 0.000000 0.000000 -0.061509 0.000000
+6  0.000000 -3.500000 0.000000 0.000000 0.150000 0.000000
+4
+C4 molecule
+6  -0.015067 -0.134577 -0.000000 -0.007222 -0.042467 -0.000000
+6  2.015067 -0.134577 -0.000000 0.007222 -0.042467 0.000000
+6  1.000000 0.819155 0.000000 0.000000 -0.065065 0.000000
+6  0.000000 -3.350000 0.000000 0.000000 0.150000 -0.000000
+4
+C4 molecule
+6  -0.023064 -0.176183 -0.000000 -0.008693 -0.040815 -0.000000
+6  2.023064 -0.176183 0.000000 0.008693 -0.040815 0.000000
+6  1.000000 0.752365 0.000000 0.000000 -0.068370 0.000000
+6  0.000000 -3.200000 0.000000 0.000000 0.150000 -0.000000
+4
+C4 molecule
+6  -0.032452 -0.216207 -0.000000 -0.010021 -0.039324 -0.000000
+6  2.032452 -0.216207 0.000000 0.010021 -0.039324 0.000000
+6  1.000000 0.682415 0.000000 0.000000 -0.071353 0.000000
+6  0.000000 -3.050000 -0.000000 0.000000 0.150000 -0.000000
+4
+C4 molecule
+6  -0.043105 -0.254830 -0.000000 -0.011251 -0.038027 -0.000000
+6  2.043105 -0.254830 0.000000 0.011251 -0.038027 0.000000
+6  1.000000 0.609660 0.000000 0.000000 -0.073946 0.000000
+6  0.000000 -2.900000 -0.000000 0.000000 0.150000 -0.000000
+4
+C4 molecule
+6  -0.054955 -0.292261 -0.000000 -0.012458 -0.036972 -0.000000
+6  2.054955 -0.292261 0.000000 0.012456 -0.036952 0.000000
+6  1.000000 0.534523 0.000000 0.000002 -0.076095 0.000000
+6  0.000000 -2.750000 -0.000000 -0.000000 0.150019 0.000000
+4
+C4 molecule
+6  -0.068022 -0.328775 -0.000000 -0.013929 -0.036689 -0.000000
+6  2.068018 -0.328734 0.000000 0.013823 -0.036085 0.000000
+6  1.000004 0.457471 0.000000 0.000104 -0.077793 0.000000
+6  -0.000000 -2.599961 0.000000 0.000002 0.150567 -0.000000
+4
+C4 molecule
+6  -0.082813 -0.365640 -0.000000 -0.016477 -0.038626 -0.000000
+6  2.082601 -0.364432 0.000000 0.015720 -0.035299 0.000000
+6  1.000207 0.378938 0.000000 0.000730 -0.079161 -0.000000
+6  0.000004 -2.448866 -0.000000 0.000027 0.153087 0.000000
+4
+C4 molecule
+6  -0.100976 -0.406027 -0.000000 -0.019983 -0.042436 -0.000000
+6  2.099459 -0.399333 0.000000 0.018006 -0.034540 0.000000
+6  1.001464 0.299148 0.000000 0.001941 -0.080240 -0.000000
+6  0.000053 -2.293788 0.000000 0.000036 0.157216 0.000000
+4
+C4 molecule
+6  -0.122780 -0.450512 -0.000000 -0.023038 -0.046313 -0.000000
+6  2.118614 -0.433512 0.000000 0.020268 -0.033936 0.000000
+6  1.004090 0.218458 -0.000000 0.002965 -0.080813 -0.000000
+6  0.000076 -2.134434 0.000000 -0.000196 0.161063 0.000000
+4
+C4 molecule
+6  -0.147052 -0.498653 -0.000000 -0.024716 -0.049516 0.000000
+6  2.139995 -0.467205 0.000000 0.022626 -0.033638 -0.000000
+6  1.007395 0.137521 -0.000000 0.003034 -0.080614 0.000000
+6  -0.000338 -1.971662 0.000000 -0.000944 0.163767 -0.000000
+4
+C4 molecule
+6  -0.172212 -0.549544 -0.000000 -0.025373 -0.049099 0.000000
+6  2.163865 -0.500787 -0.000000 0.025561 -0.033757 -0.000000
+6  1.010158 0.057230 0.000000 0.002105 -0.078908 0.000000
+6  -0.001811 -1.806899 -0.000000 -0.002294 0.161764 -0.000000
+4
+C4 molecule
+6  -0.197797 -0.596852 0.000000 -0.027850 -0.034629 0.000000
+6  2.191118 -0.534718 -0.000000 0.028951 -0.033981 -0.000000
+6  1.011605 -0.020296 0.000000 0.002384 -0.073994 0.000000
+6  -0.004926 -1.648134 -0.000000 -0.003485 0.142604 -0.000000
+4
+C4 molecule
+6  -0.227912 -0.618801 0.000000 -0.035941 0.004585 0.000000
+6  2.221767 -0.568750 -0.000000 0.031911 -0.033896 -0.000000
+6  1.014926 -0.090757 0.000000 0.005543 -0.065934 0.000000
+6  -0.008781 -1.521692 -0.000000 -0.001514 0.095245 -0.000000
+4
+C4 molecule
+6  -0.269678 -0.587682 0.000000 -0.049131 0.056614 0.000000
+6  2.254939 -0.602511 -0.000000 0.033875 -0.033450 -0.000000
+6  1.022692 -0.152164 0.000000 0.010964 -0.057197 0.000000
+6  -0.007953 -1.457643 -0.000000 0.004292 0.034034 -0.000000
+4
+C4 molecule
+6  -0.326174 -0.505574 0.000000 -0.064642 0.101386 0.000000
+6  2.289517 -0.635651 -0.000000 0.034962 -0.032760 -0.000000
+6  1.036854 -0.205150 0.000000 0.019329 -0.048689 0.000000
+6  -0.000197 -1.453625 -0.000000 0.010351 -0.019937 -0.000000
+4
+C4 molecule
+6  -0.398963 -0.384910 0.000000 -0.076520 0.127234 0.000000
+6  2.324863 -0.668031 -0.000000 0.036312 -0.032302 0.000000
+6  1.061351 -0.249542 0.000000 0.027495 -0.041612 -0.000000
+6  0.012749 -1.497517 -0.000000 0.012713 -0.053321 -0.000000
+4
+C4 molecule
+6  -0.479213 -0.251106 0.000000 -0.081035 0.134696 0.000000
+6  2.362140 -0.700255 -0.000000 0.037721 -0.032004 0.000000
+6  1.091843 -0.288373 0.000000 0.032065 -0.037621 -0.000000
+6  0.025229 -1.560266 -0.000000 0.011248 -0.065071 -0.000000
+4
+C4 molecule
+6  -0.561032 -0.115519 0.000000 -nan -nan -nan
+6  2.400305 -0.732039 -0.000000 -nan -nan -nan
+6  1.125481 -0.324784 0.000000 -nan -nan -nan
+6  0.035246 -1.627658 -0.000000 -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+4
+C4 molecule
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan
+6  -nan -nan -nan -nan -nan -nan

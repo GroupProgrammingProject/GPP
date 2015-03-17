@@ -3,7 +3,6 @@
 #include <vector>
 #include "Eigen/Dense"
 #include "include/readinxyz.h"
-#include "include/readinxyzv.h"
 #include "include/vectorfunctions.h"
 #include "include/hamiltonian.h"
 #include "include/functions.h"
@@ -21,11 +20,11 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
-	bool pbc = 1, ander=0;
+	bool pbc = 0, ander=0;
 	std::vector<bool> velspec;
-	ReadInXYZV (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
+	ReadInXYZ (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc,&velspec);
 	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1000,nprint=1;
+	int n=posx.size(),norbs=4,nmd=10,nprint=1;
 	// Velocities, reference postions, and vector neighbour list
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n), fx(n), fy(n), fz(n);
 	std::vector<int> nnear(n);
@@ -82,8 +81,8 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
-		if(i*10%nmd==0){
-			std::cout << i*10/nmd << "% completed" << std::endl;}
+		if(i*100%nmd==0){
+			std::cout << i*100/nmd << "% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
@@ -97,17 +96,14 @@ int main(int argc, char* argv[]){
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-		if(pbc==1){fprintf(file,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
-		else{fprintf(file,"%d\nC%d.xyz\n",n,n);}
-//	    fprintf(file,"%d\nC4 molecule\n",n);
+	    fprintf(file,"%d\nC4 molecule\n",n);
 	    for(j=0;j<n;j++){
 	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	    }
 	  } 
 	}
 	FILE *rel=fopen("relax.xyz","w");
-	if(pbc==1){fprintf(rel,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
-	else{fprintf(rel,"%d\nC%d.xyz\n",n,n);}
+	fprintf(rel,"%d\nC4 molecule\n",n);
 	//Output final positions and velocities to a .xyz file for future simulations
 	for(j=0;j<n;j++){
 		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
@@ -121,7 +117,6 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-	std::cout << lats.at(0) << " " << lats.at(1) << " " << lats.at(2) << std::endl;
 
 return 0;
 }
