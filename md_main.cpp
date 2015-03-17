@@ -13,9 +13,9 @@
 int main(int argc, char* argv[]){
 	// Read in the parameter values to run MD simulation
 	// The order in which they are passed is important, determined in run script
-	int nmd=atoi(argv[2]), nprint=atoi(argv[7]), norbs=atoi(argv[11]), maxnn=atoi(argv[12]);
-	double dt=atof(argv[3]), T=atof(argv[6]), rv=atof(argv[9]),rc=atof(argv[10]);
-	bool v=atoi(argv[8]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
+	int nmd=atoi(argv[2]), nprint=atoi(argv[8]), norbs=atoi(argv[12]), maxnn=atoi(argv[13]);
+	double dt=atof(argv[3]), T=atof(argv[7]), rv=atof(argv[10]),rc=atof(argv[11]), nu=atof(argv[6]);
+	bool v=atoi(argv[9]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
 	
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool renn;
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
 	// MD cycle
 	for(i=0; i<nmd; i++){
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,&TBparam);
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander,&TBparam);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
 			fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
