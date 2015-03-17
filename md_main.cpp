@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
-	std::vector<bool> velbool;
+
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size();
@@ -61,14 +61,6 @@ int main(int argc, char* argv[]){
 	NearestNeighbours(&inear,&nnear,&modr,rv);
 	// Calculation of initial velocities:
 	velocity(m,&vx,&vy,&vz,T);
-	//If input velocities are specified, initialise them for relevant atoms
-	for(i=0; i<n; i++){
-		if(velbool.at(i)==1){
-			vx.at(i)=vxin.at(i);
-			vy.at(i)=vyin.at(i);
-			vz.at(i)=vzin.at(i);
-		}
-	}
 	// Initialisation of reference positions:
 	for(i=0;i<n;i++){
 	  refposx.at(i)=posx.at(i);
