@@ -1,3 +1,6 @@
+#ifndef RAN_H
+#define RAN_H
+
 struct Ran {
 	Ullong u,v,w;
 	Ran(Ullong j) : v(4101842887655102017LL), w(1) {
@@ -133,3 +136,4 @@ struct Ranlim32 {
 	}
 };
 
+#endif
