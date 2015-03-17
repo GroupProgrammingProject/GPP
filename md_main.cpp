@@ -14,9 +14,18 @@
 int main(int argc, char* argv[]){
 	// Read in the parameter values to run MD simulation
 	// The order in which they are passed is important, determined in run script
+	//RUNCOMMAND="$1MAIN $2XYZ_FILE_PATH $3NUM_STEPS $4DT $5PBC $6ENSEMBLE $7THERM_RATE $8T $9FRAME_RATE $10VERBOSE $11RV $12RC $13NUM_ORBS $14MAX_NEIGHBOURS $15MASS $16NU $17P1 $18P2 $19P3 $20P4 $21P5 $22P6"
+
 	int nmd=atoi(argv[2]), nprint=atoi(argv[8]), norbs=atoi(argv[12]), maxnn=atoi(argv[13]);
-	double dt=atof(argv[3]), T=atof(argv[7]), rv=atof(argv[10]),rc=atof(argv[11]), nu=atof(argv[6]);
+	double dt=atof(argv[3]), T=atof(argv[7]), rv=atof(argv[10]),rc=atof(argv[11]), nu=atof(argv[6]),m=atof(argv[14]);
 	bool v=atoi(argv[9]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
+	std::vector<double> TBparam(6); //vector to hold TB parameters (Xu et al)
+	TBparam[0]=atof(argv[16]);		// E_s
+	TBparam[1]=atof(argv[17]);		// E_p
+	TBparam[2]=atof(argv[18]);		// V_ss_sigma
+	TBparam[3]=atof(argv[19]);		//	V_sp_sigma
+	TBparam[4]=atof(argv[20]);		// V_pp_sigma
+	TBparam[5]=atof(argv[21]);		// V_pp_pi
 	
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool renn;
@@ -42,18 +51,9 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
 	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double Tf,m=12*1.0365e2,tmd,kb=1./11603;
+	double Tf,tmd,kb=1./11603;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	// Create empty arrays needed for MD
-
-	std::vector<double> TBparam(6);
-	// In final version, TB params will be read in from input file
-	TBparam[0]=-2.99;		// E_s
-	TBparam[1]=3.71;		// E_p
-	TBparam[2]=-5;			// V_ss_sigma
-	TBparam[3]=4.7;		//	V_sp_sigma
-	TBparam[4]=5.5;		// V_pp_sigma
-	TBparam[5]=-1.55;		// V_pp_pi
 
 	//Matrix for eigenvectors
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);

@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# Input parameters to be set
+# Parameters that have not been set get assigned a default value
+MODE="md"
+XYZ_FILE_PATH="xyzfiles/C12_ad.xyz"
+PBC="1"
+
+# ---------------------------------------------------------------------------------------------------------------- #
+# 							Rest of the script sets defaults for unspecified or optional parameters
+
+# Parameterisation of the TB model, the default is taken from Xu et al.(1992)
+P1="-2.99"			#Es
+P2="3.71"			#Ep
+P3="-5"				#v0
+P4="4.7"				#v1
+P5="5.5"				#v2
+P6="-1.55"			#v3
+MASS="1234.8"
+
+# MODE and XYZ_FILE_PATH have to be set, otherwise the code will not run
+if [ -z ${MODE+x} ] || [ -z ${XYZ_FILE_PATH+x} ]
+then
+	RUN="0"
+	echo The variables MODE and XYZ_FILE_PATH have to be specified in the run script for the code to run
+else
+	RUN="1"
+fi
+
+#Set default values if they have not been specified above
+if [ -z ${PBC+x} ]; then PBC="0"; fi
+if [ -z ${VERBOSE+x} ]; then VERBOSE="0"; fi
+if [ -z ${RV+x} ]; then RV="3"; fi
+if [ -z ${RC+x} ]; then RC="2.6"; fi
+if [ -z ${NUM_ORBS+x} ]; then NUM_ORBS="4"; fi
+if [ -z ${MAX_NEIGHBOURS+x} ]; then MAX_NEIGHBOURS="100"; fi
+
+# Default parameters needed by MD simulations
+if [ $MODE == "md" ]
+then
+	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="1000"; fi
+	if [ -z ${DT+x} ]; then DT="1"; fi
+	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
+	if [ -z ${ENSEMBLE+x} ]; then ENSEMBLE="0"; fi
+	if [ -z ${T+x} ]; then T="300"; fi
+	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
+	if [ -z ${NU+x} ]; then NU="0.1"; fi
+	MAIN="md_main"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $NUM_STEPS $DT $PBC $ENSEMBLE $THERM_RATE $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $NU $P1 $P2 $P3 $P4 $P5 $P6"
+	echo $RUNCOMMAND
+fi
+
+# Default parameters needed by geom opt simulations
+if [ $MODE == "relax" ]
+then
+	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="1000"; fi
+	if [ -z ${DT+x} ]; then DT="1"; fi
+	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
+	if [ -z ${T+x} ]; then T="300"; fi
+	if [ -z ${TOL+x} ]; then TOL="1e-6"; fi
+	if [ -z ${NU+x} ]; then NU="0.1"; fi
+	if [ -z ${H+x} ]; then H="0.001"; fi
+	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="10000"; fi
+	MAIN="relax_main"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $NU $H $P1 $P2 $P3 $P4 $P5 $P6"
+	echo $RUNCOMMAND
+fi
+
+# Default parameters needed by single energy calculation 
+if [ $MODE == "energy" ]
+then
+	if [ -z ${KPTS+x} ]; then KPTS="0"; fi
+	if [ -z ${KPTS_FILE_PATH+x} ] && [ $KPTS==1 ]
+	then
+		RUN="0"
+		echo A k-points file path has to be specified
+	elif [ $KPTS -eq 0 ]
+	then
+		KPTS_FILE_PATH="kpnts_file_not_needed"
+	fi
+	MAIN="singleE_main"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $PBC $VERBOSE $RV $RC $NUM_ORBS $P1 $P2 $P3 $P4 $P5 $P6"
+	echo $RUNCOMMAND
+fi
+
+# Execute the code with the right command if the necessary parameters have been set
+if [ $RUN -eq 1 ]
+then
+	./$RUNCOMMAND
+else
+	echo Run Aborted
+fi
