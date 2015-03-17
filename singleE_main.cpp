@@ -13,7 +13,7 @@
 int main(int argc, char* argv[]){
 
 	//Turn kpoint sampling on or off
-	bool kpts = 0;
+	bool kpts = 1;
 	if(kpts==0){
 		if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
 		if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
@@ -50,11 +50,13 @@ int main(int argc, char* argv[]){
 	if(kpts==0){
 		Eigen::MatrixXd eigvects(4*n,4*n);						//real matrix
 		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
+/*
 		erep=Erep(&modr);
 		etot=ebs+erep;
 		std::cout << "Ebs = " << ebs/(double)n << std::endl;
 		std::cout << "Erep = " << erep/(double)n << std::endl;
 		std::cout << "Etot = " << etot/(double)n << std::endl;
+*/
 	}
 	else if(kpts==1){
 		Eigen::MatrixXcd eigvects(4*n,4*n);					//complex matrix
@@ -63,19 +65,25 @@ int main(int argc, char* argv[]){
 		readinkpoints(argv[2],&kpoints);
 		int ktot = kpoints.size();
 		std::vector<double> kvec(3);
-	 
 		int j = 0;
 		for (int i=0;i<ktot;i++) {
 			kvec = kpoints.at(i);
 			ebs=ebs+(1.0/(double)ktot)*band_Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,&eigenvalaar,&kvec,v);
 			j++;
 		}
+/*
 		erep=Erep(&modr);
 		etot=ebs+erep;
 		std::cout << "Ebs = " << ebs/(double)n << std::endl;
 		std::cout << "Erep = " << erep/(double)n << std::endl;
 		std::cout << "Etot = " << etot/(double)n << std::endl;
+*/
 	}
+	erep=Erep(&modr);
+	etot=ebs+erep;
+	std::cout << "Ebs = " << ebs/(double)n << std::endl;
+	std::cout << "Erep = " << erep/(double)n << std::endl;
+	std::cout << "Etot = " << etot/(double)n << std::endl;
 
 return 0;
 }

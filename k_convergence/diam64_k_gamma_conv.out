@@ -1,0 +1,16 @@
+1 kpoint
+Ebs = -30.937
+Erep = 22.5626
+Etot = -8.37443
+2 kpoints
+Ebs = -30.9448
+Erep = 22.5626
+Etot = -8.38216
+4 kpoints
+Ebs = -30.9503
+Erep = 22.5626
+Etot = -8.38765
+8 kpoints
+Ebs = -30.9543
+Erep = 22.5626
+Etot = -8.39171
