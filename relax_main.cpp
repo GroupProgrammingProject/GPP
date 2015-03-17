@@ -11,78 +11,45 @@
 #include "include/MolDyn.h"
 
 int main(int argc, char* argv[]){
+  	// Read in parameter values passed by the run script with MODE="energy"
+	// xyzfilepath=argv[1], kptsfilepath=argv[3]
 
-	if (argc<1){std::cout<<"You should append a file to the main object!"<<std::endl;}
-	if (argc!=2){std::cout<<"You should append one and only one xyz file to the main!!"<<std::endl;}
-	
-	// Turn verbose mode (hamiltonian routine) on/off
-	bool v=0, renn;
-	int i,j;
-	std::vector<double> lats(3);
-	// Read in types, 
-	std::vector<double> posx, posy, posz;
-	bool pbc = 1;
-	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
-//	scramble(&posx,&posy,&posz);
-	// Number of atoms, number of orbitals, and number of MD steps
-	int n=posx.size(),norbs=4,nmd=1,nprint=1;
-	// Velocities, reference postions, and vector neighbour list
-	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n),fx(n),fy(n),fz(n),fmag(n);
-	std::vector<int> nnear(n);
+	//RUNCOMMAND="$MAIN $1XYZ_FILE_PATH $2KPTS $3KPTS_FILE_PATH $4NUM_STEPS $5DT $6PBC $7T $8FRAME_RATE $9VERBOSE $10RV $11RC $12NUM_ORBS $13MAX_NEIGHBOURS $14MASS $15TOL $16MAX_STEEP $17NU $18H $19P1 $20P2 $21P3 $22P4 $23P5 $24P6"
+
+	// From now on is the good version (input)
+   int nmd=atoi(argv[4]), nprint=atoi(argv[8]), maxnn=atoi(argv[13]), maxsteep=atoi(argv[16]);
+	bool kpts=atoi(argv[2]), pbc=atoi(argv[6]), v=atoi(argv[9]);
+	int norbs=atoi(argv[12]);
+	double rv=atof(argv[10]), rc=atof(argv[11]);
+	double tol=atof(argv[15]), m=atof(argv[14]), dt=atof(argv[5]), T=atof(argv[7]), nu=atof(argv[17]), h=atof(argv[18]);
+
+	std::vector<double> TBparam(6);
+	TBparam[0]=atof(argv[19]);		// E_s
+	TBparam[1]=atof(argv[20]);		// E_p
+	TBparam[2]=atof(argv[21]);		// V_ss_sigma
+	TBparam[3]=atof(argv[22]);		//	V_sp_sigma
+	TBparam[4]=atof(argv[23]);		// V_pp_sigma
+	TBparam[5]=atof(argv[24]);		// V_pp_pi
+
+	std::vector<double> lats(3), posx, posy, posz;
+	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
+	int n=posx.size();
 	// Determine maximum number of nearest neighbours
-	int maxnn=100;
-	if(n<maxnn){
-	  maxnn=n;
-	}
+	if(n<maxnn){maxnn=n;}
 	// Matrix neighbour list
 	Eigen::MatrixXi inear(n,maxnn);
+	std::vector<int> nnear(n);
 	// Calculate distances
 	Eigen::MatrixXd modr(n,n);
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double dt=1,T=500,Tf,m=12*1.0365e2,rc=2.6,rv=3,tmd,kb=1./11603,fmax,h=0.001,gam=1;
-	int nmax=10000,count=0;
+	// Calculate distances
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
-	// Create empty arrays needed for MD
-	Eigen::MatrixXd eigvects(4*n,4*n);
-	// Energies from TB model
-	double ebs,erep,etot,ekin;
-	// Calculation of nearest neighbours:
-	NearestNeighbours(&inear,&nnear,&modr,rv);
-	// Starting TB	module: calculating energies
-	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
-	FILE *file=fopen("movie.txt","w");
-	FILE *file2=fopen("forces.txt","w");
-	fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
-	for(i=0; i<n; i++){
-		fprintf(file,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
-	}
-	//steepest descent relaxation routine
-	do{
-		if(count*100%nmax==0){std::cout << count*100/nmax << "% complete" << std::endl;}
-		forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
-		fprintf(file,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
-		for(i=0; i<n; i++){
-			posx.at(i)=posx.at(i)+gam*h*fx.at(i);
-			posy.at(i)=posy.at(i)+gam*h*fy.at(i);
-			posz.at(i)=posz.at(i)+gam*h*fz.at(i);
-			fmag.at(i)=sqrt(fx.at(i)*fx.at(i)+fy.at(i)*fy.at(i)+fz.at(i)*fz.at(i));
-			fprintf(file,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
-			fprintf(file2,"6 %i %.10f %.10f %.10f %.10f \n", count, fx.at(i), fy.at(i), fz.at(i), fmag.at(i));
-		}
-		fmax=*std::max_element(fmag.begin(),fmag.end()); //find largest elemen of fmag
-		GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
-		NearestNeighbours(&inear,&nnear,&modr,rv);
-		ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);
-		count=count+1;
-	}while(fmax>1e-8 && count<nmax); //continue until desired accuracy reached, or we've reached nmax steps
-	FILE *file_rel=fopen("relax.txt","w");
-	fprintf(file_rel,"%d\nC12 \t %.3f \t %.3f \t %.3f \n",n,lats[0],lats[1],lats[2]);
-	for(i=0; i<n; i++){
-		fprintf(file_rel,"6 %.10f %.10f %.10f\n", posx.at(i), posy.at(i), posz.at(i));
-	}
+	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
+	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
+	// Geometry optimisation routine
+	GeomOpt(norbs,rc,rv,m,dt,nmd,&posx,&posy,&posz,&refposx,&refposy,&refposz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,&lats,pbc,T,nu,h,v,nprint,&TBparam,tol,maxsteep);
 
-return 0;
+	return 0;
 }
