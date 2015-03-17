@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
+#include "nr3.h"
+#include "ran.h"
 
 //scaling functions, notations as in the paper 
 double ts (double r);
@@ -19,5 +21,6 @@ double d_f0(double x);
 double d_o(double r,double dx);
 double X (Eigen::MatrixXd* modr,int n, int i );
 double Erep (Eigen::MatrixXd* modr);
+double Gauss(double mu, double sigma);
 
 #endif

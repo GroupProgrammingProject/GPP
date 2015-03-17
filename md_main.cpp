@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "Eigen/Dense"
-#include "include/readinxyzv.h"
+#include "include/readinxyz.h"
 #include "include/vectorfunctions.h"
 #include "include/hamiltonian.h"
 #include "include/functions.h"
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
 	std::vector<bool> velbool;
-	ReadInXYZV (argv[1],&posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc, &velbool);
+	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size();
 	// Velocities, reference postions, and vector neighbour list

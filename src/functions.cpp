@@ -186,5 +186,19 @@ double Erep (Eigen::MatrixXd* modr){
   return total;
 }
 
+//Generate random numbers in Gaussian distribution
+double Gauss(double mu, double sigma){
+	double v1,v2,r,l;
+	Ran ran(time(0)+clock());
+	do{
+		v1=2.0*ran.doub()-1; //-1<=v1<=1
+		v2=2.0*ran.doub()-1;
+		r=v1*v1+v2*v2;
+	}while(r>=1 || r==0); //continue until we find random numbers that lie within unit circle
+	l=v1*sqrt(-2.0*log(r)/r);
+	return l=mu+sigma*l; //random number from Gaussian dist
+}
+
+
 
 

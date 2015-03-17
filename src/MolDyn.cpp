@@ -243,7 +243,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       fprintf(file,"6  %f %f %f\n",(*posx).at(i),(*posy).at(i),(*posz).at(i));
     }
     // Starting TB	module: calculating energies
-    ebs=Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,c,v);
+    ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
     //H_MD and eigvects have now also been populated
     erep=Erep(modr);	
     ekin=3*(n-1)*kb*T/2;
@@ -258,7 +258,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
     if(T<=0){
       T=1e-6;
     }
-    Tf=verlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,eigvects,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander);
+    Tf=verlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,eigvects,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander,TBparam);
     if(i%nprint==0 && verb==1){
       //H_MD and eigvects have now also been populated
       erep=Erep(modr);
@@ -316,8 +316,8 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
 	}
       }
     }
-    ebs=Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,c,v);
-    forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz);
+    ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v); 
+    forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
     for(j=0;j<n;j++){
       if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}
       if(fabs(fy.at(j))>fmax){fmax=fabs(fy.at(j));}

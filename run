@@ -39,7 +39,7 @@ if [ -z ${MAX_NEIGHBOURS+x} ]; then MAX_NEIGHBOURS="100"; fi
 # Default parameters needed by MD simulations
 if [ $MODE == "md" ]
 then
-	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="100"; fi
+	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="1000"; fi
 	if [ -z ${DT+x} ]; then DT="1"; fi
 	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
 	if [ -z ${ENSEMBLE+x} ]; then ENSEMBLE="0"; fi
