@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd drrz(n,n);
 	std::vector<double> drposx(n),drposy(n),drposz(n),f_fdx(n),f_fdy(n),f_fdz(n),fxa(n),fya(n),fza(n),df1x(n),df1y(n),df1z(n),df2x(n),df2y(n),df2z(n),f_repx(n),f_repy(n),f_repz(n);
 	std::vector<double> dlposx(n),dlposy(n),dlposz(n);
-	double h=0.0001;
+	double h=0.000001;
 	for(int k=0; k<n; k++)
 	{
 		drposx.at(k)=posx.at(k);
