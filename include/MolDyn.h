@@ -11,14 +11,13 @@
 #include <stdio.h>
 #include <vector>
 #include <ctime>
-#include "Eigen/Dense"
+#include <Eigen/Dense>
 #include "functions.h"
 #include "hamiltonian.h"
 #include "Gethijab.h"
 #include "geometryinfo.h"
-#include <vector>
-//#include "nr3.h"
-//#include "ran.h"
+#include "nr3.h"
+#include "ran.h"
 
 //Vector syntax: std::vector<double>. Assignments: xi=(*v).at(i). Inputs as pointer: std::vector<double>*
 

@@ -5,8 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
-#include "nr3.h"
-#include "ran.h"
 
 //scaling functions, notations as in the paper 
 double ts (double r);

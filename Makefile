@@ -3,7 +3,7 @@ CXXFLAGS=
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = functions geometryinfo hamiltonian MolDyn readinxyz vectorfunctions ScaleGeom Gethijab
+LIBFILES = MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
