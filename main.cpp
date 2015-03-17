@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
 	// MD cycle
 	for(i=1;i<nmd+1;i++){
 		if(i*10%nmd==0){
-			std::cout << i*10/nmd << "% completed" << std::endl;}
+			std::cout << i*10/nmd << "0% completed" << std::endl;}
 	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);
 	  //canonical ensemble function
@@ -92,25 +92,24 @@ int main(int argc, char* argv[]){
 				 fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
 	  }
 	  if(i%nprint==0){
-	    //H_MD and eigvects have now also been populated
-	    erep=Erep(&modr);
-	    etot=ebs+erep+ekin;
-	    tmd=i*dt;
-	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
-		if(pbc==1){fprintf(file,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
-		else{fprintf(file,"%d\nC%d.xyz\n",n,n);}
-//	    fprintf(file,"%d\nC4 molecule\n",n);
-	    for(j=0;j<n;j++){
-	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
-	    }
+			//H_MD and eigvects have now also been populated
+	    	erep=Erep(&modr);
+	    	etot=ebs+erep+ekin;
+	    	tmd=i*dt;
+	    	fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
+			if(pbc==1){fprintf(file,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
+			else{fprintf(file,"%d\nC%d.xyz\n",n,n);}
+	    	for(j=0;j<n;j++){
+	      	fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
+			}
 	  } 
 	}
-	FILE *rel=fopen("relax.xyz","w");
-	if(pbc==1){fprintf(rel,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
-	else{fprintf(rel,"%d\nC%d.xyz\n",n,n);}
+	FILE *fin=fopen("final.xyz","w");
+	if(pbc==1){fprintf(fin,"%d\nC%d.xyz %f %f %f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
+	else{fprintf(fin,"%d\nC%d.xyz\n",n,n);}
 	//Output final positions and velocities to a .xyz file for future simulations
 	for(j=0;j<n;j++){
-		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
+		fprintf(fin,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j), vy.at(j), vz.at(j));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,&modr,&rx,&ry,&rz,&eigvects,v);

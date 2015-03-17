@@ -12,20 +12,10 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*x).at(i)=(*x).at(i)+(*vx).at(i)*dt+0.5*fx.at(i)*dt*dt/m;
       (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
       (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
-
-		if(pbc==1){
-			if((*x).at(i)>=(*lats).at(0)){(*x).at(i)=(*x).at(i)-(*lats).at(0);}
-			else if((*x).at(i)<=-(*lats).at(0)){(*x).at(i)=(*x).at(i)+(*lats).at(0);}
-			
-			if((*y).at(i)>=(*lats).at(1)){(*y).at(i)=(*y).at(i)-(*lats).at(1);}
-			else if((*y).at(i)<=-(*lats).at(1)){(*y).at(i)=(*y).at(i)+(*lats).at(1);}
-			
-			if((*z).at(i)>=(*lats).at(2)){(*z).at(i)=(*z).at(i)-(*lats).at(2);}
-			else if((*z).at(i)<=-(*lats).at(2)){(*z).at(i)=(*z).at(i)+(*lats).at(2);}
-		}
-    }
-  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
-  if(renn==1){
+	 }
+  if(pbc==1){pbcshift(x,y,z,lats);} //If PBCs are active, put all atoms in unit cell 
+  renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);
+	if(renn==1){
     NearestNeighbours(inear,nnear,modr,rv);
   }
   GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);

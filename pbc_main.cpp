@@ -87,16 +87,16 @@ int main(int argc, char* argv[]){
 			std::cout << i*10/nmd << "0% completed" << std::endl;}
 		for(j=0;j<n;j++){
 			posx.at(j)=posx.at(j)+vx.at(j)*dt;
-			if(posx.at(j)>=lats.at(0)){posx.at(j)=posx.at(j)-lats.at(0);}
-			else if(posx.at(j)<=-lats.at(0)){posx.at(j)=posx.at(j)+lats.at(0);}
+			if(posx.at(j)>=lats.at(0)/2){posx.at(j)=posx.at(j)-lats.at(0);}
+			else if(posx.at(j)<=-lats.at(0)/2){posx.at(j)=posx.at(j)+lats.at(0);}
 			
 			posy.at(j)=posy.at(j)+vy.at(j)*dt;
-			if(posy.at(j)>lats.at(1)){posy.at(j)=posy.at(j)-lats.at(1);}
-			else if(posy.at(j)<-lats.at(1)){posy.at(j)=posy.at(j)+lats.at(1);}
+			if(posy.at(j)>lats.at(1)/2){posy.at(j)=posy.at(j)-lats.at(1);}
+			else if(posy.at(j)<-lats.at(1)/2){posy.at(j)=posy.at(j)+lats.at(1);}
 			
 			posz.at(j)=posz.at(j)+vz.at(j)*dt;
-			if(posz.at(j)>lats.at(2)){posz.at(j)=posz.at(j)-lats.at(2);}
-			else if(posz.at(j)<-lats.at(2)){posy.at(j)=posz.at(j)+lats.at(2);}
+			if(posz.at(j)>lats.at(2)/2){posz.at(j)=posz.at(j)-lats.at(2);}
+			else if(posz.at(j)<-lats.at(2)/2){posy.at(j)=posz.at(j)+lats.at(2);}
 		}
 /*	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz);
 	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander);

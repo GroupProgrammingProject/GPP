@@ -88,7 +88,7 @@ void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::Matr
 		double distz=(*rz)(i, j);
 		double modulusr=sqrt(distx*distx+disty*disty+distz*distz);
 		if (modulusr< rv){(*modr)(i, j)=modulusr;}
-		else {(*modr)(i, j)=0;}
+		else {(*modr)(i, j)=rv+3;}
 		}
 	}
 }
@@ -155,5 +155,29 @@ bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<doub
 return recalc;
 }
 
-
+//Translates all atom positions to within unit cell
+void pbcshift(std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* lats)
+{
+	int N=(*x).size(); //number of atoms
+	for(int i=0; i<N; i++){
+		if((*x).at(i)>(*lats).at(0)/2){ //the cell is centred on (0,0,0) with side lengths (lats.at(0),lats.at(1),lats.at(2))
+			while((*x).at(i)>(*lats).at(0)/2){(*x).at(i)=(*x).at(i)-(*lats).at(0);}
+		}
+		else if((*x).at(i)<-(*lats).at(0)/2){
+			while((*x).at(i)<-(*lats).at(0)/2){(*x).at(i)=(*x).at(i)+(*lats).at(0);}
+		}	
+		if((*y).at(i)>(*lats).at(1)/2){
+			while((*y).at(i)>(*lats).at(1)/2){(*y).at(i)=(*y).at(i)-(*lats).at(1);}
+		}
+		else if((*y).at(i)<-(*lats).at(1)/2){
+			while((*y).at(i)<-(*lats).at(1)/2){(*y).at(i)=(*y).at(i)+(*lats).at(1);}
+		}
+		if((*z).at(i)>(*lats).at(2)/2){
+			while((*z).at(i)>(*lats).at(2)/2){(*z).at(i)=(*z).at(i)-(*lats).at(2);}
+		}
+		else if((*z).at(i)<-(*lats).at(2)/2){
+			while((*z).at(i)<-(*lats).at(2)/2){(*z).at(i)=(*z).at(i)+(*lats).at(2);}
+		}
+	}
+}
 

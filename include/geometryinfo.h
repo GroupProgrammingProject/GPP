@@ -19,4 +19,6 @@ void PbcGetAllDistances (Eigen::MatrixXd* modr, Eigen::MatrixXd* rx, Eigen::Matr
 void NearestNeighbours(Eigen::MatrixXi* inear, std::vector<int>* nnear, Eigen::MatrixXd* modr, double rv);
 bool RecalculateNearestNeighbours(std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, double rc, double rv);
 void SetEqual(std::vector<double>* a, std::vector<double>* b);
+void pbcshift(std::vector<double>* xvect,std::vector<double>* yvect,std::vector<double>* zvect,std::vector<double>* lats);
+
 #endif

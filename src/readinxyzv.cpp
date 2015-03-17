@@ -6,30 +6,6 @@ std::map<std::string, int> SetElementMap(){
 	map["C"]=6;
 	return map;
 }
-void pbcshift(std::vector<double>* x, std::vector<double>* y, std::vector<double>* z, std::vector<double>* lats)
-{
-	int N=(*x).size(); //number of atoms
-	for(int i=0; i<N; i++){
-		if((*x).at(i)>(*lats).at(0)/2){
-			while((*x).at(i)>(*lats).at(0)/2){(*x).at(i)=(*x).at(i)-(*lats).at(0);}
-		}
-		else if((*x).at(i)<-(*lats).at(0)/2){
-			while((*x).at(i)<-(*lats).at(0)/2){(*x).at(i)=(*x).at(i)+(*lats).at(0);}
-		}	
-		if((*y).at(i)>(*lats).at(1)/2){
-			while((*y).at(i)>(*lats).at(1)/2){(*y).at(i)=(*y).at(i)-(*lats).at(1);}
-		}
-		else if((*y).at(i)<-(*lats).at(1)/2){
-			while((*y).at(i)<-(*lats).at(1)/2){(*y).at(i)=(*y).at(i)+(*lats).at(1);}
-		}
-		if((*z).at(i)>(*lats).at(2)/2){
-			while((*z).at(i)>(*lats).at(2)/2){(*z).at(i)=(*z).at(i)-(*lats).at(2);}
-		}
-		else if((*z).at(i)<-(*lats).at(2)/2){
-			while((*z).at(i)<-(*lats).at(2)/2){(*z).at(i)=(*z).at(i)+(*lats).at(2);}
-		}
-	}
-}
 
 // Reads in 4 vectors from cell file: elements; x , y and z coords; vx, vy and vz velocities; cell parameters; switch for PBCs; array of Booleans for input velocities
 void ReadInXYZV(char* filename, std::vector<double>* xvect, std::vector<double>* yvect, std::vector<double>* zvect, std::vector<double>* vxvect, std::vector<double>* vyvect, std::vector<double>* vzvect,std::vector<double>* lats, bool pbc, std::vector<bool>* velspec){
@@ -43,20 +19,12 @@ void ReadInXYZV(char* filename, std::vector<double>* xvect, std::vector<double>*
 	n=atoi(skipline1.c_str()); //read in number of atoms from first line
 	// If using periodic boundary conditions
 	if (pbc == 1) {
-	  // Read in a, b and c lattice parameters
-/*	  std::string name;
-	  double a, b, c;
-	  infile>>name>>a>>b>>c;
-	  (*lats).at(0) = a;
-	  (*lats).at(1) = b;
-	  (*lats).at(2) = c;
-*/	  std::string line2;
+		std::string line2;
 		std::vector<std::string> input;
-		std::string token;
-	  std::getline(infile, line2);
-	  std::stringstream pbcs(line2);
-	  while(pbcs >> token){input.push_back(token);} //put elements of line into string
-		std::cout << "This line contains: " << line2 << std::endl;
+		std::string token; //dummy label for elements of input string
+		std::getline(infile, line2); //read in the line
+		std::stringstream pbcs(line2); 
+		while(pbcs >> token){input.push_back(token);} //put elements of line into string
 		(*lats).at(0)=::atof(input.at(1).c_str());
 		(*lats).at(1)=::atof(input.at(2).c_str());
 		(*lats).at(2)=::atof(input.at(3).c_str());
@@ -79,8 +47,7 @@ void ReadInXYZV(char* filename, std::vector<double>* xvect, std::vector<double>*
 		xvect->push_back(::atof(input.at(1).c_str())); //converts strings to doubles and adds the result to xvect vector
 		yvect->push_back(::atof(input.at(2).c_str()));
 		zvect->push_back(::atof(input.at(3).c_str()));
-		if(input.size()>4) //if there are velocities on this line of the input file
-		{
+		if(input.size()>4){ //if there are velocities on this line of the input file
 			vxvect->push_back(::atof(input.at(4).c_str()));
 			vyvect->push_back(::atof(input.at(5).c_str()));
 			vzvect->push_back(::atof(input.at(6).c_str()));
@@ -93,8 +60,5 @@ void ReadInXYZV(char* filename, std::vector<double>* xvect, std::vector<double>*
 			velspec->push_back(0);
 		}
 	}
-	if(pbc==1){
-		std::cout << "Calling pbcshift" << std::endl; 
-		pbcshift(xvect,yvect,zvect,lats);
-	}
+	if(pbc==1){pbcshift(xvect,yvect,zvect,lats);} //put all atoms in unit cell if PBCs are used
 }
