@@ -90,7 +90,7 @@
 @timestamp rot 0
 @timestamp font 0
 @timestamp char size 1.000000
-@timestamp def "Tue Feb 24 19:23:39 2015"
+@timestamp def "Tue Mar 17 17:53:02 2015"
 @r0 off
 @link r0 to g0
 @r0 type above
@@ -137,11 +137,11 @@
 @g0 fixedpoint format general general
 @g0 fixedpoint prec 6, 6
 @with g0
-@    world 0, -8.41, 500, -8.27
+@    world 0, -8.41, 520, -8.27
 @    stack world 0, 0, 0, 0
 @    znorm 1
 @    view 0.150000, 0.150000, 1.150000, 0.850000
-@    title "Energy convergence of graphene (bond length 1.42 \cE\C)"
+@    title ""
 @    title font 0
 @    title size 1.500000
 @    title color 1
@@ -160,10 +160,10 @@
 @    xaxis  bar color 1
 @    xaxis  bar linestyle 1
 @    xaxis  bar linewidth 1.0
-@    xaxis  label "Number of atoms in supercell"
+@    xaxis  label "No. of atoms"
 @    xaxis  label layout para
 @    xaxis  label place auto
-@    xaxis  label char size 1.000000
+@    xaxis  label char size 1.480000
 @    xaxis  label font 0
 @    xaxis  label color 1
 @    xaxis  label place normal
@@ -199,7 +199,7 @@
 @    xaxis  ticklabel start 0.000000
 @    xaxis  ticklabel stop type auto
 @    xaxis  ticklabel stop 0.000000
-@    xaxis  ticklabel char size 1.000000
+@    xaxis  ticklabel char size 1.480000
 @    xaxis  ticklabel font 0
 @    xaxis  ticklabel color 1
 @    xaxis  tick place both
@@ -211,10 +211,10 @@
 @    yaxis  bar color 1
 @    yaxis  bar linestyle 1
 @    yaxis  bar linewidth 1.0
-@    yaxis  label "Total energy (eV)"
+@    yaxis  label "Energy per atom (eV)"
 @    yaxis  label layout para
 @    yaxis  label place auto
-@    yaxis  label char size 1.000000
+@    yaxis  label char size 1.480000
 @    yaxis  label font 0
 @    yaxis  label color 1
 @    yaxis  label place normal
@@ -250,7 +250,7 @@
 @    yaxis  ticklabel start 0.000000
 @    yaxis  ticklabel stop type auto
 @    yaxis  ticklabel stop 0.000000
-@    yaxis  ticklabel char size 1.000000
+@    yaxis  ticklabel char size 1.480000
 @    yaxis  ticklabel font 0
 @    yaxis  ticklabel color 1
 @    yaxis  tick place both
@@ -307,7 +307,7 @@
 @    s0 fill pattern 1
 @    s0 avalue on
 @    s0 avalue type 1
-@    s0 avalue char size 1.000000
+@    s0 avalue char size 1.460000
 @    s0 avalue font 0
 @    s0 avalue color 1
 @    s0 avalue rot 0
@@ -315,7 +315,7 @@
 @    s0 avalue prec 3
 @    s0 avalue prepend ""
 @    s0 avalue append ""
-@    s0 avalue offset 0.020000 , 0.000000
+@    s0 avalue offset 0.025000 , 0.010000
 @    s0 errorbar on
 @    s0 errorbar place both
 @    s0 errorbar color 1
