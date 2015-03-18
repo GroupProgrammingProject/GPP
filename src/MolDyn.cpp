@@ -253,7 +253,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   std::cout << "Starting simulated annealing..." << std::endl;
   // Simulated annealing cycle
   for(i=1;i<nmd+1;i++){
-    if(i%(nmd/10)==0 && verb==1){std::cout << i*100/nmd << "% completed" << std::endl;}
+    if(i%(nmd/10)==0){std::cout << i*100/nmd << "% completed" << std::endl;}
     T=T-Tin/(nmd*0.99);
     if(T<=0){
       T=1e-6;
@@ -331,17 +331,21 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
     }
     nsteep++;
   }
+  GetDistances(modr,rx,ry,rz,posx,posy,posz,lats,rv,pbc);
+  erep=Erep(modr);
+  ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v); 
+  etot=ebs+erep;
+  
   if(verb==1){	
     fprintf(file,"%d\nIteration %d\n",n,i);
     for(j=0;j<n;j++){
       fprintf(file,"6  %f %f %f\n",(*posx).at(j),(*posy).at(j),(*posz).at(j));
       fprintf(file2,"6 %.10f %.10f %.10f \n",fx.at(j),fy.at(j),fz.at(j));
     }
-    erep=Erep(modr);
-    etot=ebs+erep;
     fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd+1,Tf,ekin,ebs,erep,etot);
   }
   std::cout << "Relaxation done." << std::endl;
+  std::cout << "Maximum force = " << fmax << std::endl;
   std::cout << "Ebs = " << ebs << std::endl;
   std::cout << "Erep = " << erep << std::endl;
   std::cout << "Etot = " << etot << std::endl;

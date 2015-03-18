@@ -2,13 +2,15 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="relax"
-XYZ_FILE_PATH="xyzfiles/C5.xyz"
+MODE="md"
+XYZ_FILE_PATH="xyzfiles/C2_v2.xyz"
 KPTS="0"
 KPTS_FILE_PATH="xyzfiles/C5.kpts"
 VERBOSE="0"
 NUM_STEPS="1000"
 MAX_STEEP="1000"
+DT="0.4"
+T="0.00001"
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # 							Rest of the script sets defaults for unspecified or optional parameters
@@ -61,11 +63,11 @@ then
 	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
 	if [ -z ${T+x} ]; then T="300"; fi
 	if [ -z ${TOL+x} ]; then TOL="1e-6"; fi
-	if [ -z ${NU+x} ]; then NU="0.1"; fi
-	if [ -z ${H+x} ]; then H="0.001"; fi
+	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
+	if [ -z ${H+x} ]; then H="0.01"; fi
 	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="10000"; fi
 	MAIN="relax_main"
-	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $NU $H $P1 $P2 $P3 $P4 $P5 $P6"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $THERM_RATE $H $P1 $P2 $P3 $P4 $P5 $P6"
 	echo $RUNCOMMAND
 fi
 
