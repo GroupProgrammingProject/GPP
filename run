@@ -3,11 +3,10 @@
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
 MODE="relax"
-XYZ_FILE_PATH="xyzfiles/C12.xyz"
-KPTS="1"
-PBC="1"
-KPTS_FILE_PATH="xyzfiles/C12_relaxed.kpts"
-VERBOSE="1"
+XYZ_FILE_PATH="xyzfiles/C5.xyz"
+KPTS="0"
+KPTS_FILE_PATH="xyzfiles/C5.kpts"
+VERBOSE="0"
 NUM_STEPS="1000"
 MAX_STEEP="1000"
 

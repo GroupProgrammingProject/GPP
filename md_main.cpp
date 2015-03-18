@@ -13,9 +13,9 @@
 int main(int argc, char* argv[]){
 	// Read in the parameter values to run MD simulation
 	// The order in which they are passed is important, determined in run script
-	int nmd=atoi(argv[2]), nprint=atoi(argv[7]), norbs=atoi(argv[11]), maxnn=atoi(argv[12]);
-	double dt=atof(argv[3]), T=atof(argv[6]), rv=atof(argv[9]),rc=atof(argv[10]);
-	bool v=atoi(argv[8]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
+	int nmd=atoi(argv[2]), nprint=atoi(argv[8]), norbs=atoi(argv[12]), maxnn=atoi(argv[13]);
+	double dt=atof(argv[3]), T=atof(argv[7]), rv=atof(argv[10]),rc=atof(argv[11]), nu=atof(argv[6]);
+	bool v=atoi(argv[9]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
 	
 	// Turn verbose mode (hamiltonian routine) on/off
 	bool renn;
@@ -23,6 +23,7 @@ int main(int argc, char* argv[]){
 	std::vector<double> lats(3);
 	// Read in types, 
 	std::vector<double> posx, posy, posz, vxin, vyin, vzin;
+
 	ReadInXYZ (argv[1],&posx, &posy, &posz, &lats, pbc);
 	// Number of atoms, number of orbitals, and number of MD steps
 	int n=posx.size();
@@ -83,8 +84,7 @@ int main(int argc, char* argv[]){
 	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=0; i<nmd; i++){
-	  forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,&TBparam);
+	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander,&TBparam);
 	  ekin=3*(n-1)*kb*Tf/2;
 	  for(int k=0; k<n; k++){
 			fprintf(f,"%f\t%f\t%f\t\n",fx.at(k),fy.at(k),fz.at(k));
@@ -100,12 +100,15 @@ int main(int argc, char* argv[]){
 	      fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	    }
 	  } 
+	  if(i*10%nmd==0){
+	    std::cout << i*10/nmd << "0 % completed" << std::endl;
+	  }
 	}
 	//Output final positions and velocities to a .xyz file for future simulations
 	FILE *rel=fopen("final.xyz","w");
 	fprintf(rel,"%d\nC3 molecule\n",n);
 	for(j=0;j<n;j++){
-		fprintf(file,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
+		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	}
 	// Starting TB	module: calculating energies
 	ebs=Hamiltonian(n,norbs,&TBparam,&modr,&rx,&ry,&rz,&eigvects,v);
