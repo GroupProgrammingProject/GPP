@@ -12,6 +12,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
     (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
   }
+  if(pbc==1){pbcshift(x,y,z,lats);} //If PBCs are active, put all atoms in unit cell
   renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
   GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
   if(renn==1){
@@ -223,8 +224,9 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 } //Hamder() ends
 
 //GeomOpt performs geometrical optimization of a struvture via simulated annealing followed by steepest descent. 
-int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam, double tol,int maxsteep){
+int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam, double tol,int maxsteep,bool kpts,std::vector<std::pair<std::vector<double>,double> >* kpoints){
   int n=(*posx).size();
+  if (kpts==1) {std::cout << "ktot = " << (*kpoints).size() << std::endl;}
   // Turn verbose mode (hamiltonian routine) on/off
   bool v=0, renn=0, ander=1;
   int i,j,nearlabel,nsteep;
@@ -233,7 +235,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   // Energies from TB model and fmax
   double ebs,erep,etot,ekin,fmax;
   // Calculation of initial velocities:
-  velocity(m,&vx,&vy,&vz,T);
+//  velocity(m,&vx,&vy,&vz,T);
   FILE *file=fopen("movie_relax.txt","w");
   FILE *en=fopen("energy_relax.txt","w");
   FILE *file2=fopen("forces_relax.txt","w");
@@ -243,7 +245,8 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       fprintf(file,"6  %f %f %f\n",(*posx).at(i),(*posy).at(i),(*posz).at(i));
     }
     // Starting TB	module: calculating energies
-    ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+	 if (kpts==1) {ebs=avekenergy(n,norbs,rx,ry,rz,modr,kpoints,TBparam);}
+    else {ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);}
     //H_MD and eigvects have now also been populated
     erep=Erep(modr);	
     ekin=3*(n-1)*kb*T/2;
@@ -258,7 +261,8 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
     if(T<=0){
       T=1e-6;
     }
-    Tf=verlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,eigvects,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander,TBparam);
+	 if (kpts==1) {Tf=kverlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander,kpoints,TBparam);}
+    else {Tf=verlet(norbs,rc,rv,m,dt,posx,posy,posz,refposx,refposy,refposz,&vx,&vy,&vz,eigvects,nnear,inear,rx,ry,rz,modr,ebs,lats,pbc,T,nu,ander,TBparam);}
     if(i%nprint==0 && verb==1){
       //H_MD and eigvects have now also been populated
       erep=Erep(modr);
@@ -271,7 +275,10 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       }
     } 
   }
-  forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
+  if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
+  else {
+	 ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+	 forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);}
   //Initialisation of maximum value of forces//
   fmax=0;
   for(j=0;j<n;j++){
@@ -319,8 +326,11 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
 	}
       }
     }
-    ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v); 
-    forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
+	 if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
+    else {
+		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+		std::cout << "normal ebs = " << ebs << std::endl;
+		forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);}
     for(j=0;j<n;j++){
       if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}
       if(fabs(fy.at(j))>fmax){fmax=fabs(fy.at(j));}
