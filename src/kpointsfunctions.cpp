@@ -1,14 +1,57 @@
 #include "../include/kpointsfunctions.h"
 // Read in kpoints from a file (e.g. for a calculation)
-void readinkpoints(char* filename, std::vector<std::vector<double> >* kpoints) {
+void readinkpoints(char* filename, std::vector<std::pair<std::vector<double>,double> >* kpoints, bool ksymm) {
   std::ifstream infile(filename);
   double k0, k1, k2;
+  std::vector<std::vector<double> > kpointstemp;
+  std::vector<std::vector<double> > kpointstemp2;
+  std::vector<double> kweights;
   std::vector<double> kvec(3);
+  std::vector<std::vector<double> >::iterator element;
+  int welement;
+  typedef std::pair<std::vector<double>,double> pair; 
   while (infile>>k0>>k1>>k2){
-	 kvec.at(0) = k0;
-	 kvec.at(1) = k1;
-	 kvec.at(2) = k2;
-	 (*kpoints).push_back(kvec);
+	 if (ksymm == 1) {
+		kvec.at(0) = std::abs(k0);
+		kvec.at(1) = std::abs(k1);
+		kvec.at(2) = std::abs(k2);
+	 }
+	 else {
+		kvec.at(0) = k0;
+		kvec.at(1) = k1;
+		kvec.at(2) = k2;
+	 }
+	 kpointstemp.push_back(kvec);
+  }
+  // Have now fully formed kpointstemp object, need to calculate weighting
+  int ktot = kpointstemp.size();
+  double wfract = 1.0/((double)ktot);
+  // Cycle through kvectors checking which are the same by symmetry
+  for (int i=0;i<ktot;i++) {
+	 // If kpointstemp.at(i) not already in kpointstemp2, sum over j and count instances of it
+	 element = std::find(kpointstemp2.begin(), kpointstemp2.end(), kpointstemp.at(i));        // Element in kpointstemp2
+	 if(element == kpointstemp2.end()) {                                                      // Check element exists
+		for (int j=0;j<ktot;j++) {
+		  if ( kpointstemp.at(i)==kpointstemp.at(j) ) {              // Indicates that vectors are equal
+			 // If kpointstemp.at(i) not already in kpointstemp2, add it
+			 element = std::find(kpointstemp2.begin(), kpointstemp2.end(), kpointstemp.at(i));        // Element in kpointstemp2
+			 if (element == kpointstemp2.end()) {
+				kpointstemp2.push_back(kpointstemp.at(i));
+				kweights.push_back(wfract);
+			 }
+			 // Otherwise just increase the weighting by one instance
+			 else {
+				welement = std::distance(kpointstemp2.begin(),element);
+				kweights.at(welement) = kweights.at(welement) + wfract;
+			 }
+		  }
+		}
+	 }
+  }
+  int ktot2 = kpointstemp2.size();
+  // Now form final object to store kpoints
+  for (int i=0;i<ktot2;i++) {
+	 (*kpoints).push_back(pair(kpointstemp2.at(i),kweights.at(i)));
   }
 }
 
@@ -176,11 +219,33 @@ double kHamder(int i, int j,int a, int b, std::vector<double>* d,double distr,in
   return h;
 } //Hamder() ends
 
-// Finds average force from multiple kpoints
-double avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<std::vector<double> >* kpoints,std::vector<double>* TBparam) {
+// Finds average energy from multiple kpoints
+double avekenergy(int N,int norbs,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr,std::vector<std::pair<std::vector<double>,double> >* kpoints,std::vector<double>* TBparam) {
   int ktot = (*kpoints).size();
   std::vector<double> kvec(3);
   double ebstemp=0;
+  double kweight;
+  Eigen::MatrixXcd eigvects(4*N,4*N);
+  std::vector<double> eigenvalaar (4*N);
+  bool v = 0;
+  // Get energies over kpoints and average
+  for (int i=0;i<ktot;i++) {
+	 kvec = (*kpoints).at(i).first;
+	 kweight = (*kpoints).at(i).second;
+	 std::cout << "k = " << kvec.at(0) << "\t" << kvec.at(1) << "\t" << kvec.at(2) << std::endl;
+	 std::cout << "weight = " << kweight << std::endl;
+	 ebstemp=ebstemp+kweight*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v);
+	 std::cout << "ebs = " << (1.0/((double)N))*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v) << std::endl;
+  }
+  return ebstemp;
+}
+
+// Finds average force from multiple kpoints
+double avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<std::pair<std::vector<double>,double> >* kpoints,std::vector<double>* TBparam) {
+  int ktot = (*kpoints).size();
+  std::vector<double> kvec(3);
+  double ebstemp=0;
+  double kweight;
   Eigen::MatrixXcd eigvects(4*N,4*N);
   std::vector<double> eigenvalaar (4*N);
   std::vector<double> fxtemp(N);
@@ -196,8 +261,9 @@ double avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd
 
   // Get forces over kpoints and average
   for (int i=0;i<ktot;i++) {
-	 kvec = (*kpoints).at(i);
-	 ebstemp=(1.0/((double)ktot))*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v);
+	 kvec = (*kpoints).at(i).first;
+	 kweight = (*kpoints).at(i).second;
+	 ebstemp=ebstemp+kweight*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v);
 	 kforces(N,4,rc, rx, ry, rz, modr, &eigvects, nnear, inear, &fxtemp, &fytemp, &fztemp, &kvec,TBparam);
 	 // Add forces from different kpoints
 	 for (int l=0;l<N;l++) {
@@ -206,10 +272,11 @@ double avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd
 		(*fz).at(l) = (*fz).at(l) + (1/(double)ktot)*fztemp.at(l);
 	 }
   }
+  std::cout << "aveforce ebs = " << ebstemp << std::endl;
   return ebstemp;
 }
 
-double kverlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, double &ebs, std::vector<double>* lats, bool pbc,double T, double nu,bool ander, std::vector<std::vector<double> >* kpoints,std::vector<double>* TBparam)
+double kverlet(int norbs,double rc,double rv,double m,double dt, std::vector<double>* x, std::vector<double>* y, std::vector<double>* z,std::vector<double>* refx, std::vector<double>* refy, std::vector<double>* refz,std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, double &ebs, std::vector<double>* lats, bool pbc,double T, double nu,bool ander, std::vector<std::pair<std::vector<double>,double> >* kpoints,std::vector<double>* TBparam)
 { double boltz=1./11603,svxm=0.0,svym=0.0,svzm=0.0,kin,Tf,sigma=sqrt(boltz*T*m),vxm=0.0,vym=0,vzm=0,rang;
   int N=(*x).size(),nearlabel;
   bool renn=0,v=0;

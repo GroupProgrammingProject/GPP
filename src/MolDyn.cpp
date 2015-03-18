@@ -223,7 +223,7 @@ double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int
 } //Hamder() ends
 
 //GeomOpt performs geometrical optimization of a struvture via simulated annealing followed by steepest descent. 
-int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam, double tol,int maxsteep,bool kpts,std::vector<std::vector<double> >* kpoints){
+int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector<double>* posx, std::vector<double>* posy, std::vector<double>* posz, std::vector<double>* refposx, std::vector<double>* refposy, std::vector<double>* refposz, Eigen::MatrixXd* eigvects,std::vector<int>* nnear,Eigen::MatrixXi* inear, Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, std::vector<double>* lats, bool pbc,double T,double nu,double h,bool verb, int nprint,std::vector<double>* TBparam, double tol,int maxsteep,bool kpts,std::vector<std::pair<std::vector<double>,double> >* kpoints){
   int n=(*posx).size();
   if (kpts==1) {std::cout << "ktot = " << (*kpoints).size() << std::endl;}
   // Turn verbose mode (hamiltonian routine) on/off
@@ -244,7 +244,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
       fprintf(file,"6  %f %f %f\n",(*posx).at(i),(*posy).at(i),(*posz).at(i));
     }
     // Starting TB	module: calculating energies
-	 if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
+	 if (kpts==1) {ebs=avekenergy(n,norbs,rx,ry,rz,modr,kpoints,TBparam);}
     else {ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);}
     //H_MD and eigvects have now also been populated
     erep=Erep(modr);	
@@ -327,7 +327,8 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
     }
 	 if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
     else {
-		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v); 
+		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
+		std::cout << "normal ebs = " << ebs << std::endl;
 		forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);}
     for(j=0;j<n;j++){
       if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}
