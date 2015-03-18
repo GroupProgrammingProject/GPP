@@ -12,6 +12,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
     (*y).at(i)=(*y).at(i)+(*vy).at(i)*dt+0.5*fy.at(i)*dt*dt/m;
     (*z).at(i)=(*z).at(i)+(*vz).at(i)*dt+0.5*fz.at(i)*dt*dt/m;
   }
+  if(pbc==1){pbcshift(x,y,z,lats);} //If PBCs are active, put all atoms in unit cell
   renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
   GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
   if(renn==1){
