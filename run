@@ -2,7 +2,7 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="md"
+MODE="relax"
 XYZ_FILE_PATH="xyzfiles/C20.xyz"
 KPTS="0"
 PBC="1"

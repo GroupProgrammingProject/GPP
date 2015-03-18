@@ -343,9 +343,9 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   }
   GetDistances(modr,rx,ry,rz,posx,posy,posz,lats,rv,pbc);
   erep=Erep(modr);
-  ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v); 
+  if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
+  else {ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);}
   etot=ebs+erep;
-  
   if(verb==1){	
     fprintf(file,"%d\nIteration %d\n",n,i);
     for(j=0;j<n;j++){
