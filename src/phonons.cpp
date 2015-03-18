@@ -1,6 +1,6 @@
 #include "../include/phonons.h"
 
-void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz, std::vector<double>* eigfreq, std::vector<double>* TBparam){
+void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* eigvects, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* TBparam){
 
 	bool v=0;
 	int i,j,l,J;						//J is index of atom to be displaced
@@ -15,18 +15,13 @@ void normalmodes(int n,int norbs,double rc,double m,Eigen::MatrixXd* rx, Eigen::
 	Eigen::MatrixXd rz_0(n,n);
 	Eigen::MatrixXd fr(3*n,3*n), fl(3*n,3*n);
 	Eigen::MatrixXd dynamicmat(3*n,3*n);
+	std::vector<double> fx(n),fy(n),fz(n),eigfreq(3*n);
+
+std::cout << "Calculating vibrational frequencies..." << std::endl;
 
  	ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
 	//recalculate forces
-	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz,TBparam);
-/*	
-std::cout << "forces of (hopefully) equilibrium structure:" << std::endl;
-for(i=0;i<n;i++){
-	std::cout << "fx = " << fx->at(i) << std::endl;
-	std::cout << "fy = " << fy->at(i) << std::endl;
-	std::cout << "fz = " << fz->at(i) << std::endl << std::endl;
-}
-*/
+	forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
 	//store original distances
 	for(i=0;i<n;i++){
 		for(j=0;j<n;j++){
@@ -63,12 +58,6 @@ for(i=0;i<n;i++){
 					}
 				}
 
-/*		std::cout << "original geometry" << std::endl;
-		std::cout << "rx" << std:: endl << rx << std::endl;
-		std::cout << "ry" << std:: endl << ry << std::endl;
-		std::cout << "rz" << std:: endl << rz << std::endl;	
-		std::cout << "modr" << std:: endl << modr << std::endl;
-*/
 				//Update all distances (keep its own to 0)
 				for(i=0;i<n;i++){
 					if(i!=J){
@@ -91,70 +80,66 @@ for(i=0;i<n;i++){
 						(*modr)(i,J)=sqrt( (*rx)(i,J) * (*rx)(i,J) + (*ry)(i,J) * (*ry)(i,J) + (*rz)(i,J) * (*rz)(i,J) );
 					}
 				}
-/*
-std::cout << "Moved atom " << J << " in " << beta << " direction" << std::endl;
-std::cout << "rx" << std:: endl << rx << std::endl;
-std::cout << "ry" << std:: endl << ry << std::endl;
-std::cout << "rz" << std:: endl << rz << std::endl;	
-std::cout << "modr" << std:: endl << modr << std::endl;
-*/
+
 				// Update eigenvectors and forces for new distances
 		 		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
 				//recalculate forces
-				forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,fx,fy,fz,TBparam);
-/*	
-std::cout << "new forces:" << std::endl;
-for(i=0;i<n;i++){
-	std::cout << "fx = " << fx->at(i) << std::endl;
-	std::cout << "fy = " << fy->at(i) << std::endl;
-	std::cout << "fz = " << fz->at(i) << std::endl << std::endl;
-}
-*/
+				forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);
+
 				for(i=0;i<n;i++){
 					if(l==0){
-						fr(3*i,3*J+beta)=fx->at(i);
-						fr(3*i+1,3*J+beta)=fy->at(i);
-						fr(3*i+2,3*J+beta)=fz->at(i);
+						fr(3*i,3*J+beta)=fx.at(i);
+						fr(3*i+1,3*J+beta)=fy.at(i);
+						fr(3*i+2,3*J+beta)=fz.at(i);
 					}
 					else if (l==1){
-						fl(3*i,3*J+beta)=fx->at(i);
-						fl(3*i+1,3*J+beta)=fy->at(i);
-						fl(3*i+2,3*J+beta)=fz->at(i);
+						fl(3*i,3*J+beta)=fx.at(i);
+						fl(3*i+1,3*J+beta)=fy.at(i);
+						fl(3*i+2,3*J+beta)=fz.at(i);
 					}
 				}
 			}	//end beta loop
 		}	//end J loop
 	}	//end l loop
 
-/*
-std::cout << "Final fr: " << std::endl;
-std::cout << fr << std::endl << std::endl;
-std::cout << "Final fl " << std::endl;
-std::cout << fl << std::endl;
-*/
-
-	//Create dynamical matrix
+	//Assemble dynamical matrix
 	for(i=0;i<3*n;i++){
 		for(j=0;j<3*n;j++){
 			dynamicmat(i,j)=(fl(i,j)-fr(i,j))/(2*abs_diff*m);
 		}
 	}
 
-//std::cout << "Dynamical matrix:" << std::endl;
-//std::cout << dynamicmat << std::endl << std::endl;
-
 	//Solve for eigenmodes and eigenfrequencies
 	Eigen::EigenSolver<Eigen::MatrixXd> es(dynamicmat);
 	//returns eigenfrequencies in fs-1
 
-//std::cout << "eigenvalues:" << std::endl;
-//std::cout << es.eigenvalues() << std::endl;
-
-//std::cout << std::endl << "eigenvectors:" << std::endl;
-//std::cout << es.eigenvectors() << std::endl;
-
-	for(i=0;i<3*n;i++){ (*eigfreq).at(i) = 1e15*sqrt(real(es.eigenvalues()[i]))/c; }
+	//Fill eigfreq_sqr with frequencies squared in s-2
+	for(i=0;i<3*n;i++){ eigfreq.at(i) = 1e30*real(es.eigenvalues()[i]); }
+	std::sort (eigfreq.begin(), eigfreq.end());
+	std::reverse (eigfreq.begin(), eigfreq.end());
+	//Write results to file
+	std::ofstream output;
+	double freq_sqr;
+	output.open("frequencies.dat");
+	output << "w^2 (s-2) \t w (s-1) \t k (cm-1) \t E (eV)" << std::endl;
+	for(i=0;i<3*n;i++){
+		freq_sqr = eigfreq.at(i);
+		output << std::setprecision(6) << freq_sqr/(double)n << "\t" << sqrt(freq_sqr)/(double)n << "\t" << sqrt(freq_sqr)/(c*(double)n) << "\t" << h_bar*sqrt(freq_sqr)/(double)n << std::endl;
+	} 
+	output.close();
+/*
 	//convert to wavevectors in cm-1
+	for(i=0;i<3*n;i++){ (*eigfreq).at(i) = 1e15*sqrt(real(es.eigenvalues()[i]))/c; }
+	std::sort ((*eigfreq).begin(), (*eigfreq).end());
+	std::reverse ((*eigfreq).begin(), (*eigfreq).end());
+	FILE *file_freq=fopen("vibrational_frequencies.dat","w");
+//std::cout << "Real eigenvalues expressed as wavectors in cm-1" << std::endl;
+//for(i=0;i<3*n;i++){	std::cout << eigfreq[i]/n << std::endl; }
+	for(i=0;i<3*n;i++){
+		fprintf(file_freq,"%f\n", (*eigfreq).at(i)/(double)n);
+	}
+	fclose(file_freq);
+*/
 
 }	//end eigenmodes()
 
