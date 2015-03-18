@@ -63,7 +63,7 @@ then
 	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
 	if [ -z ${T+x} ]; then T="300"; fi
 	if [ -z ${TOL+x} ]; then TOL="1e-6"; fi
-	if [ -z ${THERM_RATE+x} ]; then NU="0.1"; fi
+	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
 	if [ -z ${H+x} ]; then H="0.001"; fi
 	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="10000"; fi
 	MAIN="relax_main"
@@ -79,7 +79,7 @@ then
 	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
 	if [ -z ${T+x} ]; then T="300"; fi
 	if [ -z ${TOL+x} ]; then TOL="1e-8"; fi
-	if [ -z ${THERM_RATE+x} ]; then NU="0.1"; fi
+	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
 	if [ -z ${H+x} ]; then H="0.001"; fi
 	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="1e6"; fi
 	MAIN="phonons_main"

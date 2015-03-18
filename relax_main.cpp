@@ -15,7 +15,6 @@ int main(int argc, char* argv[]){
   	// Read in parameter values passed by the run script with MODE="energy"
 	// xyzfilepath=argv[1], kptsfilepath=argv[3]
   //RUNCOMMAND="$0MAIN $1XYZ_FILE_PATH $2KPTS $3KPTS_FILE_PATH $4KSYMM $5NUM_STEPS $6DT $7PBC $8T $9FRAME_RATE $10VERBOSE $11RV $12RC $13NUM_ORBS $14MAX_NEIGHBOURS $15MASS $16TOL $17MAX_STEEP $18THERM_RATE $19H $20P1 $21P2 $22P3 $23P4 $24P5 $25P6"
-  
 	// From now on is the good version (input)
    int nmd=atoi(argv[5]), nprint=atoi(argv[9]), maxnn=atoi(argv[14]);
    bool kpts=atoi(argv[2]), pbc=atoi(argv[7]), v=atoi(argv[10]), ksymm=atoi(argv[4]);
@@ -61,7 +60,6 @@ int main(int argc, char* argv[]){
 	if (kpts == 1) {
 	  readinkpoints(argv[3],&kpoints,ksymm);
 	}
-
 	// Geometry optimisation routine
 	GeomOpt(norbs,rc,rv,m,dt,nmd,&posx,&posy,&posz,&refposx,&refposy,&refposz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,&lats,pbc,T,nu,h,v,nprint,&TBparam,tol,maxsteep,kpts,&kpoints);
 
