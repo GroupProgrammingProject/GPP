@@ -3,7 +3,7 @@ CXXFLAGS+= -std=c++11
 LD = g++
 
 #files to be compiled in libraries
-LIBFILES = phonons kpointsfunctions MolDyn band_hamiltonian hamiltonian geometryinfo readinxyz readinxyzv vectorfunctions ScaleGeom Gethijab functions 
+LIBFILES = phonons MolDyn kpointsfunctions band_hamiltonian hamiltonian geometryinfo readinxyz vectorfunctions ScaleGeom Gethijab functions 
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
@@ -21,7 +21,7 @@ RPATH = -Wl,-rpath=$(LIB_DIR)
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: singleE_main md_main phonons_main relax_main
+all: relax_main singleE_main md_main phonons_main
 
 singleE_main: singleE_main.cpp
 	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
