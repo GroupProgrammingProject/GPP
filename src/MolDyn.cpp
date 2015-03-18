@@ -235,7 +235,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   // Energies from TB model and fmax
   double ebs,erep,etot,ekin,fmax;
   // Calculation of initial velocities:
-//  velocity(m,&vx,&vy,&vz,T);
+  velocity(m,&vx,&vy,&vz,T);
   FILE *file=fopen("movie_relax.txt","w");
   FILE *en=fopen("energy_relax.txt","w");
   FILE *file2=fopen("forces_relax.txt","w");
@@ -290,6 +290,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   std::cout << "Starting steepest descent..." << endl;
   //Steepest descent cycle
   while(fmax>tol && nsteep<maxsteep){
+		fmax=0;
     renn=RecalculateNearestNeighbours(refposx,refposy,refposz,posx,posy,posz,rc,rv); 
     if(renn==1){
       GetDistances(modr,rx,ry,rz,posx,posy,posz,lats,rv,pbc);
@@ -329,7 +330,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
 	 if (kpts==1) {ebs=avekforces(n,norbs,rc,rx,ry,rz,modr,nnear,inear,&fx,&fy,&fz,kpoints,TBparam);}
     else {
 		ebs=Hamiltonian(n,norbs,TBparam,modr,rx,ry,rz,eigvects,v);
-		std::cout << "normal ebs = " << ebs << std::endl;
+//		std::cout << "normal ebs = " << ebs << std::endl;
 		forces(n,norbs,rc,rx,ry,rz,modr,eigvects,nnear,inear,&fx,&fy,&fz,TBparam);}
     for(j=0;j<n;j++){
       if(fabs(fx.at(j))>fmax){fmax=fabs(fx.at(j));}

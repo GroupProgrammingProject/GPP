@@ -44,8 +44,9 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rz(n,n);
 	// Calculate distances
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
-	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
-	velocity(m,&vx,&vy,&vz,T);
+//	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
+	std::vector<double> refposx(n), refposy(n), refposz(n);
+/*	velocity(m,&vx,&vy,&vz,T);
 	//If input velocities are specified, initialise them for given atoms
 	for(int i=0; i<n; i++){
 		if(velspec.at(i)==1){
@@ -55,6 +56,7 @@ int main(int argc, char* argv[]){
 		}
 	}
 	//	std::vector<std::vector<double> > 
+*/
 	std::vector<std::pair<std::vector<double>,double> > kpoints; 
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);                //real matrix
 	if (kpts == 1) {

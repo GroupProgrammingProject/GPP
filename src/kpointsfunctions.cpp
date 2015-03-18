@@ -232,10 +232,10 @@ double avekenergy(int N,int norbs,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eige
   for (int i=0;i<ktot;i++) {
 	 kvec = (*kpoints).at(i).first;
 	 kweight = (*kpoints).at(i).second;
-	 std::cout << "k = " << kvec.at(0) << "\t" << kvec.at(1) << "\t" << kvec.at(2) << std::endl;
-	 std::cout << "weight = " << kweight << std::endl;
+//	 std::cout << "k = " << kvec.at(0) << "\t" << kvec.at(1) << "\t" << kvec.at(2) << std::endl;
+//	 std::cout << "weight = " << kweight << std::endl;
 	 ebstemp=ebstemp+kweight*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v);
-	 std::cout << "ebs = " << (1.0/((double)N))*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v) << std::endl;
+//	 std::cout << "ebs = " << (1.0/((double)N))*band_Hamiltonian(N,norbs,TBparam,modr,rx,ry,rz,&eigvects,&eigenvalaar,&kvec,v) << std::endl;
   }
   return ebstemp;
 }
@@ -272,7 +272,6 @@ double avekforces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd
 		(*fz).at(l) = (*fz).at(l) + (1/(double)ktot)*fztemp.at(l);
 	 }
   }
-  std::cout << "aveforce ebs = " << ebstemp << std::endl;
   return ebstemp;
 }
 

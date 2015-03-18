@@ -3,13 +3,12 @@
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
 MODE="relax"
-XYZ_FILE_PATH="xyzfiles/C20.xyz"
+XYZ_FILE_PATH="xyzfiles/C5.xyz"
 KPTS="0"
 PBC="1"
-#KPTS_FILE_PATH="xyzfiles/C10.kpts"
-KPTS_FILE_PATH="gamma.kpts"
-VERBOSE="0"
-MAX_STEEP="0"
+KPTS_FILE_PATH="xyzfiles/C5.kpts"
+VERBOSE="1"
+KSYMM="0"
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # 							Rest of the script sets defaults for unspecified or optional parameters
