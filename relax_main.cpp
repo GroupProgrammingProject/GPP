@@ -14,7 +14,7 @@
 int main(int argc, char* argv[]){
   	// Read in parameter values passed by the run script with MODE="energy"
 	// xyzfilepath=argv[1], kptsfilepath=argv[3]
-  //RUNCOMMAND="$0MAIN $1XYZ_FILE_PATH $2KPTS $3KPTS_FILE_PATH $4KSYMM $5NUM_STEPS $6DT $7PBC $8T $9FRAME_RATE $10VERBOSE $11RV $12RC $13NUM_ORBS $14MAX_NEIGHBOURS $15MASS $16TOL $17MAX_STEEP $18NU $19H $20P1 $21P2 $22P3 $23P4 $24P5 $25P6"
+  //RUNCOMMAND="$0MAIN $1XYZ_FILE_PATH $2KPTS $3KPTS_FILE_PATH $4KSYMM $5NUM_STEPS $6DT $7PBC $8T $9FRAME_RATE $10VERBOSE $11RV $12RC $13NUM_ORBS $14MAX_NEIGHBOURS $15MASS $16TOL $17MAX_STEEP $18THERM_RATE $19H $20P1 $21P2 $22P3 $23P4 $24P5 $25P6"
   
 	// From now on is the good version (input)
    int nmd=atoi(argv[5]), nprint=atoi(argv[9]), maxnn=atoi(argv[14]);
@@ -29,8 +29,9 @@ int main(int argc, char* argv[]){
 	TBparam[3]=atof(argv[23]);		//	V_sp_sigma
 	TBparam[4]=atof(argv[24]);		// V_pp_sigma
 	TBparam[5]=atof(argv[25]);		// V_pp_pi
-	std::vector<double> lats(3), posx, posy, posz;
-	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
+	std::vector<double> lats(3), posx, posy, posz, vxin, vyin, vzin;
+	std::vector<bool> velspec;
+	ReadInXYZ (argv[1], &posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc, &velspec);
 	int n=posx.size();
 	// Determine maximum number of nearest neighbours
 	if(n<maxnn){maxnn=n;}
@@ -45,6 +46,15 @@ int main(int argc, char* argv[]){
 	// Calculate distances
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	std::vector<double> vx(n), vy(n), vz(n), refposx(n), refposy(n), refposz(n);
+	velocity(m,&vx,&vy,&vz,T);
+	//If input velocities are specified, initialise them for given atoms
+	for(int i=0; i<n; i++){
+		if(velspec.at(i)==1){
+			vx.at(i)=vxin.at(i);
+			vy.at(i)=vxin.at(i);
+			vz.at(i)=vxin.at(i);
+		}
+	}
 	//	std::vector<std::vector<double> > 
 	std::vector<std::pair<std::vector<double>,double> > kpoints; 
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);                //real matrix

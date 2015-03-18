@@ -24,8 +24,9 @@ int main(int argc, char* argv[]){
 	TBparam[3]=atof(argv[14]);		//	V_sp_sigma
 	TBparam[4]=atof(argv[15]);		// V_pp_sigma
 	TBparam[5]=atof(argv[16]);		// V_pp_pi
-	std::vector<double> lats(3), posx, posy, posz;
-	ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
+	std::vector<double> lats(3), posx, posy, posz, vxin, vyin, vzin;
+	std::vector<bool> velspec;
+	ReadInXYZ (argv[1], &posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc, &velspec);
 	int n=posx.size();
 	// Determine maximum number of nearest neighbours
 	if(n<maxnn){maxnn=n;}

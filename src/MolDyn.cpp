@@ -235,7 +235,7 @@ int GeomOpt(int norbs,double rc,double rv,double m,double dt,int nmd,std::vector
   // Energies from TB model and fmax
   double ebs,erep,etot,ekin,fmax;
   // Calculation of initial velocities:
-  velocity(m,&vx,&vy,&vz,T);
+//  velocity(m,&vx,&vy,&vz,T);
   FILE *file=fopen("movie_relax.txt","w");
   FILE *en=fopen("energy_relax.txt","w");
   FILE *file2=fopen("forces_relax.txt","w");

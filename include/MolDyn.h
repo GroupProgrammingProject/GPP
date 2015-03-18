@@ -30,7 +30,7 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
 void forces(int N,int norbs,double rc,Eigen::MatrixXd* rx, Eigen::MatrixXd* ry, Eigen::MatrixXd* rz, Eigen::MatrixXd* modr, Eigen::MatrixXd* c, std::vector<int>* nnear, Eigen::MatrixXi* inear, std::vector<double>* fx, std::vector<double>* fy, std::vector<double>* fz,std::vector<double>* TBparam);
 /*Inputs, in order: #atoms; #orbitals; atom vector distances; modulus of vector distances; matrix of eigenvectors (N*N) (vectors as columns); nearest neighbour lists; forces vectors.*/
 
-void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);/*Inputs, in order: #atoms; mass; vectors of velocities; temperature.*/
+void velocity(double m, std::vector<double>* vx, std::vector<double>* vy, std::vector<double>* vz, double T);/*Inputs, in order: mass; vectors of velocities; temperature.*/
 
 double Hamder(int i, int j,int a, int b, std::vector<double>* d,double distr,int conum, std::vector<double>* TBparam);
 /*Inputs, in order: first atom index; second atom index; first orbital index; second orbital index; vector of direction cosines; modulus of distance between i and j; switch for component.*/ 
