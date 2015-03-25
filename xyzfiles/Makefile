@@ -18,15 +18,11 @@ RPATH = -Wl,-rpath=../lib
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: genkgrid genkpath replicate scalecell
+all: genkgrid replicate scalecell
 
 genkgrid: gen_kgrid.cpp
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 genkgrid: $(HEADERS)
-
-genkpath: gen_kpath.cpp
-	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
-genkpath: $(HEADERS)
 
 replicate: ReplicateCell.cpp 
 	$(CXX) $(INCLUDE) $(RPATH) $(LDFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)

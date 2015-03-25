@@ -15,8 +15,8 @@ int main(int argc, char* argv[]){
   bool pbc = 1;
   std::vector<bool> velspec;
   std::vector<double> lats(3);
-  std::vector<double> posx, posy, posz, velx, vely, velz;
-  ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, &velx, &vely, &velz, pbc, &velspec);
+  std::vector<double> posx, posy, posz, vxin, vyin, vzin;
+  ReadInXYZ (argv[1], &posx, &posy, &posz, &vxin, &vyin, &vzin, &lats, pbc, &velspec);
   // Number of atoms
   int n=posx.size();
 
