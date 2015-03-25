@@ -13,9 +13,10 @@ int main(int argc, char* argv[]){
   if (argc!=6){std::cout<<"You should append one input and one output xyz files and the numbers by which you wish to replicate the cell along each axis to the main!!"<<std::endl;}
   
   bool pbc = 1;
+  std::vector<bool> velspec;
   std::vector<double> lats(3);
-  std::vector<double> posx, posy, posz;
-  ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, pbc);
+  std::vector<double> posx, posy, posz, velx, vely, velz;
+  ReadInXYZ (argv[1], &posx, &posy, &posz, &lats, &velx, &vely, &velz, pbc, &velspec);
   // Number of atoms
   int n=posx.size();
 
