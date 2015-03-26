@@ -64,14 +64,14 @@ int main(int argc, char* argv[]){
 	velocity(m,&vx,&vy,&vz,T);
 	//If input velocities are given, initialise them for relevant atoms
 	for(i=0; i<n; i++){
-		if(velspec.at(i)==1){
-			vx.at(i)=vxin.at(i);
-			vy.at(i)=vyin.at(i);
-			vz.at(i)=vzin.at(i);
-		}
-		msvx=msvx+vx.at(i)*vx.at(i);
-		msvy=msvy+vy.at(i)*vy.at(i);
-		msvz=msvz+vz.at(i)*vz.at(i);
+	  if(velspec.at(i)==1){
+	    vx.at(i)=vxin.at(i);
+	    vy.at(i)=vyin.at(i);
+	    vz.at(i)=vzin.at(i);
+	  }
+	  msvx=msvx+vx.at(i)*vx.at(i);
+	  msvy=msvy+vy.at(i)*vy.at(i);
+	  msvz=msvz+vz.at(i)*vz.at(i);
 	}
 	// Initialisation of reference positions
 	for(i=0;i<n;i++){
@@ -104,6 +104,7 @@ int main(int argc, char* argv[]){
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
 	    tmd=i*dt;
+	    forces(n,norbs,rc,&rx,&ry,&rz,&modr,&eigvects,&nnear,&inear,&fx,&fy,&fz,&TBparam);
 	    fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",tmd,Tf,ekin,ebs,erep,etot);
 	    fprintf(mov,"%d\nC%d molecule\n",n,n);
 	    for(j=0;j<n;j++){

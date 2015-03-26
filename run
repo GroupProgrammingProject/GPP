@@ -2,13 +2,14 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="phonons"
+MODE="md"
 XYZ_FILE_PATH="xyzfiles/C5.xyz"
 KPTS="0"
 PBC="0"
 KPTS_FILE_PATH="xyzfiles/C5.kpts"
-VERBOSE="1"
+VERBOSE="0"
 KSYMM="0"
+NUM_STEPS="1000"
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # 							Rest of the script sets defaults for unspecified or optional parameters
@@ -20,7 +21,7 @@ P3="-5"				#v0
 P4="4.7"				#v1
 P5="5.5"				#v2
 P6="-1.55"			#v3
-MASS="1234.8"
+MASS="1243.71"
 
 # MODE and XYZ_FILE_PATH have to be set, otherwise the code will not run
 if [ -z ${MODE+x} ] || [ -z ${XYZ_FILE_PATH+x} ]
