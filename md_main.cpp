@@ -14,12 +14,11 @@ int main(int argc, char* argv[]){
 	// Read in the parameter values to run MD simulation
 	// The order in which they are passed is important, determined in run script
 	//RUNCOMMAND="$0MAIN $1XYZ_FILE_PATH $2NUM_STEPS $3DT $4PBC $5ENSEMBLE $6THERM_RATE $7T $8FRAME_RATE $9VERBOSE $10RV $11RC $12NUM_ORBS $13MAX_NEIGHBOURS $14MASS $15P1 $16P2 $17P3 $18P4 $19P5 $20P6"
-
 	//nmd= no. of MD steps, nprint=how often steps are printed to file, norbs=no. of atomic orbitals, maxnn=max no. of nearest neighbours that any atom can have.
 	int nmd=atoi(argv[2]), nprint=atoi(argv[8]), norbs=atoi(argv[12]), maxnn=atoi(argv[13]);
 	//dt=time step, T=temperature, rv=Verlet radius, rc=cut-off radius (from Xu et al), nu=frequency of collisions in canonical ensemble, m =mass.
 	double dt=atof(argv[3]), T=atof(argv[7]), rv=atof(argv[10]), rc=atof(argv[11]), nu=atof(argv[6]), m=atof(argv[14]);
-	//v=verbose (turn Hamiltonian printing on/off), pbc=switch for PBCs, ander=switch for thermof=dynamic ensemble.
+	//v=verbose (turn Hamiltonian printing on/off), pbc=switch for PBCs, ander=switch for thermodynamic ensemble.
 	bool v=atoi(argv[9]), pbc=atoi(argv[4]), ander=atoi(argv[5]);
 	std::vector<double> TBparam(6); //vector to hold TB parameters
 	TBparam[0]=atof(argv[15]);		// E_s
@@ -51,8 +50,8 @@ int main(int argc, char* argv[]){
 	Eigen::MatrixXd rx(n,n);
 	Eigen::MatrixXd ry(n,n);
 	Eigen::MatrixXd rz(n,n);
-	// Timestep, initial temperature, atomic mass, cut off and Verlet radii
-	double Tf,tmd,kb=1./11603,msvx,msvy,msvz;
+	// Final temperature, length of MD simulation, Boltzmann's constant (eV/K), mean square velocities, total velocities, average velocities
+	double Tf,tmd,kb=1./11603,msvx,msvy,msvz,vxtot=0,vytot=0,vztot=0,vxavg,vyavg,vzavg;
 	GetDistances(&modr,&rx,&ry,&rz,&posx,&posy,&posz,&lats,rv,pbc);
 	//Matrix for eigenvectors
 	Eigen::MatrixXd eigvects(norbs*n,norbs*n);
@@ -69,15 +68,25 @@ int main(int argc, char* argv[]){
 			vy.at(i)=vyin.at(i);
 			vz.at(i)=vzin.at(i);
 		}
-		msvx=msvx+vx.at(i)*vx.at(i);
-		msvy=msvy+vy.at(i)*vy.at(i);
-		msvz=msvz+vz.at(i)*vz.at(i);
+		vxtot=vxtot+vx.at(i);
+		vytot=vytot+vy.at(i);
+		vztot=vztot+vz.at(i);
 	}
+	vxavg=vxtot/n;
+	vyavg=vytot/n;
+	vzavg=vztot/n;
 	// Initialisation of reference positions
 	for(i=0;i<n;i++){
 	  refposx.at(i)=posx.at(i);
 	  refposy.at(i)=posy.at(i);
 	  refposz.at(i)=posz.at(i);
+	  //Rescale all velocities to fix centre of mass
+	  vx.at(i)=vx.at(i)-vxavg;
+	  vy.at(i)=vy.at(i)-vyavg;
+	  vz.at(i)=vz.at(i)-vzavg;
+	  msvx=msvx+vx.at(i)*vx.at(i);
+	  msvy=msvy+vy.at(i)*vy.at(i);
+	  msvz=msvz+vz.at(i)*vz.at(i);
 	}
 	//Open file to store atom positions in MD steps
 	FILE *mov=fopen("movie.txt","w");
@@ -94,12 +103,12 @@ int main(int argc, char* argv[]){
 	//Open files to store energies at each step
 	FILE *en=fopen("energy.txt","w");
 	fprintf(en,"%f\t%f\t%f\t%f\t%f\t%f\n",0.0,T,ekin,ebs,erep,etot);
-	double xi1=0,xi2=0,vxi1=0,vxi2=0,q1=1,q2=1;
 	// MD cycle
 	for(i=1; i<nmd+1; i++){
-	  Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander,&TBparam);
-	  ekin=3*(n-1)*kb*Tf/2;
-	  if(i%nprint==0){
+		//Call the Verlet algorithm
+		Tf=verlet(norbs,rc,rv,m,dt,&posx,&posy,&posz,&refposx,&refposy,&refposz,&vx,&vy,&vz,&eigvects,&nnear,&inear,&rx,&ry,&rz,&modr,ebs,&lats,pbc,T,nu,ander,&TBparam);
+		ekin=3*(n-1)*kb*Tf/2;
+		if(i%nprint==0){
 	    //H_MD and eigvects have now also been populated
 	    erep=Erep(&modr);
 	    etot=ebs+erep+ekin;
@@ -116,7 +125,8 @@ int main(int argc, char* argv[]){
 	}
 	//Output final positions and velocities to a .xyz file for future simulations
 	FILE *rel=fopen("final.xyz","w");
-	fprintf(rel,"%d\nC%d molecule\n",n,n);
+	if(pbc==1){fprintf(rel,"%d\nC%d.xyz%f\t%f\t%f\n",n,n,lats.at(0),lats.at(1),lats.at(2));}
+	else{fprintf(rel,"%d\nC%d.xyz\n",n,n);}
 	for(j=0;j<n;j++){
 		fprintf(rel,"6  %f %f %f %f %f %f\n",posx.at(j),posy.at(j),posz.at(j),vx.at(j),vy.at(j),vz.at(j));
 	}
@@ -129,6 +139,5 @@ int main(int argc, char* argv[]){
 	std::cout << "Ebs = " << ebs << std::endl;
 	std::cout << "Erep = " << erep << std::endl;
 	std::cout << "Etot = " << etot << std::endl;
-
 return 0;
 }

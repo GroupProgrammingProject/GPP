@@ -14,7 +14,6 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   }
   if(pbc==1){pbcshift(x,y,z,lats);} //If PBCs are active, put all atoms in unit cell
   renn=RecalculateNearestNeighbours(refx,refy,refz,x,y,z,rc,rv);  
-  GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
   if(renn==1){
     GetDistances(modr,rx,ry,rz,x,y,z,lats,rv,pbc);
     NearestNeighbours(inear,nnear,modr,rv);
@@ -59,19 +58,21 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
       (*vz).at(i)=(*vz).at(i)+dt*(fz.at(i)+fzn.at(i))/(2*m);
       rang=ran.doub();
       if((rang<nu*dt) && (ander==1)){ //implement the Andersen thermostat for canonical ensemble
-	(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
-	(*vy).at(i)=Gauss(0,sigma)/m;
-	(*vz).at(i)=Gauss(0,sigma)/m;
-	vxm=vxm+(*vx).at(i);
-	vym=vym+(*vy).at(i);
-	vzm=vzm+(*vz).at(i);
+			(*vx).at(i)=Gauss(0,sigma)/m; //generate random numbers from Gaussian distribution
+			(*vy).at(i)=Gauss(0,sigma)/m;
+			(*vz).at(i)=Gauss(0,sigma)/m;
+			vxm=vxm+(*vx).at(i);
+			vym=vym+(*vy).at(i);
+			vzm=vzm+(*vz).at(i);
       }
     }
   for(int i=0; i<N; i++)//mean square velocities
     {
-      (*vx).at(i)=(*vx).at(i)-vxm/N;
-      (*vy).at(i)=(*vy).at(i)-vym/N;
-      (*vz).at(i)=(*vz).at(i)-vzm/N;
+		if(ander==1){
+			(*vx).at(i)=(*vx).at(i)-vxm/N;
+			(*vy).at(i)=(*vy).at(i)-vym/N;
+			(*vz).at(i)=(*vz).at(i)-vzm/N;
+		}
       svxm=svxm+(*vx).at(i)*(*vx).at(i);
       svym=svym+(*vy).at(i)*(*vy).at(i);
       svzm=svzm+(*vz).at(i)*(*vz).at(i);
