@@ -81,9 +81,11 @@ double verlet(int norbs,double rc,double rv,double m,double dt, std::vector<doub
   /*calculation of mean squared velocities:*/
   for(int i=0; i<N; i++)
     {
-      (*vx).at(i)=(*vx).at(i)-vxm/N;
-      (*vy).at(i)=(*vy).at(i)-vym/N;
-      (*vz).at(i)=(*vz).at(i)-vzm/N;
+		if(ander==1){
+			(*vx).at(i)=(*vx).at(i)-vxm/N;
+			(*vy).at(i)=(*vy).at(i)-vym/N;
+			(*vz).at(i)=(*vz).at(i)-vzm/N;
+		}
       svxm=svxm+(*vx).at(i)*(*vx).at(i);
       svym=svym+(*vy).at(i)*(*vy).at(i);
       svzm=svzm+(*vz).at(i)*(*vz).at(i);
