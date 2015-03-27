@@ -2,16 +2,17 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="md"
-XYZ_FILE_PATH="xyzfiles/grapad1ACrAt1z12.xyz"
+MODE="phonons"
+XYZ_FILE_PATH="xyzfiles/C3.xyz"
 KPTS="0"
-PBC="1"
+PBC="0"
 KPTS_FILE_PATH="adatoms/graphene24_36.kpts"
 VERBOSE="1"
 KSYMM="1"
-TOL="0.04"
-T="550"
-FRAME_RATE="10"
+TOL="1e-6"
+#NUM_STEPS="0"
+#T="550"
+#FRAME_RATE="10"
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # 							Rest of the script sets defaults for unspecified or optional parameters
@@ -73,7 +74,7 @@ then
 	echo $RUNCOMMAND
 fi
 
-# Default parameters needed by phonons calculations
+# Default parameters needed by phonons ssimulations
 if [ $MODE == "phonons" ]
 then
 	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="1000"; fi
@@ -83,9 +84,9 @@ then
 	if [ -z ${TOL+x} ]; then TOL="1e-8"; fi
 	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
 	if [ -z ${H+x} ]; then H="0.001"; fi
-	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="1e6"; fi
+	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="1e8"; fi
 	MAIN="phonons_main"
-	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $THERM_RATE $H $KSYMM $P1 $P2 $P3 $P4 $P5 $P6"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $KSYMM $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $THERM_RATE $H $P1 $P2 $P3 $P4 $P5 $P6"
 	echo $RUNCOMMAND
 fi
 

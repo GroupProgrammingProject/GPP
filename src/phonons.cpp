@@ -78,6 +78,7 @@ std::cout << "Calculating vibrational frequencies..." << std::endl;
 				for(i=0;i<n;i++){
 					if(i!=J){
 						(*modr)(i,J)=sqrt( (*rx)(i,J) * (*rx)(i,J) + (*ry)(i,J) * (*ry)(i,J) + (*rz)(i,J) * (*rz)(i,J) );
+						(*modr)(J,i)=(*modr)(i,J);
 					}
 				}
 
@@ -114,32 +115,19 @@ std::cout << "Calculating vibrational frequencies..." << std::endl;
 	//returns eigenfrequencies in fs-1
 
 	//Fill eigfreq_sqr with frequencies squared in s-2
-	for(i=0;i<3*n;i++){ eigfreq.at(i) = 1e30*real(es.eigenvalues()[i]); }
-	std::sort (eigfreq.begin(), eigfreq.end());
-	std::reverse (eigfreq.begin(), eigfreq.end());
+	for(i=0;i<3*n;i++){ eigfreq.at(i) = real(es.eigenvalues()[i]); }
+//	std::sort (eigfreq.begin(), eigfreq.end());
+//	std::reverse (eigfreq.begin(), eigfreq.end());
 	//Write results to file
 	std::ofstream output;
 	double freq_sqr;
 	output.open("frequencies.dat");
 	output << "w^2 (s-2) \t w (s-1) \t k (cm-1) \t E (eV)" << std::endl;
 	for(i=0;i<3*n;i++){
-		freq_sqr = eigfreq.at(i);
-		output << std::setprecision(6) << freq_sqr/(double)n << "\t" << sqrt(freq_sqr)/(double)n << "\t" << sqrt(freq_sqr)/(c*(double)n) << "\t" << h_bar*sqrt(freq_sqr)/(double)n << std::endl;
+		freq_sqr = 1e30*eigfreq.at(i);
+		output << std::setprecision(6) << freq_sqr << "\t" << sqrt(freq_sqr) << "\t" << sqrt(freq_sqr)/(c*2*M_PI) << "\t" << h_bar*sqrt(freq_sqr) << std::endl;
 	} 
 	output.close();
-/*
-	//convert to wavevectors in cm-1
-	for(i=0;i<3*n;i++){ (*eigfreq).at(i) = 1e15*sqrt(real(es.eigenvalues()[i]))/c; }
-	std::sort ((*eigfreq).begin(), (*eigfreq).end());
-	std::reverse ((*eigfreq).begin(), (*eigfreq).end());
-	FILE *file_freq=fopen("vibrational_frequencies.dat","w");
-//std::cout << "Real eigenvalues expressed as wavectors in cm-1" << std::endl;
-//for(i=0;i<3*n;i++){	std::cout << eigfreq[i]/n << std::endl; }
-	for(i=0;i<3*n;i++){
-		fprintf(file_freq,"%f\n", (*eigfreq).at(i)/(double)n);
-	}
-	fclose(file_freq);
-*/
 
 }	//end eigenmodes()
 
