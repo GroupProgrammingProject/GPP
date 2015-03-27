@@ -2,15 +2,15 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="energy"
+MODE="md"
 XYZ_FILE_PATH="xyzfiles/grapad1ACrAt1z12.xyz"
-KPTS="1"
+KPTS="0"
 PBC="1"
 KPTS_FILE_PATH="adatoms/graphene24_36.kpts"
-VERBOSE="0"
+VERBOSE="1"
 KSYMM="1"
 TOL="0.04"
-T="150"
+T="550"
 FRAME_RATE="10"
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -53,7 +53,7 @@ then
 	if [ -z ${T+x} ]; then T="300"; fi
 	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
 	MAIN="md_main"
-	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $NUM_STEPS $DT $PBC $ENSEMBLE $THERM_RATE $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $P1 $P2 $P3 $P4 $P5 $P6"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $KSYMM $NUM_STEPS $DT $PBC $ENSEMBLE $THERM_RATE $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $P1 $P2 $P3 $P4 $P5 $P6"
 	echo $RUNCOMMAND
 fi
 
