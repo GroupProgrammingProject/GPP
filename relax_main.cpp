@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
   //RUNCOMMAND="$0MAIN $1XYZ_FILE_PATH $2KPTS $3KPTS_FILE_PATH $4KSYMM $5NUM_STEPS $6DT $7PBC $8T $9FRAME_RATE $10VERBOSE $11RV $12RC $13NUM_ORBS $14MAX_NEIGHBOURS $15MASS $16TOL $17MAX_STEEP $18THERM_RATE $19H $20P1 $21P2 $22P3 $23P4 $24P5 $25P6"
 	// From now on is the good version (input)
    int nmd=atoi(argv[5]), nprint=atoi(argv[9]), maxnn=atoi(argv[14]);
-   bool kpts=atoi(argv[2]), pbc=atoi(argv[7]), v=atoi(argv[10]), ksymm=atoi(argv[4]);
+   bool kpts=atoi(argv[2]), pbc=atoi(argv[7]), v=1, ksymm=atoi(argv[4]);
 	int norbs=atoi(argv[13]), maxsteep=atoi(argv[17]);
 	double rv=atof(argv[11]), rc=atof(argv[12]);
 	double tol=atof(argv[16]), m=atof(argv[15]), dt=atof(argv[6]), T=atof(argv[8]), nu=atof(argv[18]), h=atof(argv[19]);

@@ -1,55 +1,57 @@
-CXX = g++
-CXXFLAGS+= -std=c++11
-LD = g++
+CXX = icpc
+CXXFLAGS= -DEIGEN_USE_MKL_ALL -std=c++11
+LD = icpc
 
 #files to be compiled in libraries
 LIBFILES = phonons MolDyn kpointsfunctions band_hamiltonian hamiltonian readinxyz geometryinfo vectorfunctions ScaleGeom Gethijab functions 
 LIBOBJECTS = $(addsuffix .o, $(LIBFILES))
 LDLIBS =  $(addprefix -l,$(LIBFILES))
 LIBNAMES =  $(addsuffix .so, $(LIBFILES))
+LIB_DIR = ./lib
 
 # Lib directory will be created
 LIB_DIR = ./lib
 
 #include path to eigen
-INCLUDE = $(addprefix -I , ~/Software/eigen/)
+INCLUDE = $(addprefix -I , ~/work/Software/eigen/)
 HEADERS = ./include/*.h
 
 #compile and runtime shared lib linking path
 LDFLAGS = $(addprefix -L ,$(LIB_DIR))
 RPATH = -Wl,-rpath=$(LIB_DIR) 
+MKLFLAG= -mkl
 
 # runs when make is executed without further options
 # meant to compile executable with dynamic lib made by make install
-all: relax_main singleE_main md_main phonons_main
+all: singleE_main md_main phonons_main relax_main
 
 singleE_main: singleE_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDE) $(RPATH) $(MKLFLAG) $< -o $@ $(LDLIBS)
 singleE_main: $(HEADERS)
 
 md_main: md_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDE) $(RPATH) $(MKLFLAG) $< -o $@ $(LDLIBS)
 md_main: $(HEADERS)
 
 phonons_main: phonons_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDE) $(RPATH) $(MKLFLAG) $< -o $@ $(LDLIBS)
 phonons_main: $(HEADERS)
 
 relax_main: relax_main.cpp
-	$(CXX) $(LDFLAGS) $(INCLUDE) $(RPATH) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(INCLUDE) $(RPATH) $(MKLFLAG) $< -o $@ $(LDLIBS)
 relax_main: $(HEADERS)
 
 # install, needs to run to compile shared library objects
 install: $(LIB_DIR) $(LIBNAMES) 
 
-$(LIB_DIR): 
+$(LIB_DIR):
 	mkdir -p $@
 
 %.so: %.o
-	$(CXX) -shared -fPIC -o lib/lib$@ $<
+	$(CXX) $(CXXFLAGS) -shared -fPIC $(MKLFLAG) -o lib/lib$@ $<
 
 %.o: src/%.cpp
-	$(CXX) -c $(INCLUDE) -fPIC $< 
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -fPIC $(MKLFLAG) $<
 %.o: include/%.h
 
 #.PRECIOUS: %.o 

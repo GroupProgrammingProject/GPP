@@ -10,8 +10,8 @@
 
 int main(int argc, char* argv[]){
   if (argc<5){std::cout<<"You should append two files and the numbers by which you wish to scale the cell along each axis to the main object!"<<std::endl;}
-  if (argc!=6){std::cout<<"You should append one input and one output xyz files and the numbers by which you wish to scale the cell along each axis to the main!!"<<std::endl;}  
-  bool pbc = 1;
+  if (argc!=7){std::cout<<"You should append one input and one output xyz files and the numbers by which you wish to scale the cell along each axis to the main!!"<<std::endl;}  
+  bool pbc = atof(argv[6]);
   std::vector<bool> velspec;
   std::vector<double> lats(3);
   std::vector<double> posx, posy, posz, vxin, vyin, vzin;

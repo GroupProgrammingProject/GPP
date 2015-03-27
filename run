@@ -2,17 +2,13 @@
 
 # Input parameters to be set
 # Parameters that have not been set get assigned a default value
-MODE="phonons"
-XYZ_FILE_PATH="xyzfiles/C3.xyz"
-KPTS="0"
-PBC="0"
-KPTS_FILE_PATH="adatoms/graphene24_36.kpts"
-VERBOSE="1"
-KSYMM="1"
-TOL="1e-6"
-#NUM_STEPS="0"
-#T="550"
-#FRAME_RATE="10"
+MODE="relax"
+XYZ_FILE_PATH="xyzfiles/C12.xyz"
+KPTS="1"
+KPTS_FILE_PATH="xyzfiles/C12_2.kpts"
+T="150"
+TOL=".001"
+PBC="1"
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # 							Rest of the script sets defaults for unspecified or optional parameters
@@ -33,6 +29,17 @@ then
 	echo The variables MODE and XYZ_FILE_PATH have to be specified in the run script for the code to run
 else
 	RUN="1"
+fi
+
+# If KPTS is 1, need to add KPTS_FILE_PATH
+if [ -z ${KPTS+x} ]; then KPTS="0"; fi
+if [ -z ${KPTS_FILE_PATH+x} ] && [ $KPTS -eq 1 ]
+	then
+	RUN="0"
+	echo A k-points file path has to be specified
+elif [ $KPTS -eq 0 ]
+then
+	KPTS_FILE_PATH="kpnts_file_not_needed"
 fi
 
 #Set default values if they have not been specified above
@@ -74,34 +81,34 @@ then
 	echo $RUNCOMMAND
 fi
 
-# Default parameters needed by phonons ssimulations
+# Default parameters needed by phonons calculations
 if [ $MODE == "phonons" ]
 then
 	if [ -z ${NUM_STEPS+x} ]; then NUM_STEPS="1000"; fi
 	if [ -z ${DT+x} ]; then DT="1"; fi
 	if [ -z ${FRAME_RATE+x} ]; then FRAME_RATE="1"; fi
 	if [ -z ${T+x} ]; then T="300"; fi
-	if [ -z ${TOL+x} ]; then TOL="1e-8"; fi
+	if [ -z ${TOL+x} ]; then TOL="1e-6"; fi
 	if [ -z ${THERM_RATE+x} ]; then THERM_RATE="0.1"; fi
 	if [ -z ${H+x} ]; then H="0.001"; fi
-	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="1e8"; fi
+	if [ -z ${MAX_STEEP+x} ]; then MAX_STEEP="1e6"; fi
 	MAIN="phonons_main"
-	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $KSYMM $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $THERM_RATE $H $P1 $P2 $P3 $P4 $P5 $P6"
+	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $NUM_STEPS $DT $PBC $T $FRAME_RATE $VERBOSE $RV $RC $NUM_ORBS $MAX_NEIGHBOURS $MASS $TOL $MAX_STEEP $THERM_RATE $H $KSYMM $P1 $P2 $P3 $P4 $P5 $P6"
 	echo $RUNCOMMAND
 fi
 
 # Default parameters needed by single energy calculation 
 if [ $MODE == "energy" ]
 then
-	if [ -z ${KPTS+x} ]; then KPTS="0"; fi
-	if [ -z ${KPTS_FILE_PATH+x} ] && [ $KPTS==1 ]
-	then
-		RUN="0"
-		echo A k-points file path has to be specified
-	elif [ $KPTS -eq 0 ]
-	then
-		KPTS_FILE_PATH="kpnts_file_not_needed"
-	fi
+#	if [ -z ${KPTS+x} ]; then KPTS="0"; fi
+#	if [ -z ${KPTS_FILE_PATH+x} ] && [ $KPTS==1 ]
+#	then
+#		RUN="0"
+#		echo A k-points file path has to be specified
+#	elif [ $KPTS -eq 0 ]
+#	then
+#		KPTS_FILE_PATH="kpnts_file_not_needed"
+#	fi
 	MAIN="singleE_main"
 	RUNCOMMAND="$MAIN $XYZ_FILE_PATH $KPTS $KPTS_FILE_PATH $KSYMM $PBC $VERBOSE $RV $RC $NUM_ORBS $MASS $P1 $P2 $P3 $P4 $P5 $P6"
 	echo $RUNCOMMAND
