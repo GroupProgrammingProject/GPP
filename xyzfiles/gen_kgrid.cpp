@@ -10,12 +10,12 @@
 
 int main(int argc, char* argv[]) {
   if (argc<5){std::cout<<"You should append two files and 3 kpoint grids to the main object!"<<std::endl;}
-  if (argc!=6){std::cout<<"You should append one xyz, one .kpts file and a kpoint grid to the main!!"<<std::endl;}
+  if (argc!=7){std::cout<<"You should append one xyz, one .kpts file and a kpoint grid to the main!!"<<std::endl;}
   std::vector<double> posx, posy, posz,vxin,vyin,vzin;                    // Required for ReadInXYZ
   std::vector<double> lats(3);                             // Vector to take lattice parameters
   std::vector<bool> velspec;
   bool pbc = 1;                                            // If generating a kpoint grid then using PBCs
   ReadInXYZ (argv[1], &posx, &posy, &posz, &vxin,&vyin,&vzin,&lats, pbc,&velspec);    // Read in lattice parameters from .xyz file
   int kn[3] = {atoi(argv[3]),atoi(argv[4]),atoi(argv[5])}; // kpoint grid read in from command line
-  genkgrid(argv[2],&lats,kn,0);                            // Generate grid in specified kpoint file
+  genkgrid(argv[2],&lats,kn,atof(argv[6]));                            // Generate grid in specified kpoint file
 }
